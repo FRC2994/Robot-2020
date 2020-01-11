@@ -8,11 +8,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 import frc.commands.ShiftGear;
+import frc.subsystems.Drivetrain;
 import frc.subsystems.Drivetrain.GearShiftState;
 
 /**
@@ -20,40 +21,28 @@ import frc.subsystems.Drivetrain.GearShiftState;
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
-  private final Joystick m_joystick = new Joystick(0);
-  private final Joystick m_gamepad = new Joystick(1);
+	private final Joystick joystick = new Joystick(0); 
+	// private final Joystick gamepad = new Joystick(1);
 
-/**
-   * Construct the OI and all of the buttons on it.
-   */
-  public OI() {
+	private final JoystickButton joystickButton;
 
+	/**
+	 * Construct the OI and all of the buttons on it.
+	 */
+	public OI() {
+		this.joystickButton = new JoystickButton(this.joystick, 12);
+	}
 
-    //Joystick
-    // final JoystickButton jsButnRecord                = new JoystickButton(m_joystick, 11);
-    final JoystickButton jsButnShifter               = new JoystickButton(m_joystick, 12);
+	public void mountJoystickButtonCommands(Drivetrain drivetrain) {
+		this.joystickButton.whenPressed(new ShiftGear(drivetrain, GearShiftState.HI));
+		this.joystickButton.whenReleased(new ShiftGear(drivetrain, GearShiftState.LO));
+	}
 
+	public Joystick getJoystick() {
+		return this.joystick;
+	}
 
-    //GamePad
-    // final JoystickButton gpButnLEDOff                = new JoystickButton(m_gamepad, 7); //Gamepad Back button
-
-
-    /* Connect the buttons to commands */
-    
-    //JOYSTICK
-    //jsButnClimb.whenPressed(new LiftUpOrDown(LiftDirection.UP));
-    jsButnShifter.whenPressed(new ShiftGear(GearShiftState.HI));
-    jsButnShifter.whenReleased(new ShiftGear(GearShiftState.LO));
-
-    //GAMEPAD
-    // gpButnLEDOff.whenPressed(new LEDcontrol(LEDstate.OFF));
-  }
-
-  public Joystick getJoystick() {
-    return m_joystick;
-  }
-
-  public Joystick getGamepad() {
-    return m_gamepad;
-  }
+	// public Joystick getGamepad() {
+	// 	return m_gamepad;
+	// }
 }
