@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.commands.DriveWithJoystick;
-import frc.robot.OI;
 
 public class Drivetrain implements Subsystem{
 	private CANSparkMax FrontRight = new CANSparkMax(1, MotorType.kBrushless);
