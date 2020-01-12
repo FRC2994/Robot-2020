@@ -18,10 +18,13 @@ import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.commands.DriveWithJoystick;
+import frc.commands.DefaultDrive;
+import frc.robot.Robot;
 
-public class Drivetrain implements Subsystem{
+public class Drivetrain extends SubsystemBase {
 	private CANSparkMax FrontRight = new CANSparkMax(1, MotorType.kBrushless);
 	private CANSparkMax FrontLeft = new CANSparkMax(2, MotorType.kBrushless);
 	private CANSparkMax RearRight = new CANSparkMax(3, MotorType.kBrushless);
@@ -48,8 +51,8 @@ public class Drivetrain implements Subsystem{
 
 	private final Joystick joystick;
 
-	public Drivetrain(Joystick joystick) {
-		this.joystick = joystick;
+	public Drivetrain() {
+		this.joystick = Robot.m_oi.joystick;
 
 		FrontRight.setInverted(false);
 		FrontLeft.setInverted(true);
@@ -70,6 +73,13 @@ public class Drivetrain implements Subsystem{
         // addChild("Drive", differentialDrive);
 		// addChild("Gyro", gyro);
 
+		//Resets the settings of motors
+		FrontRight.restoreFactoryDefaults();
+		RearRight.restoreFactoryDefaults();
+		FrontLeft.restoreFactoryDefaults();
+		RearLeft.restoreFactoryDefaults();
+
+		//Sets the motors to brake mode
 		FrontRight.setIdleMode(IdleMode.kBrake);
 		RearRight.setIdleMode(IdleMode.kBrake);
 		FrontLeft.setIdleMode(IdleMode.kBrake);
@@ -78,6 +88,7 @@ public class Drivetrain implements Subsystem{
 		FrontRight.setOpenLoopRampRate(0.1);
 
 		reverse = false;
+		setDefaultCommand(new DefaultDrive()); //This makes the DefaultDrive command run automatically, no need to initialize it
 	}
 	
 	public void setDesiredPosition(int position) {
@@ -156,6 +167,14 @@ public class Drivetrain implements Subsystem{
 	public void setGear(GearShiftState state) {
 	   System.out.println("Trying to shift to gear state " + state);
 	   gearShiftSolenoid.set(state==GearShiftState.HI?false:true);
+	}
+
+	public void highGear() {
+		gearShiftSolenoid.set(true);
+	}
+
+	public void lowGear() {
+		gearShiftSolenoid.set(false);
 	}
 
 	public void reverseDrive(boolean state) {

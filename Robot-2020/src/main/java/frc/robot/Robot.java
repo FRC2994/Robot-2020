@@ -31,21 +31,22 @@ public class Robot extends TimedRobot {
 	private String m_autoSelected;
 	private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-	private final Drivetrain m_drivetrain;
-	private final OI m_oi;
+	public static Drivetrain m_drivetrain;
+	public static OI m_oi;
 
-	private final DriveWithJoystick driveWithJoystickCommand; 
+	// private final DriveWithJoystick driveWithJoystickCommand; 
 
 	public Robot() {
 		// init components
 		this.m_oi = new OI();
-		this.m_drivetrain = new Drivetrain(this.m_oi.getJoystick());
+		this.m_drivetrain = new Drivetrain();
 
 		// setup components
-		this.m_oi.mountJoystickButtonCommands(this.m_drivetrain); // set up the joystick buttons to shift gears
+		this.m_oi.initializeButtons(); // set up the joystick buttons to shift gears
 
 		// init commands
-		this.driveWithJoystickCommand = new DriveWithJoystick(this.m_drivetrain, this.m_oi.getJoystick());
+		//Changed the line below as this is already set as a default command to the subsystem Drivetrain and doesnt need to be initalized
+		// this.driveWithJoystickCommand = new DriveWithJoystick(this.m_drivetrain, this.m_oi.getJoystick());
 	}
 
 
@@ -115,7 +116,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		System.out.println("[robot] running teleopInit");
 
-		this.driveWithJoystickCommand.schedule(); 
+		// this.driveWithJoystickCommand.schedule(); 
 	}
 
 	/**
