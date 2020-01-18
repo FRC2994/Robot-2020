@@ -23,7 +23,7 @@ import frc.subsystems.Drivetrain.GearShiftState;
  */
 public class OI {
 	public final Joystick joystick = new Joystick(0); 
-	// public final Joystick gamepad = new Joystick(1);
+	public final Joystick gamepad = new Joystick(1);
 
 
 
@@ -53,7 +53,7 @@ public class OI {
 		return this.joystick;
 	}
 
-	// public Joystick getGamepad() {
-	// 	return m_gamepad;
-	// }
+	public Joystick getGamepad() {
+		return this.gamepad;
+	}
 }

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.subsystems.Drivetrain;
+import frc.subsystems.ShooterWheel;
 import frc.robot.OI;
 
 import frc.commands.DriveWithJoystick;
@@ -33,13 +34,14 @@ public class Robot extends TimedRobot {
 
 	public static Drivetrain m_drivetrain;
 	public static OI m_oi;
-
+	public static ShooterWheel m_shooterwheel;
 	// private final DriveWithJoystick driveWithJoystickCommand; 
 
 	public Robot() {
 		// init components
 		m_oi = new OI();
 		m_drivetrain = new Drivetrain();
+		m_shooterwheel = new ShooterWheel();
 
 		// setup components
 		m_oi.initializeButtons(); // set up the joystick buttons to shift gears
