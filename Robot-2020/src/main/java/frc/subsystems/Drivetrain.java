@@ -23,12 +23,13 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.commands.DriveWithJoystick;
 import frc.commands.DefaultDrive;
 import frc.robot.Robot;
+import frc.utils.Constants;
 
 public class Drivetrain extends SubsystemBase {
-	private CANSparkMax FrontRight = new CANSparkMax(1, MotorType.kBrushless);
-	private CANSparkMax FrontLeft = new CANSparkMax(2, MotorType.kBrushless);
-	private CANSparkMax RearRight = new CANSparkMax(3, MotorType.kBrushless);
-	private CANSparkMax RearLeft = new CANSparkMax(4, MotorType.kBrushless);
+	private CANSparkMax FrontRight = new CANSparkMax(Constants.CAN_RIGHT_FRONT_WHEEL, MotorType.kBrushless);
+	private CANSparkMax FrontLeft = new CANSparkMax(Constants.CAN_LEFT_FRONT_WHEEL, MotorType.kBrushless);
+	private CANSparkMax RearRight = new CANSparkMax(Constants.CAN_RIGHT_BACK_WHEEL, MotorType.kBrushless);
+	private CANSparkMax RearLeft = new CANSparkMax(Constants.CAN_LEFT_BACK_WHEEL, MotorType.kBrushless);
 
 	private CANPIDController rightPID = FrontRight.getPIDController();
 	private CANPIDController leftPID = FrontLeft.getPIDController();

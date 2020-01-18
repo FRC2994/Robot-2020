@@ -38,11 +38,11 @@ public class Robot extends TimedRobot {
 
 	public Robot() {
 		// init components
-		this.m_oi = new OI();
-		this.m_drivetrain = new Drivetrain();
+		m_oi = new OI();
+		m_drivetrain = new Drivetrain();
 
 		// setup components
-		this.m_oi.initializeButtons(); // set up the joystick buttons to shift gears
+		m_oi.initializeButtons(); // set up the joystick buttons to shift gears
 
 		// init commands
 		//Changed the line below as this is already set as a default command to the subsystem Drivetrain and doesnt need to be initalized
