@@ -39,6 +39,9 @@ public class ShooterWheel extends SubsystemBase {
     //Ensures the motor stops
     stopMotor();
 
+    Shooter.restoreFactoryDefaults();
+    Shooter.setIdleMode(IdleMode.kCoast);
+
     //Sets the shoot command automatic and periodic
     setDefaultCommand(new Shoot());
   }
@@ -75,7 +78,6 @@ public class ShooterWheel extends SubsystemBase {
     {
       //increases the rpm and sets it
       desiredRPM = desiredRPM + increments;
-      set[currentSet-1] = desiredRPM;
       pid.setReference(desiredRPM, ControlType.kVelocity);
     }
   }
@@ -88,7 +90,6 @@ public class ShooterWheel extends SubsystemBase {
     {
       //decrease the rpm and set it
       desiredRPM = desiredRPM - increments;
-      set[currentSet-1] = desiredRPM;
       pid.setReference(desiredRPM, ControlType.kVelocity);
     }
   }
