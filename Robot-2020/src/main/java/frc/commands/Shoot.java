@@ -10,13 +10,14 @@ package frc.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.subsystems.ShooterWheel;
-import frc.robot.Robot;
 
 public class Shoot extends CommandBase {
-  private ShooterWheel shoot = Robot.m_shooterwheel;
-  private Joystick joystick = Robot.m_oi.getGamepad();
+  private Joystick joystick;
+  private ShooterWheel shoot;
 
-  public Shoot() {
+  public Shoot(ShooterWheel subsystem, Joystick gamepad) {
+    this.shoot = subsystem;
+    this.joystick = gamepad;
     addRequirements(this.shoot);
   }
 

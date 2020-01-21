@@ -13,9 +13,9 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax.IdleMode;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.commands.Shoot;
 
 public class ShooterWheel extends SubsystemBase {
   private CANSparkMax Shooter;
@@ -41,9 +41,6 @@ public class ShooterWheel extends SubsystemBase {
 
     Shooter.restoreFactoryDefaults();
     Shooter.setIdleMode(IdleMode.kCoast);
-
-    //Sets the shoot command automatic and periodic
-    setDefaultCommand(new Shoot());
   }
 
 

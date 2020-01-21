@@ -17,12 +17,8 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.commands.DriveWithJoystick;
-import frc.commands.DefaultDrive;
-import frc.robot.Robot;
 import frc.utils.Constants;
 
 public class Drivetrain extends SubsystemBase {
@@ -50,11 +46,12 @@ public class Drivetrain extends SubsystemBase {
 	private static final double leftDistancePerPulse = (4.0 / 12.0 * Math.PI) / 360.0;
 	private static final double rightDistancePerPulse = (4.0 / 12.0 * Math.PI) / 360.0;
 
-	private final Joystick joystick;
-
 	public Drivetrain() {
-		this.joystick = Robot.m_oi.joystick;
-
+		FrontRight.restoreFactoryDefaults();
+		RearRight.restoreFactoryDefaults();
+		FrontLeft.restoreFactoryDefaults();
+		RearLeft.restoreFactoryDefaults();
+		
 		FrontRight.setInverted(false);
 		FrontLeft.setInverted(true);
 		// Set the rear drives to follow the left and right front drives
@@ -74,12 +71,6 @@ public class Drivetrain extends SubsystemBase {
         // addChild("Drive", differentialDrive);
 		// addChild("Gyro", gyro);
 
-		//Resets the settings of motors
-		FrontRight.restoreFactoryDefaults();
-		RearRight.restoreFactoryDefaults();
-		FrontLeft.restoreFactoryDefaults();
-		RearLeft.restoreFactoryDefaults();
-
 		//Sets the motors to brake mode
 		FrontRight.setIdleMode(IdleMode.kBrake);
 		RearRight.setIdleMode(IdleMode.kBrake);
@@ -89,7 +80,6 @@ public class Drivetrain extends SubsystemBase {
 		FrontRight.setOpenLoopRampRate(0.1);
 
 		reverse = false;
-		setDefaultCommand(new DefaultDrive()); //This makes the DefaultDrive command run automatically, no need to initialize it
 	}
 	
 	public void setDesiredPosition(int position) {
@@ -140,12 +130,12 @@ public class Drivetrain extends SubsystemBase {
 	}
 	
 
-	public void arcadeDrive() {
-		differentialDrive.arcadeDrive(this.joystick.getY(),-this.joystick.getX());
+	public void arcadeDrive(double forward, double rotation) {
+		differentialDrive.arcadeDrive(forward , rotation);
 	}
 
-	public void getJoystickValues() {
-		System.out.println("Y VALUE: " +this.joystick.getY() + " X VALUE: " + this.joystick.getX());
+	public void getJoystickValues(Joystick joystick) {
+		System.out.println("Y VALUE: " + joystick.getY() + " X VALUE: " + joystick.getX());
 	}
 	
 	public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -243,7 +233,6 @@ public class Drivetrain extends SubsystemBase {
     * Reset the robots sensors to the zero states.
     */
     public void reset() {
-		setDefaultCommand(new DriveWithJoystick(this, this.joystick));
 		setGear(GearShiftState.LO);
 		
 		resetEncoders();
