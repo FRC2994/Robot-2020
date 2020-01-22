@@ -17,16 +17,19 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.commands.DriveWithJoystick;
+import frc.commands.DefaultDrive;
 import frc.robot.Robot;
+import frc.utils.Constants;
 
-public class Drivetrain extends Subsystem{
-	private CANSparkMax FrontRight = new CANSparkMax(1, MotorType.kBrushless);
-	private CANSparkMax FrontLeft = new CANSparkMax(2, MotorType.kBrushless);
-	private CANSparkMax RearRight = new CANSparkMax(3, MotorType.kBrushless);
-	private CANSparkMax RearLeft = new CANSparkMax(4, MotorType.kBrushless);
+public class Drivetrain extends SubsystemBase {
+	private CANSparkMax FrontRight = new CANSparkMax(Constants.CAN_RIGHT_FRONT_WHEEL, MotorType.kBrushless);
+	private CANSparkMax FrontLeft = new CANSparkMax(Constants.CAN_LEFT_FRONT_WHEEL, MotorType.kBrushless);
+	private CANSparkMax RearRight = new CANSparkMax(Constants.CAN_RIGHT_BACK_WHEEL, MotorType.kBrushless);
+	private CANSparkMax RearLeft = new CANSparkMax(Constants.CAN_LEFT_BACK_WHEEL, MotorType.kBrushless);
 
 	private CANPIDController rightPID = FrontRight.getPIDController();
 	private CANPIDController leftPID = FrontLeft.getPIDController();
@@ -40,19 +43,53 @@ public class Drivetrain extends Subsystem{
 	public DifferentialDrive differentialDrive;
 
 	private int startPosition;
-	private int desiredPosition = 0;
+	private int desiredPosition = 0; 
 	private boolean stopArcadeDrive;
 	private boolean reverse;
 	
 	private static final double leftDistancePerPulse = (4.0 / 12.0 * Math.PI) / 360.0;
 	private static final double rightDistancePerPulse = (4.0 / 12.0 * Math.PI) / 360.0;
 
-	public static Drivetrain instance;
+	private final Joystick joystick;
 
-	private Joystick joystickValues;
-	
-	public static Drivetrain getInstance() {
-		return instance;
+	public Drivetrain() {
+		this.joystick = Robot.m_oi.joystick;
+
+		FrontRight.setInverted(false);
+		FrontLeft.setInverted(true);
+		// Set the rear drives to follow the left and right front drives
+		RearLeft.follow(FrontLeft);
+		RearRight.follow(FrontRight);
+
+        differentialDrive = new DifferentialDrive(FrontLeft, FrontRight);
+
+		gyro.calibrate();
+
+		//Resets Encoder Position to 0
+		leftENC.setPosition(0);
+		rightENC.setPosition(0);
+
+		// Let's name the sensors on the LiveWindow
+		// TODO: figure out the 2020 version of this
+        // addChild("Drive", differentialDrive);
+		// addChild("Gyro", gyro);
+
+		//Resets the settings of motors
+		FrontRight.restoreFactoryDefaults();
+		RearRight.restoreFactoryDefaults();
+		FrontLeft.restoreFactoryDefaults();
+		RearLeft.restoreFactoryDefaults();
+
+		//Sets the motors to brake mode
+		FrontRight.setIdleMode(IdleMode.kBrake);
+		RearRight.setIdleMode(IdleMode.kBrake);
+		FrontLeft.setIdleMode(IdleMode.kBrake);
+		RearLeft.setIdleMode(IdleMode.kBrake);
+		FrontLeft.setOpenLoopRampRate(0.1);
+		FrontRight.setOpenLoopRampRate(0.1);
+
+		reverse = false;
+		setDefaultCommand(new DefaultDrive()); //This makes the DefaultDrive command run automatically, no need to initialize it
 	}
 	
 	public void setDesiredPosition(int position) {
@@ -97,63 +134,32 @@ public class Drivetrain extends Subsystem{
 		rightPID.setP(0.15, 0);
 		rightPID.setD(0, 0);
 	}
-
-	public Drivetrain() {
-		instance = this;
-
-		FrontRight.setInverted(false);
-		FrontLeft.setInverted(true);
-		// Set the rear drives to follow the left and right front drives
-		RearLeft.follow(FrontLeft);
-		RearRight.follow(FrontRight);
-
-        differentialDrive = new DifferentialDrive(FrontLeft, FrontRight);
-
-		gyro.calibrate();
-
-		//Resets Encoder Position to 0
-		leftENC.setPosition(0);
-		rightENC.setPosition(0);
-
-        // Let's name the sensors on the LiveWindow
-        addChild("Drive", differentialDrive);
-		addChild("Gyro", gyro);
-
-		FrontRight.setIdleMode(IdleMode.kBrake);
-		RearRight.setIdleMode(IdleMode.kBrake);
-		FrontLeft.setIdleMode(IdleMode.kBrake);
-		RearLeft.setIdleMode(IdleMode.kBrake);
-		FrontLeft.setOpenLoopRampRate(0.1);
-		FrontRight.setOpenLoopRampRate(0.1);
-
-		reverse = false;
-	}
 	
 	public void driveWithCurve(double speed, double turn, boolean isQuickTurn) {
 		differentialDrive.curvatureDrive(speed, turn, isQuickTurn);
 	}
 	
 
-	public void arcadeDrive(Joystick driveJoystick) {
-		differentialDrive.arcadeDrive(driveJoystick.getY(),-driveJoystick.getX());
+	public void arcadeDrive() {
+		differentialDrive.arcadeDrive(this.joystick.getY(),-this.joystick.getX());
 	}
 
 	public void getJoystickValues() {
-		joystickValues = Robot.m_oi.getJoystick();
-		System.out.println("Y VALUE: " +joystickValues.getY() + " X VALUE: " + joystickValues.getX());
+		System.out.println("Y VALUE: " +this.joystick.getY() + " X VALUE: " + this.joystick.getX());
 	}
 	
 	public void tankDrive(double leftSpeed, double rightSpeed) {
 		differentialDrive.tankDrive(-leftSpeed, -rightSpeed);
 	}
 	
-	
 	public void resetEncoders() {
 		leftENC.setPosition(0);
 		rightENC.setPosition(0);
+
 		if (getLeftEncoderValue() != 0) {
 			System.out.println("ERROR - Could not reset Left encoder!!");
 		}
+
 		if (getRightEncoderValue() != 0) {
 			System.out.println("ERROR - Could not reset Right encoder!!");
 		}
@@ -162,6 +168,14 @@ public class Drivetrain extends Subsystem{
 	public void setGear(GearShiftState state) {
 	   System.out.println("Trying to shift to gear state " + state);
 	   gearShiftSolenoid.set(state==GearShiftState.HI?false:true);
+	}
+
+	public void highGear() {
+		gearShiftSolenoid.set(true);
+	}
+
+	public void lowGear() {
+		gearShiftSolenoid.set(false);
 	}
 
 	public void reverseDrive(boolean state) {
@@ -229,13 +243,17 @@ public class Drivetrain extends Subsystem{
     * Reset the robots sensors to the zero states.
     */
     public void reset() {
-        setDefaultCommand(new DriveWithJoystick());
+		setDefaultCommand(new DriveWithJoystick(this, this.joystick));
+		setGear(GearShiftState.LO);
+		
 		resetEncoders();
 		resetGyro();
+
 		stopArcadeDrive = false;
+
 		RearRight.setInverted(false);
 		FrontRight.setInverted(false);
-		setGear(GearShiftState.LO);
+		
 		zero();
         // Logger.appendRecord("dtLmtr\tdtRmtr\tdtLenc\tdtRenc\tdtGyro\t");
     }
@@ -249,14 +267,4 @@ public class Drivetrain extends Subsystem{
 	   return (getLeftEncoderValue()*leftDistancePerPulse + 
 	         getRightEncoderValue()*rightDistancePerPulse) / 2;
     }
-
-   /**
-    * When no other command is running let the operator drive around using the
-    * PS3 joystick.
-    */
-    @Override
-    public void initDefaultCommand() {
-		reset();
-	}
-
 }
