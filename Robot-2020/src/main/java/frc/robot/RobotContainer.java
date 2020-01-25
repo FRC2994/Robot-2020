@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.subsystems.Drivetrain;
 import frc.subsystems.ShooterWheel;
+import frc.subsystems.Elevator;
 
 import frc.commands.DefaultDrive;
 import frc.commands.Shoot;
@@ -23,6 +24,7 @@ public class RobotContainer {
     //Subsystems
     private final Drivetrain m_drivetrain = new Drivetrain();
     private final ShooterWheel m_shooterwheel = new ShooterWheel();
+    private final Elevator m_elevator = new Elevator();
     
     //Joystick and Gamepad
     public final Joystick joystick = new Joystick(0); 
@@ -30,7 +32,7 @@ public class RobotContainer {
 
     //Joystick and Gamepad buttons
     private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
-    private final JoystickButton gpButnElevator = new JoystickButton(this.joystick, 2);
+    private final JoystickButton gpButnElevator = new JoystickButton(this.gamepad, 2);
 
     //Contains subsystems, OI devices, and commands.
     public RobotContainer(){
@@ -46,6 +48,8 @@ public class RobotContainer {
     {
         //Instant commands
         this.jsButnShifter.whenPressed(new InstantCommand(m_drivetrain::highGear, m_drivetrain));
-		this.jsButnShifter.whenReleased(new InstantCommand(m_drivetrain::lowGear, m_drivetrain));
+        this.jsButnShifter.whenReleased(new InstantCommand(m_drivetrain::lowGear, m_drivetrain));
+        this.gpButnElevator.whenPressed(new InstantCommand(m_elevator:: ascendingSpeed, m_elevator));
+        this.gpButnElevator.whenReleased(new InstantCommand(m_elevator:: stopMotor, m_elevator));
     }
 }
