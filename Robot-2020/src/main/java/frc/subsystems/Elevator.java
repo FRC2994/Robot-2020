@@ -28,8 +28,14 @@ motorcontroller.set(ControlMode.PercentOutput, 0.8);
   public void descendingSpeed()
   {
 motorcontroller.set(ControlMode.PercentOutput, -0.8);
+
+  public void stopMotor()
+  {
+motorcontroller.set(ControlMode.PercentOutput, 0);
   }
+
   @Override
+
   public void periodic() {
     // This method will be called once per scheduler run
   }
