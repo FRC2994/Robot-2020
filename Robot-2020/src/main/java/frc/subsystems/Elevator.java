@@ -22,16 +22,16 @@ public class Elevator extends SubsystemBase {
   
   public void ascendingSpeed()
   {
-motorcontroller.set(ControlMode.PercentOutput, 0.8);
+    motorcontroller.set(ControlMode.PercentOutput, 0.8);
   }
 
   public void descendingSpeed()
   {
-motorcontroller.set(ControlMode.PercentOutput, -0.8);
-
+    motorcontroller.set(ControlMode.PercentOutput, -0.8);
+  }
   public void stopMotor()
   {
-motorcontroller.set(ControlMode.PercentOutput, 0);
+    motorcontroller.set(ControlMode.PercentOutput, 0);
   }
 
   @Override
