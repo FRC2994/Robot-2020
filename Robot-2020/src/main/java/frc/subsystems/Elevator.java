@@ -7,18 +7,28 @@
 
 package frc.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Elevator extends SubsystemBase {
   private VictorSPX motorcontroller;
   /**
-   * Creates a new Elevator.
+   * Creates a new Elevator
    */
   public Elevator() {
-    motorcontroller = new VictorSPX(1);
+    motorcontroller = new VictorSPX(0);
+  }
+  
+  public void ascendingSpeed()
+  {
+motorcontroller.set(ControlMode.PercentOutput, 0.8);
   }
 
+  public void descendingSpeed()
+  {
+motorcontroller.set(ControlMode.PercentOutput, -0.8);
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
