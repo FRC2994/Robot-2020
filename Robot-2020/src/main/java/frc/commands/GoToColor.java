@@ -22,7 +22,7 @@ public class GoToColor extends CommandBase {
   
  	private final VictorSPX motor;
   	private final ColorSensorV3 sensor;
-  	private final ColorMatch matcher;
+  	private ColorMatch matcher;
 
  	private Color blueTarget;
 
@@ -30,32 +30,33 @@ public class GoToColor extends CommandBase {
 	 * Creates a new DetectColor.
 	 */
 	public GoToColor(ControlPanel controlPanel) {
-	this.addRequirements(controlPanel);
-	
-	this.motor = controlPanel.motor();
-	this.sensor = controlPanel.colorSensor();
-	this.matcher = new ColorMatch();
+		this.addRequirements(controlPanel);
+		
+		this.motor = controlPanel.motor();
+		this.sensor = controlPanel.colorSensor();
+		this.matcher = new ColorMatch();
 	}
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-		this.blueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
-		this.matcher.addColorMatch(blueTarget);
+	this.blueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
+	this.matcher.addColorMatch(this.blueTarget);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-	
 	Color currentColor = this.sensor.getColor();
 	ColorMatchResult matchResult = this.matcher.matchClosestColor(currentColor);
 	SmartDashboard.putNumber("Confidence", matchResult.confidence);
 
-	if (matchResult.color == this.blueTarget) {
+	if (matchResult.confidence > 0.9) {
+		System.out.println("NO MOVE");
 		this.motor.set(ControlMode.PercentOutput, 0);
 	} else {
 		this.motor.set(ControlMode.PercentOutput, 0.75);
+		System.out.println("MOVE");
 	}
   }
 
