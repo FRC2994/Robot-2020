@@ -16,7 +16,8 @@ import frc.subsystems.ShooterWheel;
 
 import frc.commands.DefaultDrive;
 import frc.commands.Shoot;
-import frc.commands.DetectColor;;
+import frc.commands.DetectColor;
+import frc.commands.GoToColor;;
 
 /**
  * Add your docs here.
@@ -46,7 +47,7 @@ public class RobotContainer {
 
         // m_drivetrain.setDefaultCommand(new DefaultDrive(m_drivetrain, joystick));
         this.shooterwheel.setDefaultCommand(new Shoot(this.shooterwheel, this.gamepad));
-        this.controlpanel.setDefaultCommand(new DetectColor(this.controlpanel));
+        this.controlpanel.setDefaultCommand(new GoToColor(this.controlpanel));
     }
 
 

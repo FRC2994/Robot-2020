@@ -8,31 +8,34 @@
 package frc.subsystems;
 
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.ColorSensorV3;
-import com.revrobotics.ColorMatchResult;
-import com.revrobotics.ColorMatch;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class ControlPanel extends SubsystemBase {
 
+	private final VictorSPX motor;
 	private final ColorSensorV3 sensor;
-	private final ColorMatch matcher;
 
 	/**
 	 * Creates a new ControlPanel.
 	 */
 	public ControlPanel() {
+		this.motor = new VictorSPX(5);
 		I2C.Port i2cPort = I2C.Port.kOnboard;
 		this.sensor = new ColorSensorV3(i2cPort);
-
-		this.matcher = new ColorMatch();
 	}
 
 	@Override
 	public void periodic() {
 	// This method will be called once per scheduler run
+	}
+
+
+	// returns the ControlPanel motor
+	public VictorSPX motor() {
+		return this.motor;
 	}
 
 	// returns the subsystem's color sensor
