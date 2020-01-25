@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.subsystems.Drivetrain;
 import frc.subsystems.ShooterWheel;
+import frc.subsystems.ShooterHood;
 
 import frc.commands.DefaultDrive;
 import frc.commands.Shoot;
@@ -27,6 +28,7 @@ public class RobotContainer {
     //Subsystems
     // private final Drivetrain m_drivetrain = new Drivetrain();
     private final ShooterWheel m_shooterwheel = new ShooterWheel();
+    private final ShooterHood m_shooterhood = new ShooterHood();
     
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
@@ -34,7 +36,9 @@ public class RobotContainer {
     private final JoystickButton lvl1 = new JoystickButton(this.joystick, 12);
     private final JoystickButton lvl2 = new JoystickButton(this.joystick, 10);
     private final JoystickButton lvl3 = new JoystickButton(this.joystick, 8);
-    
+    private final JoystickButton ServoIncrement = new JoystickButton(this.joystick, 3);
+    private final JoystickButton ServoDecrement = new JoystickButton(this.joystick, 4);
+    private final JoystickButton ServoReset = new JoystickButton(this.joystick, 5);
 
     //Contains subsystems, OI devices, and commands.
     public RobotContainer(){
@@ -55,5 +59,8 @@ public class RobotContainer {
         this.lvl1.whenPressed(new InstantCommand(m_shooterwheel::setLevelOne, m_shooterwheel));
         this.lvl2.whenPressed(new InstantCommand(m_shooterwheel::setLevelTwo, m_shooterwheel));
         this.lvl3.whenPressed(new InstantCommand(m_shooterwheel::setLevelThree, m_shooterwheel));
+        this.ServoIncrement.whenPressed(new InstantCommand(m_shooterhood::ServoInc, m_shooterhood));
+        this.ServoDecrement.whenPressed(new InstantCommand(m_shooterhood::ServoDec, m_shooterhood));
+        this.ServoReset.whenPressed(new InstantCommand(m_shooterhood::ServoReset, m_shooterhood));
     }
 }
