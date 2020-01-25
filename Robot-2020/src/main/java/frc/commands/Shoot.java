@@ -29,46 +29,13 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //The top dpad
-    if(joystick.getPOV() == 0 && shoot.status == true)
-    {
-      shoot.incrementSpeed();
-    }
-    //The bottom dpad
-    if(joystick.getPOV() == 180 && shoot.status == true)
-    {
-      shoot.decrementSpeed();
-    }
-
-    //X preset Button
-    if(joystick.getRawButton(3) == true)
-    {
-      shoot.shoot(1);
-    }
-
-    //Y preset Button
-    if(joystick.getRawButton(4) == true)
-    {
-      shoot.shoot(2);
-    }
-
-    //B preset Button
-    if(joystick.getRawButton(2) == true)
-    {
-      shoot.shoot(3);
-    }
-
-    //A button stop
-    if(joystick.getRawButton(1) == true)
-    {
-      shoot.stopMotor();
-    }
+    this.shoot.shoot();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shoot.stopMotor();
+    
   }
 
   // Returns true when the command should end.
