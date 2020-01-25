@@ -24,11 +24,7 @@ public class Elevator extends SubsystemBase {
   {
     motorcontroller.set(ControlMode.PercentOutput, 0.8);
   }
-
-  public void descendingSpeed()
-  {
-    motorcontroller.set(ControlMode.PercentOutput, -0.8);
-  }
+  
   public void stopMotor()
   {
     motorcontroller.set(ControlMode.PercentOutput, 0);
