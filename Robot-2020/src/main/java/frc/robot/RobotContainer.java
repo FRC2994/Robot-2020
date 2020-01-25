@@ -30,7 +30,7 @@ public class RobotContainer {
 
     //Joystick and Gamepad buttons
     private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
-    
+    private final JoystickButton gpButnElevator = new JoystickButton(this.joystick, 2);
 
     //Contains subsystems, OI devices, and commands.
     public RobotContainer(){
