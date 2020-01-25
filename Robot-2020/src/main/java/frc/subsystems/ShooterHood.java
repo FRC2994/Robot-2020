@@ -31,13 +31,6 @@ public class ShooterHood extends SubsystemBase {
     HoodAngle = HoodAngle - ConstantChange;
     Hood.set(HoodAngle);
   }
-
-  public void ServoReset() {
-    final double ResetAngle = 0;
-    Hood.set(ResetAngle);
-    HoodAngle = ResetAngle;
-  }
-
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

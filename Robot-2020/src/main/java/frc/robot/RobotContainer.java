@@ -38,7 +38,6 @@ public class RobotContainer {
     private final JoystickButton lvl3 = new JoystickButton(this.joystick, 8);
     private final JoystickButton ServoIncrement = new JoystickButton(this.joystick, 3);
     private final JoystickButton ServoDecrement = new JoystickButton(this.joystick, 4);
-    private final JoystickButton ServoReset = new JoystickButton(this.joystick, 5);
 
     //Contains subsystems, OI devices, and commands.
     public RobotContainer(){
@@ -61,6 +60,5 @@ public class RobotContainer {
         this.lvl3.whenPressed(new InstantCommand(m_shooterwheel::setLevelThree, m_shooterwheel));
         this.ServoIncrement.whenPressed(new InstantCommand(m_shooterhood::ServoInc, m_shooterhood));
         this.ServoDecrement.whenPressed(new InstantCommand(m_shooterhood::ServoDec, m_shooterhood));
-        this.ServoReset.whenPressed(new InstantCommand(m_shooterhood::ServoReset, m_shooterhood));
     }
 }
