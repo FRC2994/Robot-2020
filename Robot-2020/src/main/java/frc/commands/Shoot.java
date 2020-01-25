@@ -7,31 +7,35 @@
 
 package frc.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.subsystems.Drivetrain;
+import edu.wpi.first.wpilibj.Joystick;
+import frc.subsystems.ShooterWheel;
 
-public class DefaultDrive extends CommandBase {
-  private Drivetrain drive;
-  private Joystick js;
+public class Shoot extends CommandBase {
+  private Joystick joystick;
+  private ShooterWheel shoot;
 
-  public DefaultDrive(Drivetrain subsystem, Joystick joystick) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.drive = subsystem;
-    this.js = joystick;
-    addRequirements(this.drive);
+  public Shoot(ShooterWheel subsystem, Joystick gamepad) {
+    this.shoot = subsystem;
+    this.joystick = gamepad;
+    addRequirements(this.shoot);
+  }
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.drive.arcadeDrive(js.getY(), js.getX());
+    this.shoot.shoot();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drive.tankDrive(0,0);
+    
   }
 
   // Returns true when the command should end.

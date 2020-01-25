@@ -11,12 +11,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.subsystems.Drivetrain;
-import frc.robot.OI;
-
-import frc.commands.DriveWithJoystick;
-
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.RobotContainer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,22 +27,11 @@ public class Robot extends TimedRobot {
 	private String m_autoSelected;
 	private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-	public static Drivetrain m_drivetrain;
-	public static OI m_oi;
-
+	private RobotContainer m_robotContainer;	
 	// private final DriveWithJoystick driveWithJoystickCommand; 
 
 	public Robot() {
-		// init components
-		m_oi = new OI();
-		m_drivetrain = new Drivetrain();
-
-		// setup components
-		m_oi.initializeButtons(); // set up the joystick buttons to shift gears
-
-		// init commands
-		//Changed the line below as this is already set as a default command to the subsystem Drivetrain and doesnt need to be initalized
-		// this.driveWithJoystickCommand = new DriveWithJoystick(this.m_drivetrain, this.m_oi.getJoystick());
+		m_robotContainer = new RobotContainer();
 	}
 
 
@@ -57,10 +42,13 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		System.out.println("[robot] running robotInit");
-
 		m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
 		m_chooser.addOption("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
+		if(m_robotContainer == null)
+		{
+			m_robotContainer = new RobotContainer();
+		}
 	}
 
 	/**
