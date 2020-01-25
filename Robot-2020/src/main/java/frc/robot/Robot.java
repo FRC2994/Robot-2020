@@ -42,11 +42,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		System.out.println("[robot] running robotInit");
+
 		m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
 		m_chooser.addOption("My Auto", kCustomAuto);
 		SmartDashboard.putData("Auto choices", m_chooser);
-		if(m_robotContainer == null)
-		{
+		
+		if(m_robotContainer == null) {
 			m_robotContainer = new RobotContainer();
 		}
 	}
@@ -120,5 +121,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
+		
 	}
 }
