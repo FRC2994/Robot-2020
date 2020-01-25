@@ -9,6 +9,7 @@ package frc.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;;
 
 public class ShooterHood extends SubsystemBase {
 
@@ -17,22 +18,26 @@ public class ShooterHood extends SubsystemBase {
   private double ConstantChange;
 
   public ShooterHood() {
-    Hood.set(0);
-    HoodAngle = 0;
-    ConstantChange = 0.2;
+    HoodAngle = 0.3;
+    Hood.set(HoodAngle);
+    ConstantChange = 0.1;
   }
 
   public void ServoInc() {
-    HoodAngle = HoodAngle + ConstantChange;
-    Hood.set(HoodAngle);
+    if(HoodAngle <= 0.9) {
+      HoodAngle += ConstantChange;
+      Hood.set(HoodAngle);
+    }
   }
 
   public void ServoDec() {
-    HoodAngle = HoodAngle - ConstantChange;
-    Hood.set(HoodAngle);
+    if(HoodAngle >= 0.3){
+      HoodAngle -= ConstantChange;
+      Hood.set(HoodAngle);
+    }
   }
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Position", HoodAngle);
   }
 }
