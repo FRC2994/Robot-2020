@@ -7,23 +7,25 @@
 
 package frc.commands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-import frc.robot.Robot;
 import frc.subsystems.Drivetrain;
 
 public class DefaultDrive extends CommandBase {
-  private final Drivetrain drive = Robot.m_drivetrain;
+  private Drivetrain drive;
+  private Joystick js;
 
-  public DefaultDrive() {
+  public DefaultDrive(Drivetrain subsystem, Joystick joystick) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.drive = subsystem;
+    this.js = joystick;
     addRequirements(this.drive);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.drive.arcadeDrive();
+    this.drive.arcadeDrive(js.getY(), js.getX());
   }
 
   // Called once the command ends or is interrupted.
