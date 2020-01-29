@@ -26,21 +26,17 @@ import frc.commands.GoToColor;;
 /**
  * Add your docs here.
  */
-public class RobotContainer {
-    //Subsystems
-    //     private final Drivetrain m_drivetrain = new Drivetrain();
-    private final ShooterWheel shooterwheel = new ShooterWheel();
-    private final Elevator elevator = new Elevator();
-    private final ShooterHood shooterhood = new ShooterHood();
-    
+public class RobotContainer {    
     //Joystick and Gamepad
     public final Joystick joystick = new Joystick(0); 
     public final Joystick gamepad = new Joystick(1);
    
     //Subsystems
-    // private final Drivetrain m_drivetrain = new Drivetrain();
-    private final ShooterWheel shooterwheel = new ShooterWheel();
+    private final Drivetrain drivetrain = new Drivetrain();
     private final ControlPanel controlpanel = new ControlPanel(); 
+    private final ShooterWheel shooterwheel = new ShooterWheel();
+    private final Elevator elevator = new Elevator();
+    private final ShooterHood shooterhood = new ShooterHood();
     
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
@@ -54,10 +50,9 @@ public class RobotContainer {
 
     //Contains subsystems, OI devices, and commands.
     public RobotContainer(){
-        
         configureButtons();
 
-        // m_drivetrain.setDefaultCommand(new DefaultDrive(m_drivetrain, joystick));
+        this.drivetrain.setDefaultCommand(new DefaultDrive(drivetrain, joystick));
         this.shooterwheel.setDefaultCommand(new Shoot(this.shooterwheel, this.gamepad));
         this.controlpanel.setDefaultCommand(new GoToColor(this.controlpanel));
     }
