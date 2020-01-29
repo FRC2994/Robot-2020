@@ -10,8 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
-//Subsystem Imports
+import frc.subsystems.ControlPanel;
 import frc.subsystems.Drivetrain;
 import frc.subsystems.ShooterWheel;
 import frc.subsystems.Elevator;
@@ -21,6 +20,8 @@ import frc.subsystems.ShooterHood;
 //Commands Imports
 import frc.commands.DefaultDrive;
 import frc.commands.Shoot;
+import frc.commands.DetectColor;
+import frc.commands.GoToColor;;
 
 /**
  * Add your docs here.
@@ -28,13 +29,18 @@ import frc.commands.Shoot;
 public class RobotContainer {
     //Subsystems
     //     private final Drivetrain m_drivetrain = new Drivetrain();
-    private final ShooterWheel m_shooterwheel = new ShooterWheel();
-    private final Elevator m_elevator = new Elevator();
-    private final ShooterHood m_shooterhood = new ShooterHood();
+    private final ShooterWheel shooterwheel = new ShooterWheel();
+    private final Elevator elevator = new Elevator();
+    private final ShooterHood shooterhood = new ShooterHood();
     
     //Joystick and Gamepad
     public final Joystick joystick = new Joystick(0); 
     public final Joystick gamepad = new Joystick(1);
+   
+    //Subsystems
+    // private final Drivetrain m_drivetrain = new Drivetrain();
+    private final ShooterWheel shooterwheel = new ShooterWheel();
+    private final ControlPanel controlpanel = new ControlPanel(); 
     
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
@@ -52,26 +58,26 @@ public class RobotContainer {
         configureButtons();
 
         // m_drivetrain.setDefaultCommand(new DefaultDrive(m_drivetrain, joystick));
-        m_shooterwheel.setDefaultCommand(new Shoot(m_shooterwheel, gamepad));
+        this.shooterwheel.setDefaultCommand(new Shoot(this.shooterwheel, this.gamepad));
+        this.controlpanel.setDefaultCommand(new GoToColor(this.controlpanel));
     }
 
 
-    private void configureButtons()
-    {
+    private void configureButtons() {
         //Instant commands
         /*GEAR SHIFTER*/
         // this.jsButnShifter.whenPressed(new InstantCommand(m_drivetrain::highGear, m_drivetrain));
         // this.jsButnShifter.whenReleased(new InstantCommand(m_drivetrain::lowGear, m_drivetrain));
         /*SHOOTER*/
-        this.trigger.whenPressed(new InstantCommand(m_shooterwheel::toggle, m_shooterwheel));
-        this.lvl1.whenPressed(new InstantCommand(m_shooterwheel::setLevelOne, m_shooterwheel));
-        this.lvl2.whenPressed(new InstantCommand(m_shooterwheel::setLevelTwo, m_shooterwheel));
-        this.lvl3.whenPressed(new InstantCommand(m_shooterwheel::setLevelThree, m_shooterwheel));
+        this.trigger.whenPressed(new InstantCommand(shooterwheel::toggle, shooterwheel));
+        this.lvl1.whenPressed(new InstantCommand(shooterwheel::setLevelOne, shooterwheel));
+        this.lvl2.whenPressed(new InstantCommand(shooterwheel::setLevelTwo, shooterwheel));
+        this.lvl3.whenPressed(new InstantCommand(shooterwheel::setLevelThree, shooterwheel));
         /*SHOOTER HOOD*/
-        this.ServoIncrement.whenPressed(new InstantCommand(m_shooterhood::ServoInc, m_shooterhood));
-        this.ServoDecrement.whenPressed(new InstantCommand(m_shooterhood::ServoDec, m_shooterhood));
+        this.ServoIncrement.whenPressed(new InstantCommand(shooterhood::ServoInc, shooterhood));
+        this.ServoDecrement.whenPressed(new InstantCommand(shooterhood::ServoDec, shooterhood));
         /*ELEVATOR*/
-        this.gpButnElevator.whenPressed(new InstantCommand(m_elevator:: ascendingSpeed, m_elevator));
-        this.gpButnElevator.whenReleased(new InstantCommand(m_elevator:: stopMotor, m_elevator));
+        this.gpButnElevator.whenPressed(new InstantCommand(elevator:: ascendingSpeed, elevator));
+        this.gpButnElevator.whenReleased(new InstantCommand(elevator:: stopMotor, elevator));
     }
 }
