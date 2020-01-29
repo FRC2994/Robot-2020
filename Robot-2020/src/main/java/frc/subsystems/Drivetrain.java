@@ -52,7 +52,7 @@ public class Drivetrain extends SubsystemBase {
 		FrontLeft.restoreFactoryDefaults();
 		RearLeft.restoreFactoryDefaults();
 		
-		FrontRight.setInverted(false);
+		FrontRight.setInverted(true);
 		FrontLeft.setInverted(true);
 		// Set the rear drives to follow the left and right front drives
 		RearLeft.follow(FrontLeft);
@@ -131,7 +131,7 @@ public class Drivetrain extends SubsystemBase {
 	
 
 	public void arcadeDrive(double forward, double rotation) {
-		differentialDrive.arcadeDrive(forward , rotation);
+		differentialDrive.arcadeDrive(forward , -rotation);
 	}
 
 	public void getJoystickValues(Joystick joystick) {
