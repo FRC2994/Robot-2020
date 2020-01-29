@@ -17,7 +17,7 @@ public class Elevator extends SubsystemBase {
    * Creates a new Elevator
    */
   public Elevator() {
-    motorcontroller = new VictorSPX(0);
+    motorcontroller = new VictorSPX(0); //TODO: Find a CAN ID for the Elevator
   }
   
   public void ascendingSpeed()
