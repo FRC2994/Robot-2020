@@ -15,13 +15,14 @@ import frc.subsystems.Drivetrain;
 import frc.subsystems.ShooterWheel;
 import frc.subsystems.Elevator;
 import frc.subsystems.ShooterHood;
-
+import frc.subsystems.VisionArduino;
 
 //Commands Imports
 import frc.commands.DefaultDrive;
 import frc.commands.Shoot;
 import frc.commands.DetectColor;
-import frc.commands.GoToColor;;
+import frc.commands.GoToColor;
+import frc.commands.FindTarget;
 
 /**
  * Add your docs here.
@@ -37,6 +38,7 @@ public class RobotContainer {
     private final ShooterWheel shooterwheel = new ShooterWheel();
     private final Elevator elevator = new Elevator();
     private final ShooterHood shooterhood = new ShooterHood();
+    private final VisionArduino vision = new VisionArduino();
     
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
@@ -47,6 +49,7 @@ public class RobotContainer {
     private final JoystickButton ServoIncrement = new JoystickButton(this.joystick, 3);
     private final JoystickButton ServoDecrement = new JoystickButton(this.joystick, 4);
     private final JoystickButton gpButnElevator = new JoystickButton(this.gamepad, 2);
+    private final JoystickButton jsButnTarget = new JoystickButton(this.joystick, 5);
 
     //Contains subsystems, OI devices, and commands.
     public RobotContainer(){
@@ -74,5 +77,6 @@ public class RobotContainer {
         /*ELEVATOR*/
         this.gpButnElevator.whenPressed(new InstantCommand(elevator:: ascendingSpeed, elevator));
         this.gpButnElevator.whenReleased(new InstantCommand(elevator:: stopMotor, elevator));
+        this.jsButnTarget.whileHeld(new FindTarget(this.vision));
     }
 }
