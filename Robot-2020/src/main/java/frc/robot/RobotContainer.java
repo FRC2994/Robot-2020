@@ -41,9 +41,8 @@ public class RobotContainer {
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
     private final JoystickButton jsButnIntakePowerCell = new JoystickButton(this.joystick, 1);
-    private final JoystickButton jsButnDriveLowGear = new JoystickButton(this.joystick, 3);
     private final JoystickButton jsButnSpinControlPanel = new JoystickButton(this.joystick, 4);
-    private final JoystickButton jsButnDriveHighGear = new JoystickButton(this.joystick, 5);
+    private final JoystickButton jsButnDriveHighAndLowGear = new JoystickButton(this.joystick, 5);
     private final JoystickButton jsButnDetectColour = new JoystickButton(this.joystick, 6);
     private final JoystickButton jsButnLowerClimb = new JoystickButton(this.joystick, 7);
     private final JoystickButton jsButnRaiseClimb = new JoystickButton(this.joystick, 8);
@@ -54,8 +53,7 @@ public class RobotContainer {
     private final JoystickButton gpButnServoIncrement = new JoystickButton(this.gamepad, 4);
     private final JoystickButton gpButnHighSpeedShooter = new JoystickButton(this.gamepad, 5);
     private final JoystickButton gpButnLowSpeedShooter = new JoystickButton(this.gamepad, 6);
-    private final JoystickButton gpButnIntakeDown = new JoystickButton(this.gamepad, 7);
-    private final JoystickButton gpButnIntakeUp = new JoystickButton(this. gamepad, 8);
+    private final JoystickButton gpButnIntakeDownAndUp = new JoystickButton(this.gamepad, 7);
     private final JoystickButton gpButnHopperDisturber = new JoystickButton(this.gamepad, 9);
     
 
