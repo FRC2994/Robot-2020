@@ -102,7 +102,7 @@ public class FollowPath extends CommandBase {
 		double left_speed = this.leftFollower.calculate((int)drivetrain.getLeftEncoderValue());
 		double right_speed = this.rightFollower.calculate((int)drivetrain.getRightEncoderValue());
 		
-		drivetrain.tankDrive(left_speed, -right_speed);
+		drivetrain.tankDrive(-left_speed, -right_speed);
 	}
 
 	// Called once the command ends or is interrupted.

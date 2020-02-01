@@ -39,7 +39,7 @@ public class RobotContainer {
     private final ShooterHood shooterhood = new ShooterHood();
     
     //Joystick and Gamepad buttons
-    // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
+    private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
     private final JoystickButton trigger = new JoystickButton(this.joystick, 1);
     private final JoystickButton lvl1 = new JoystickButton(this.joystick, 12);
     private final JoystickButton lvl2 = new JoystickButton(this.joystick, 10);
@@ -61,14 +61,14 @@ public class RobotContainer {
     private void configureButtons() {
         //Instant commands
         /*GEAR SHIFTER*/
-        // this.jsButnShifter.whenPressed(new InstantCommand(m_drivetrain::highGear, m_drivetrain));
-        // this.jsButnShifter.whenReleased(new InstantCommand(m_drivetrain::lowGear, m_drivetrain));
+        this.jsButnShifter.whenPressed(new InstantCommand(this.drivetrain::highGear, this.drivetrain));
+        this.jsButnShifter.whenReleased(new InstantCommand(this.drivetrain::lowGear, this.drivetrain));
         /*SHOOTER*/
         this.trigger.whenPressed(new InstantCommand(shooterwheel::toggle, shooterwheel));
         this.lvl1.whenPressed(new InstantCommand(shooterwheel::setLevelOne, shooterwheel));
         this.lvl2.whenPressed(new InstantCommand(shooterwheel::setLevelTwo, shooterwheel));
         this.lvl3.whenPressed(new InstantCommand(shooterwheel::setLevelThree, shooterwheel));
-        /*SHOOTER HOOD*/
+        // /*SHOOTER HOOD*/
         this.ServoIncrement.whenPressed(new InstantCommand(shooterhood::ServoInc, shooterhood));
         this.ServoDecrement.whenPressed(new InstantCommand(shooterhood::ServoDec, shooterhood));
         /*ELEVATOR*/
