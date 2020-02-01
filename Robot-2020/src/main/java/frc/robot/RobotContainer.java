@@ -20,8 +20,8 @@ import frc.subsystems.ShooterHood;
 //Commands Imports
 import frc.commands.DefaultDrive;
 import frc.commands.Shoot;
-import frc.commands.DetectColor;
-import frc.commands.GoToColor;;
+import frc.commands.GoToColor;
+import frc.commands.FollowPath;
 
 /**
  * Add your docs here.
@@ -52,7 +52,7 @@ public class RobotContainer {
     public RobotContainer(){
         configureButtons();
 
-        this.drivetrain.setDefaultCommand(new DefaultDrive(drivetrain, joystick));
+        this.setAutonomousActive(false);
         this.shooterwheel.setDefaultCommand(new Shoot(this.shooterwheel, this.gamepad));
         this.controlpanel.setDefaultCommand(new GoToColor(this.controlpanel));
     }
@@ -74,5 +74,13 @@ public class RobotContainer {
         /*ELEVATOR*/
         this.gpButnElevator.whenPressed(new InstantCommand(elevator:: ascendingSpeed, elevator));
         this.gpButnElevator.whenReleased(new InstantCommand(elevator:: stopMotor, elevator));
+    }
+
+    public void setAutonomousActive(boolean active) {
+        if (active) {
+            this.drivetrain.setDefaultCommand(new FollowPath(this.drivetrain));
+        } else {
+            this.drivetrain.setDefaultCommand(new DefaultDrive(drivetrain, joystick));
+        }
     }
 }

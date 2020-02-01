@@ -52,11 +52,9 @@ public class GoToColor extends CommandBase {
 	SmartDashboard.putNumber("Confidence", matchResult.confidence);
 
 	if (matchResult.confidence > 0.9) {
-		System.out.println("NO MOVE");
 		this.motor.set(ControlMode.PercentOutput, 0);
 	} else {
 		this.motor.set(ControlMode.PercentOutput, 0.75);
-		System.out.println("MOVE");
 	}
   }
 

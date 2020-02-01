@@ -22,18 +22,12 @@ import frc.robot.RobotContainer;
  * project.
  */
 public class Robot extends TimedRobot {
-	private static final String kDefaultAuto = "Default";
-	private static final String kCustomAuto = "My Auto";
-	private String m_autoSelected;
-	private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
-	private RobotContainer m_robotContainer;	
-	// private final DriveWithJoystick driveWithJoystickCommand; 
+	private RobotContainer m_robotContainer;
 
 	public Robot() {
 		m_robotContainer = new RobotContainer();
 	}
-
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -42,14 +36,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		System.out.println("[robot] running robotInit");
-
-		m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-		m_chooser.addOption("My Auto", kCustomAuto);
-		SmartDashboard.putData("Auto choices", m_chooser);
-		
-		if(m_robotContainer == null) {
-			m_robotContainer = new RobotContainer();
-		}
 	}
 
 	/**
@@ -80,9 +66,7 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		System.out.println("[robot] running autonomousInit");
 
-		m_autoSelected = m_chooser.getSelected();
-		// m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-		System.out.println("Auto selected: " + m_autoSelected);
+		this.m_robotContainer.setAutonomousActive(true);
 	}
 
 	/**
@@ -90,22 +74,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		switch (m_autoSelected) {
-			case kCustomAuto:
-				// Put custom auto code here
-				break;
-			case kDefaultAuto:
-			default:
-				// Put default auto code here
-				break;
-		}
 	}
 
 	@Override
 	public void teleopInit() {
 		System.out.println("[robot] running teleopInit");
 
-		// this.driveWithJoystickCommand.schedule(); 
+		this.m_robotContainer.setAutonomousActive(false); 
 	}
 
 	/**
@@ -113,7 +88,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-
 	}
 
 	/**
@@ -121,6 +95,5 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		
 	}
 }

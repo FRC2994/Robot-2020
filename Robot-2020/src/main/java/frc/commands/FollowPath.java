@@ -14,18 +14,14 @@ import java.io.IOException;
 
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
-import jaci.pathfinder.Trajectory.Segment;
-import jaci.pathfinder.Waypoint;
 import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
-import jaci.pathfinder.PathfinderFRC;
 
 import edu.wpi.first.wpilibj.Filesystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class FollowPath extends CommandBase {
-
 	//Drivetrain
 	private Drivetrain drivetrain;
 
@@ -33,9 +29,9 @@ public class FollowPath extends CommandBase {
 	private EncoderFollower rightFollower;
 
 	//Robot info
-	private int ticksPerRev = 3500;
+	private int ticksPerRev = 4500;
 	private double wheelDiameter = 6.15*0.0254; //0.0254 meters = 1 inch
-	private double velocity = 1.52;
+	private double velocity = 0.5;
 	private double wheelbaseWidth = 0.2921;
 
 	//Trajectory
@@ -51,6 +47,8 @@ public class FollowPath extends CommandBase {
 	 * Creates a new FollowPath.
 	 */
 	public FollowPath(Drivetrain drivetrain) {
+		System.out.println("[FollowPath] constructor");
+
 		this.drivetrain = drivetrain;
 		addRequirements(this.drivetrain);
 
@@ -81,6 +79,8 @@ public class FollowPath extends CommandBase {
 
 		this.leftFollower = new EncoderFollower(trajL);
 		this.rightFollower = new EncoderFollower(trajR);
+
+		System.out.println("[FollowPath] constructor complete");
 	}
 
 	// Called when the command is initially scheduled.
@@ -97,10 +97,12 @@ public class FollowPath extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
+		System.out.println("[FollowPath] execute");
+
 		double left_speed = this.leftFollower.calculate((int)drivetrain.getLeftEncoderValue());
 		double right_speed = this.rightFollower.calculate((int)drivetrain.getRightEncoderValue());
 		
-		drivetrain.tankDrive(left_speed, right_speed);
+		drivetrain.tankDrive(left_speed, -right_speed);
 	}
 
 	// Called once the command ends or is interrupted.
@@ -113,6 +115,9 @@ public class FollowPath extends CommandBase {
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
-		return this.leftFollower.isFinished() && this.rightFollower.isFinished();
+		boolean isFinished = this.leftFollower.isFinished() && this.rightFollower.isFinished();
+		System.out.println("[FollowPath] isFinished: " + isFinished);
+		
+		return isFinished;
 	}
 }
