@@ -26,14 +26,17 @@ public class FindTarget extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("[FindTarget] execute");
+
     String data = arduino.read();
-    if(data == "LEFT"){
+
+    if(data.equals("LEFT")){
       System.out.println("GO LEFT");
     }
-    else if(data == "GOOD"){
-      System.out.println("GOOD");
+    else if(data.equals("CENTER")){
+      System.out.println("STOP");
     }
-    else if(data == "RIGHT"){
+    else if(data.equals("RIGHT")){
       System.out.println("GO RIGHT");
     }
   }
