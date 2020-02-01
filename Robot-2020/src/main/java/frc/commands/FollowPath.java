@@ -36,16 +36,11 @@ public class FollowPath extends CommandBase {
 	private int ticksPerRev = 3500;
 	private double wheelDiameter = 6.15*0.0254; //0.0254 meters = 1 inch
 	private double velocity = 1.52;
-	private double wheelbaseWidth = 2.25;
-
-	//Path files
-	
-	String pathName = "Test";
+	private double wheelbaseWidth = 0.2921;
 
 	//Trajectory
 	private Trajectory trajL;
 	private Trajectory trajR;
-
 
 	//PID Values
 	double kP = 0.9;
@@ -62,11 +57,23 @@ public class FollowPath extends CommandBase {
 		try{
 			File deployDir = Filesystem.getDeployDirectory();
 
-			File leftTraj = new File(deployDir.getAbsolutePath() + "/PathWeaver/output/GenericPath.left.pf1.csv");
-			File rightTraj = new File(deployDir.getAbsolutePath() + "/PathWeaver/output/GenericPath.right.pf1.csv");
+			// File leftTraj = new File(deployDir.getAbsolutePath() + "/PathWeaver/output/GenericPath.left.pf1.csv");
+			// File rightTraj = new File(deployDir.getAbsolutePath() + "/PathWeaver/output/GenericPath.right.pf1.csv");
 
-			this.trajL = Pathfinder.readFromCSV(leftTraj);
-			this.trajR = Pathfinder.readFromCSV(rightTraj);
+			// this.trajL = Pathfinder.readFromCSV(leftTraj);
+			// this.trajR = Pathfinder.readFromCSV(rightTraj);
+			File trajFile = new File(deployDir.getAbsolutePath() + "/PathWeaver/output/GenericPath.pf1.csv");
+			Trajectory mainTraj = Pathfinder.readFromCSV(trajFile);
+
+			// Create the Modifier Object
+			TankModifier modifier = new TankModifier(mainTraj);
+
+			// Generate the Left and Right trajectories using the original trajectory
+			// as the centre
+			modifier.modify(wheelbaseWidth);
+
+			this.trajL = modifier.getLeftTrajectory();       // Get the Left Side
+			this.trajR = modifier.getRightTrajectory();      // Get the Right Side 
 
 		} catch (IOException e) {
 			e.printStackTrace();	   
