@@ -1,0 +1,111 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+package frc.commands;
+
+import frc.subsystems.Drivetrain;
+
+import java.io.File;
+import java.io.IOException;
+
+import jaci.pathfinder.Pathfinder;
+import jaci.pathfinder.Trajectory;
+import jaci.pathfinder.Trajectory.Segment;
+import jaci.pathfinder.Waypoint;
+import jaci.pathfinder.followers.EncoderFollower;
+import jaci.pathfinder.modifiers.TankModifier;
+import jaci.pathfinder.PathfinderFRC;
+
+import edu.wpi.first.wpilibj.Filesystem;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
+public class FollowPath extends CommandBase {
+
+	//Drivetrain
+	private Drivetrain drivetrain;
+
+	private EncoderFollower leftFollower;
+	private EncoderFollower rightFollower;
+
+	//Robot info
+	private int ticksPerRev = 3500;
+	private double wheelDiameter = 6.15*0.0254; //0.0254 meters = 1 inch
+	private double velocity = 1.52;
+	private double wheelbaseWidth = 2.25;
+
+	//Path files
+	
+	String pathName = "Test";
+
+	//Trajectory
+	private Trajectory trajL;
+	private Trajectory trajR;
+
+
+	//PID Values
+	double kP = 0.9;
+	double kI = 0;
+	double kD = 0;
+
+	/**
+	 * Creates a new FollowPath.
+	 */
+	public FollowPath(Drivetrain drivetrain) {
+		this.drivetrain = drivetrain;
+		addRequirements(this.drivetrain);
+
+		try{
+			File deployDir = Filesystem.getDeployDirectory();
+
+			File leftTraj = new File(deployDir.getAbsolutePath() + "/PathWeaver/output/GenericPath.left.pf1.csv");
+			File rightTraj = new File(deployDir.getAbsolutePath() + "/PathWeaver/output/GenericPath.right.pf1.csv");
+
+			this.trajL = Pathfinder.readFromCSV(leftTraj);
+			this.trajR = Pathfinder.readFromCSV(rightTraj);
+
+		} catch (IOException e) {
+			e.printStackTrace();	   
+		}
+
+		this.leftFollower = new EncoderFollower(trajL);
+		this.rightFollower = new EncoderFollower(trajR);
+	}
+
+	// Called when the command is initially scheduled.
+	@Override
+	public void initialize() {
+		drivetrain.resetEncoders();
+    
+		this.leftFollower.configureEncoder((int)drivetrain.getLeftEncoderValue(), ticksPerRev, wheelDiameter);
+		this.leftFollower.configurePIDVA(kP, kI, kD, 1 / velocity, 0);
+		this.rightFollower.configureEncoder((int)drivetrain.getRightEncoderValue(), ticksPerRev, wheelDiameter);
+		this.rightFollower.configurePIDVA(kP, kI, kD, 1 / velocity, 0);
+	}
+
+	// Called every time the scheduler runs while the command is scheduled.
+	@Override
+	public void execute() {
+		double left_speed = this.leftFollower.calculate((int)drivetrain.getLeftEncoderValue());
+		double right_speed = this.rightFollower.calculate((int)drivetrain.getRightEncoderValue());
+		
+		drivetrain.tankDrive(left_speed, right_speed);
+	}
+
+	// Called once the command ends or is interrupted.
+	@Override
+	public void end(boolean interrupted) {
+		drivetrain.tankDrive(0,0);
+    	System.out.println("PATH IS DONE");
+	}
+
+	// Returns true when the command should end.
+	@Override
+	public boolean isFinished() {
+		return this.leftFollower.isFinished() && this.rightFollower.isFinished();
+	}
+}
