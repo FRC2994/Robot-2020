@@ -9,13 +9,17 @@ package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.subsystems.VisionArduino;
+import frc.subsystems.Drivetrain;
 
 public class FindTarget extends CommandBase {
   private VisionArduino arduino;
-  public FindTarget(VisionArduino target) {
+  private Drivetrain drive;
+  public FindTarget(VisionArduino target, Drivetrain dt) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arduino = target;
+    this.drive = dt;
     addRequirements(this.arduino);
+    addRequirements(this.drive);
   }
 
   // Called when the command is initially scheduled.
@@ -32,12 +36,15 @@ public class FindTarget extends CommandBase {
 
     if(data.equals("LEFT")){
       System.out.println("GO LEFT");
+      drive.arcadeDrive(0, 0.3);
     }
     else if(data.equals("CENTER")){
       System.out.println("STOP");
+      drive.arcadeDrive(0, 0);
     }
     else if(data.equals("RIGHT")){
       System.out.println("GO RIGHT");
+      drive.arcadeDrive(0, -0.3);
     }
   }
 
