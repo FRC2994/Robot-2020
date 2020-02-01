@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 
 public class VisionArduino extends SubsystemBase {
-  private static I2C Wire = new I2C(Port.kOnboard, 4);//uses the i2c port on the RoboRIO
+  private static I2C Wire = new I2C(Port.kMXP, 4);//uses the i2c port on the RoboRIO
   //uses address 4 
   private static final int MAX_BYTES = 32;
 
