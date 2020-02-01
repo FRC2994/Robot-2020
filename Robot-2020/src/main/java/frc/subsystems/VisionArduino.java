@@ -16,6 +16,13 @@ public class VisionArduino extends SubsystemBase {
   //uses address 4 
   private static final int MAX_BYTES = 32;
 
+  public int getPos(){ //function to read the data from arduino
+		byte[] data = new byte[MAX_BYTES];//create a byte array to hold the incoming data
+		Wire.read(4, MAX_BYTES, data);//use address 4 on i2c and store it in data
+		String output = new String(data);//create a string from the byte array
+		return Integer.parseInt(output);
+  }
+
   public String read(){ //function to read the data from arduino
 		byte[] data = new byte[MAX_BYTES];//create a byte array to hold the incoming data
 		Wire.read(4, MAX_BYTES, data);//use address 4 on i2c and store it in data

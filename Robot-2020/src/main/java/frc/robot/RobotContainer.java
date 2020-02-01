@@ -23,6 +23,7 @@ import frc.commands.Shoot;
 import frc.commands.DetectColor;
 import frc.commands.GoToColor;
 import frc.commands.FindTarget;
+import frc.commands.AlignPID;
 
 /**
  * Add your docs here.
@@ -77,6 +78,6 @@ public class RobotContainer {
         /*ELEVATOR*/
         this.gpButnElevator.whenPressed(new InstantCommand(elevator:: ascendingSpeed, elevator));
         this.gpButnElevator.whenReleased(new InstantCommand(elevator:: stopMotor, elevator));
-        this.jsButnTarget.whileHeld(new FindTarget(this.vision, this.drivetrain));
+        this.jsButnTarget.whileHeld(new AlignPID(this.vision, this.drivetrain));
     }
 }
