@@ -17,6 +17,7 @@ public class ControlPanel extends SubsystemBase {
 
 	private final VictorSPX motor;
 	private final ColorSensorV3 sensor;
+	private int colorAmount;
 
 	/**
 	 * Creates a new ControlPanel.
@@ -25,6 +26,7 @@ public class ControlPanel extends SubsystemBase {
 		this.motor = new VictorSPX(5);
 		I2C.Port i2cPort = I2C.Port.kOnboard;
 		this.sensor = new ColorSensorV3(i2cPort);
+		colorAmount = 0;
 	}
 
 	@Override

@@ -21,7 +21,8 @@ import frc.subsystems.ShooterHood;
 import frc.commands.DefaultDrive;
 import frc.commands.Shoot;
 import frc.commands.DetectColor;
-import frc.commands.GoToColor;;
+import frc.commands.GoToColor;
+import frc.commands.SpinControlPanel;
 
 /**
  * Add your docs here.
@@ -49,8 +50,9 @@ public class RobotContainer {
     private final JoystickButton lvl2 = new JoystickButton(this.joystick, 10);
     private final JoystickButton lvl3 = new JoystickButton(this.joystick, 8);
     private final JoystickButton ServoIncrement = new JoystickButton(this.joystick, 3);
-    private final JoystickButton ServoDecrement = new JoystickButton(this.joystick, 4);
+    //private final JoystickButton ServoDecrement = new JoystickButton(this.joystick, 4);
     private final JoystickButton gpButnElevator = new JoystickButton(this.gamepad, 2);
+    private final JoystickButton RotationControl = new JoystickButton(this.joystick, 4);
 
     //Contains subsystems, OI devices, and commands.
     public RobotContainer(){
@@ -60,6 +62,7 @@ public class RobotContainer {
         // m_drivetrain.setDefaultCommand(new DefaultDrive(m_drivetrain, joystick));
         this.shooterwheel.setDefaultCommand(new Shoot(this.shooterwheel, this.gamepad));
         this.controlpanel.setDefaultCommand(new GoToColor(this.controlpanel));
+        this.controlpanel.setDefaultCommand(new SpinControlPanel(this.controlpanel));
     }
 
 
