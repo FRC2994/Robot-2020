@@ -49,6 +49,9 @@ public class RobotContainer {
     private final JoystickButton spinControlPanel = new JoystickButton(this.joystick, 4);
     private final JoystickButton driveHighGear = new JoystickButton(this.joystick, 5);
     private final JoystickButton detectColour = new JoystickButton(this.joystick, 6);
+    private final JoystickButton lowerClimb = new JoystickButton(this.joystick, 7);
+    private final JoystickButton raiseClimb = new JoystickButton(this.joystick, 8);
+    private final JoystickButton releaseHooks = new JoystickButton(this.joystick, 9);
     private final JoystickButton shooter = new JoystickButton(this.gamepad, 1);
     private final JoystickButton gpButnElevator = new JoystickButton(this.gamepad, 2);
     private final JoystickButton ServoDecrement = new JoystickButton(this.gamepad, 3);
