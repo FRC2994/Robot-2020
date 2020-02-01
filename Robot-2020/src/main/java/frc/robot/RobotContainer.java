@@ -73,12 +73,18 @@ public class RobotContainer {
         // this.jsButnShifter.whenPressed(new InstantCommand(m_drivetrain::highGear, m_drivetrain));
         // this.jsButnShifter.whenReleased(new InstantCommand(m_drivetrain::lowGear, m_drivetrain));
         /*SHOOTER*/
-        this.jsButnIntakePowerCell.whenPressed(new InstantCommand(shooterwheel::toggle, shooterwheel));
+        this.gpButnShooter.whenPressed(new InstantCommand(shooterwheel::toggle, shooterwheel));
         /*SHOOTER HOOD*/
         this.gpButnServoIncrement.whenPressed(new InstantCommand(shooterhood::ServoInc, shooterhood));
         this.gpButnServoDecrement.whenPressed(new InstantCommand(shooterhood::ServoDec, shooterhood));
         /*ELEVATOR*/
         this.gpButnElevator.whenPressed(new InstantCommand(elevator:: ascendingSpeed, elevator));
         this.gpButnElevator.whenReleased(new InstantCommand(elevator:: stopMotor, elevator));
+        /*CONTROL PANEL*/
+        this.jsButnDetectColour.whileHeld(new GoToColor(controlpanel));
+
+        /*CLIMBER*/
+
+        /*HOPPER*/
     }
 }
