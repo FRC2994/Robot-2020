@@ -28,8 +28,8 @@ import frc.commands.GoToColor;;
  */
 public class RobotContainer {    
     //Joystick and Gamepad
-    public final Joystick joystick = new Joystick(0); 
-    public final Joystick gamepad = new Joystick(1);
+    // public final Joystick joystick = new Joystick(0); 
+    // public final Joystick gamepad = new Joystick(1);
    
     //Subsystems
     private final Drivetrain drivetrain = new Drivetrain();
@@ -40,20 +40,20 @@ public class RobotContainer {
     
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
-    private final JoystickButton trigger = new JoystickButton(this.joystick, 1);
-    private final JoystickButton lvl1 = new JoystickButton(this.joystick, 12);
-    private final JoystickButton lvl2 = new JoystickButton(this.joystick, 10);
-    private final JoystickButton lvl3 = new JoystickButton(this.joystick, 8);
-    private final JoystickButton ServoIncrement = new JoystickButton(this.joystick, 3);
-    private final JoystickButton ServoDecrement = new JoystickButton(this.joystick, 4);
+    // private final JoystickButton trigger = new JoystickButton(this.joystick, 1);
+    // private final JoystickButton lvl1 = new JoystickButton(this.joystick, 12);
+    // private final JoystickButton lvl2 = new JoystickButton(this.joystick, 10);
+    // private final JoystickButton lvl3 = new JoystickButton(this.joystick, 8);
+    // private final JoystickButton ServoIncrement = new JoystickButton(this.joystick, 3);
+    // private final JoystickButton ServoDecrement = new JoystickButton(this.joystick, 4);
     // private final JoystickButton gpButnElevator = new JoystickButton(this.gamepad, 2);
 
     //Contains subsystems, OI devices, and commands.
     public RobotContainer(){
         configureButtons();
 
-        this.drivetrain.setDefaultCommand(new DefaultDrive(drivetrain, joystick));
-        this.shooterwheel.setDefaultCommand(new Shoot(this.shooterwheel, this.gamepad));
+        // this.drivetrain.setDefaultCommand(new DefaultDrive(drivetrain, joystick));
+        // this.shooterwheel.setDefaultCommand(new Shoot(this.shooterwheel, this.gamepad));
         this.controlpanel.setDefaultCommand(new GoToColor(this.controlpanel));
     }
 
@@ -64,13 +64,13 @@ public class RobotContainer {
         // this.jsButnShifter.whenPressed(new InstantCommand(m_drivetrain::highGear, m_drivetrain));
         // this.jsButnShifter.whenReleased(new InstantCommand(m_drivetrain::lowGear, m_drivetrain));
         /*SHOOTER*/
-        this.trigger.whenPressed(new InstantCommand(shooterwheel::toggle, shooterwheel));
-        this.lvl1.whenPressed(new InstantCommand(shooterwheel::setLevelOne, shooterwheel));
-        this.lvl2.whenPressed(new InstantCommand(shooterwheel::setLevelTwo, shooterwheel));
-        this.lvl3.whenPressed(new InstantCommand(shooterwheel::setLevelThree, shooterwheel));
-        /*SHOOTER HOOD*/
-        this.ServoIncrement.whenPressed(new InstantCommand(shooterhood::ServoInc, shooterhood));
-        this.ServoDecrement.whenPressed(new InstantCommand(shooterhood::ServoDec, shooterhood));
+        // this.trigger.whenPressed(new InstantCommand(shooterwheel::toggle, shooterwheel));
+        // this.lvl1.whenPressed(new InstantCommand(shooterwheel::setLevelOne, shooterwheel));
+        // this.lvl2.whenPressed(new InstantCommand(shooterwheel::setLevelTwo, shooterwheel));
+        // this.lvl3.whenPressed(new InstantCommand(shooterwheel::setLevelThree, shooterwheel));
+        // /*SHOOTER HOOD*/
+        // this.ServoIncrement.whenPressed(new InstantCommand(shooterhood::ServoInc, shooterhood));
+        // this.ServoDecrement.whenPressed(new InstantCommand(shooterhood::ServoDec, shooterhood));
         /*ELEVATOR*/
         // this.gpButnElevator.whenPressed(new InstantCommand(elevator:: ascendingSpeed, elevator));
         // this.gpButnElevator.whenReleased(new InstantCommand(elevator:: stopMotor, elevator));

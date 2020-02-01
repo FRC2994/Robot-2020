@@ -55,7 +55,7 @@ public class GoToColor extends CommandBase {
 		System.out.println("NO MOVE");
 		this.motor.set(ControlMode.PercentOutput, 0);
 	} else {
-		this.motor.set(ControlMode.PercentOutput, 0.75);
+		this.motor.set(ControlMode.PercentOutput, -0.7);
 		System.out.println("MOVE");
 	}
   }
