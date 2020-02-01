@@ -40,27 +40,23 @@ public class RobotContainer {
     
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
-    private final JoystickButton trigger = new JoystickButton(this.joystick, 1);
-    private final JoystickButton lvl1 = new JoystickButton(this.joystick, 12);
-    private final JoystickButton lvl2 = new JoystickButton(this.joystick, 10);
-    private final JoystickButton lvl3 = new JoystickButton(this.joystick, 8);
-    private final JoystickButton intakePowerCell = new JoystickButton(this.joystick, 1);
-    private final JoystickButton driveLowGear = new JoystickButton(this.joystick, 3);
-    private final JoystickButton spinControlPanel = new JoystickButton(this.joystick, 4);
-    private final JoystickButton driveHighGear = new JoystickButton(this.joystick, 5);
-    private final JoystickButton detectColour = new JoystickButton(this.joystick, 6);
-    private final JoystickButton lowerClimb = new JoystickButton(this.joystick, 7);
-    private final JoystickButton raiseClimb = new JoystickButton(this.joystick, 8);
-    private final JoystickButton releaseHooks = new JoystickButton(this.joystick, 9);
-    private final JoystickButton shooter = new JoystickButton(this.gamepad, 1);
+    private final JoystickButton jsButnIntakePowerCell = new JoystickButton(this.joystick, 1);
+    private final JoystickButton jsButnDriveLowGear = new JoystickButton(this.joystick, 3);
+    private final JoystickButton jsButnSpinControlPanel = new JoystickButton(this.joystick, 4);
+    private final JoystickButton jsButnDriveHighGear = new JoystickButton(this.joystick, 5);
+    private final JoystickButton jsButnDetectColour = new JoystickButton(this.joystick, 6);
+    private final JoystickButton jsButnLowerClimb = new JoystickButton(this.joystick, 7);
+    private final JoystickButton jsButnRaiseClimb = new JoystickButton(this.joystick, 8);
+    private final JoystickButton jsButnReleaseHooks = new JoystickButton(this.joystick, 9);
+    private final JoystickButton gpButnShooter = new JoystickButton(this.gamepad, 1);
     private final JoystickButton gpButnElevator = new JoystickButton(this.gamepad, 2);
-    private final JoystickButton ServoDecrement = new JoystickButton(this.gamepad, 3);
-    private final JoystickButton ServoIncrement = new JoystickButton(this.gamepad, 4);
-    private final JoystickButton highSpeedShooter = new JoystickButton(this.gamepad, 5);
-    private final JoystickButton lowSpeedShooter = new JoystickButton(this.gamepad, 6);
-    private final JoystickButton intakeDown = new JoystickButton(this.gamepad, 7);
-    private final JoystickButton intakeUp = new JoystickButton(this. gamepad, 8);
-    private final JoystickButton hopperDisturber = new JoystickButton(this.gamepad, 9);
+    private final JoystickButton gpButnServoDecrement = new JoystickButton(this.gamepad, 3);
+    private final JoystickButton gpButnServoIncrement = new JoystickButton(this.gamepad, 4);
+    private final JoystickButton gpButnHighSpeedShooter = new JoystickButton(this.gamepad, 5);
+    private final JoystickButton gpButnLowSpeedShooter = new JoystickButton(this.gamepad, 6);
+    private final JoystickButton gpButnIntakeDown = new JoystickButton(this.gamepad, 7);
+    private final JoystickButton gpButnIntakeUp = new JoystickButton(this. gamepad, 8);
+    private final JoystickButton gpButnHopperDisturber = new JoystickButton(this.gamepad, 9);
     
 
     //Contains subsystems, OI devices, and commands.
@@ -79,13 +75,10 @@ public class RobotContainer {
         // this.jsButnShifter.whenPressed(new InstantCommand(m_drivetrain::highGear, m_drivetrain));
         // this.jsButnShifter.whenReleased(new InstantCommand(m_drivetrain::lowGear, m_drivetrain));
         /*SHOOTER*/
-        this.trigger.whenPressed(new InstantCommand(shooterwheel::toggle, shooterwheel));
-        this.lvl1.whenPressed(new InstantCommand(shooterwheel::setLevelOne, shooterwheel));
-        this.lvl2.whenPressed(new InstantCommand(shooterwheel::setLevelTwo, shooterwheel));
-        this.lvl3.whenPressed(new InstantCommand(shooterwheel::setLevelThree, shooterwheel));
+        this.jsButnIntakePowerCell.whenPressed(new InstantCommand(shooterwheel::toggle, shooterwheel));
         /*SHOOTER HOOD*/
-        this.ServoIncrement.whenPressed(new InstantCommand(shooterhood::ServoInc, shooterhood));
-        this.ServoDecrement.whenPressed(new InstantCommand(shooterhood::ServoDec, shooterhood));
+        this.gpButnServoIncrement.whenPressed(new InstantCommand(shooterhood::ServoInc, shooterhood));
+        this.gpButnServoDecrement.whenPressed(new InstantCommand(shooterhood::ServoDec, shooterhood));
         /*ELEVATOR*/
         this.gpButnElevator.whenPressed(new InstantCommand(elevator:: ascendingSpeed, elevator));
         this.gpButnElevator.whenReleased(new InstantCommand(elevator:: stopMotor, elevator));
