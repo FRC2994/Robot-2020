@@ -44,9 +44,21 @@ public class RobotContainer {
     private final JoystickButton lvl1 = new JoystickButton(this.joystick, 12);
     private final JoystickButton lvl2 = new JoystickButton(this.joystick, 10);
     private final JoystickButton lvl3 = new JoystickButton(this.joystick, 8);
-    private final JoystickButton ServoIncrement = new JoystickButton(this.joystick, 3);
-    private final JoystickButton ServoDecrement = new JoystickButton(this.joystick, 4);
+    private final JoystickButton intakePowerCell = new JoystickButton(this.joystick, 1);
+    private final JoystickButton driveLowGear = new JoystickButton(this.joystick, 3);
+    private final JoystickButton spinControlPanel = new JoystickButton(this.joystick, 4);
+    private final JoystickButton driveHighGear = new JoystickButton(this.joystick, 5);
+    private final JoystickButton detectColour = new JoystickButton(this.joystick, 6);
+    private final JoystickButton shooter = new JoystickButton(this.gamepad, 1);
     private final JoystickButton gpButnElevator = new JoystickButton(this.gamepad, 2);
+    private final JoystickButton ServoDecrement = new JoystickButton(this.gamepad, 3);
+    private final JoystickButton ServoIncrement = new JoystickButton(this.gamepad, 4);
+    private final JoystickButton highSpeedShooter = new JoystickButton(this.gamepad, 5);
+    private final JoystickButton lowSpeedShooter = new JoystickButton(this.gamepad, 6);
+    private final JoystickButton intakeDown = new JoystickButton(this.gamepad, 7);
+    private final JoystickButton intakeUp = new JoystickButton(this. gamepad, 8);
+    private final JoystickButton hopperDisturber = new JoystickButton(this.gamepad, 9);
+    
 
     //Contains subsystems, OI devices, and commands.
     public RobotContainer(){
