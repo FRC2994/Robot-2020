@@ -20,7 +20,6 @@ import frc.subsystems.ShooterHood;
 //Commands Imports
 import frc.commands.DefaultDrive;
 import frc.commands.Shoot;
-import frc.commands.DetectColor;
 import frc.commands.GoToColor;;
 
 /**
