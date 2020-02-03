@@ -74,6 +74,8 @@ public class RobotContainer {
         // this.jsButnShifter.whenReleased(new InstantCommand(m_drivetrain::lowGear, m_drivetrain));
         /*SHOOTER*/
         this.gpButnShooter.whenPressed(new InstantCommand(shooterwheel::toggle, shooterwheel));
+        this.gpButnHighSpeedShooter.whenPressed(new InstantCommand(shooterwheel::setLevelThree, shooterwheel));
+        this.gpButnLowSpeedShooter.whenPressed(new InstantCommand(shooterwheel::setLevelOne, shooterwheel));
         /*SHOOTER HOOD*/
         this.gpButnServoIncrement.whenPressed(new InstantCommand(shooterhood::ServoInc, shooterhood));
         this.gpButnServoDecrement.whenPressed(new InstantCommand(shooterhood::ServoDec, shooterhood));
