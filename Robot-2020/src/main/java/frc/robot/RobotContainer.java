@@ -86,5 +86,9 @@ public class RobotContainer {
         /*CLIMBER*/
 
         /*HOPPER*/
+
+        /*DRIVETRAIN*/
+        this.jsButnDriveHighAndLowGear.whileHeld(new InstantCommand(drivetrain::configureFastProfile, drivetrain));
+        this.jsButnDriveHighAndLowGear.whenReleased(new InstantCommand(drivetrain::configureSlowProfile, drivetrain));
     }
 }
