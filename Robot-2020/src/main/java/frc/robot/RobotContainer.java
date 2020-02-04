@@ -15,12 +15,14 @@ import frc.subsystems.Drivetrain;
 import frc.subsystems.ShooterWheel;
 import frc.subsystems.Elevator;
 import frc.subsystems.ShooterHood;
+import frc.subsystems.intakeSubsystem;
 
 
 //Commands Imports
 import frc.commands.DefaultDrive;
 import frc.commands.Shoot;
-import frc.commands.GoToColor;;
+import frc.commands.GoToColor;
+import frc.commands.intakeArm;
 
 /**
  * Add your docs here.
@@ -36,6 +38,7 @@ public class RobotContainer {
     private final ShooterWheel shooterwheel = new ShooterWheel();
     private final Elevator elevator = new Elevator();
     private final ShooterHood shooterhood = new ShooterHood();
+    private final intakeSubsystem intake = new intakeSubsystem();
     
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
@@ -94,5 +97,6 @@ public class RobotContainer {
         this.jsButnDriveHighAndLowGear.whenReleased(new InstantCommand(drivetrain::configureSlowProfile, drivetrain));
         /*INTAKE*/
         this.jsButnIntakePowerCell.whenPressed(new InstantCommand());
+        this.gpButnIntakeDownAndUp.whenPressed(new intakeArm(intake));
     }
 }
