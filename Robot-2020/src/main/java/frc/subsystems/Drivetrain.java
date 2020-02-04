@@ -90,42 +90,6 @@ public class Drivetrain extends SubsystemBase {
 	public int getDesiredPosition() {
 		return desiredPosition;
 	}
-
-	public void stopTalonPID() {
-		FrontLeft.set(0);
-		FrontRight.set(0);
-		RearRight.setInverted(false);
-		RearLeft.setInverted(false);
-	}
-	
-	
-	public void configureTurboProfile() {
-		leftPID.setP(0.4, 0);
-		leftPID.setD(0.01, 0);
-
-		rightPID.setP(0.4, 0);
-		rightPID.setD(0.01, 0);
-	}
-	
-	public void configureFastProfile() {
-		leftPID.setP(0.2, 0);
-		leftPID.setD(0.1, 0);
-
-		rightPID.setP(0.2, 0);
-		rightPID.setD(0.1, 0);
-	}
-	
-	public void configureSlowProfile() {
-		leftPID.setP(0.15, 0);
-		leftPID.setD(0, 0);
-
-		rightPID.setP(0.15, 0);
-		rightPID.setD(0, 0);
-	}
-	
-	public void driveWithCurve(double speed, double turn, boolean isQuickTurn) {
-		differentialDrive.curvatureDrive(speed, turn, isQuickTurn);
-	}
 	
 
 	public void arcadeDrive(double forward, double rotation) {
@@ -179,7 +143,6 @@ public class Drivetrain extends SubsystemBase {
 	}
 
 	public CANSparkMax getRearLeftMotor() {
-	//public TalonSRX getRearLeftMotor() {
 		return RearLeft;
 	}
 
@@ -188,7 +151,6 @@ public class Drivetrain extends SubsystemBase {
 	}
 
 	public CANSparkMax getRearRightMotor() {
-	//public TalonSRX getRearRightMotor() {
 		return RearRight;
 	}
 
@@ -199,6 +161,7 @@ public class Drivetrain extends SubsystemBase {
 	public double getRightEncoderValue() {
 		return rightENC.getPosition();
 	}
+
 	public void zero() {
 		startPosition = (int)getLeftEncoderValue();
 	}
@@ -212,10 +175,6 @@ public class Drivetrain extends SubsystemBase {
      */
 	@Override
 	public void periodic() {
-//		System.out.println("Left Encoder: " + getLeftEncoderValue() +" Right Encoder: " + getRightEncoderValue());
-		// Logger.appendRecord(
-		//  		getFrontLeftMotor().getMotorOutputVoltage() + "\t" + getFrontRightMotor().getMotorOutputVoltage() + 
-		//  		"\t" + getLeftEncoderValue() + "\t" + getRightEncoderValue() + "\t" + getHeading() + "\t");
 	}
 
    /**
@@ -242,7 +201,6 @@ public class Drivetrain extends SubsystemBase {
 		FrontRight.setInverted(false);
 		
 		zero();
-        // Logger.appendRecord("dtLmtr\tdtRmtr\tdtLenc\tdtRenc\tdtGyro\t");
     }
 
    /**

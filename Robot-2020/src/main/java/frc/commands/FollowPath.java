@@ -29,9 +29,9 @@ public class FollowPath extends CommandBase {
 	private EncoderFollower rightFollower;
 
 	//Robot info
-	private int ticksPerRev = 4500;
-	private double wheelDiameter = 6.15*0.0254; //0.0254 meters = 1 inch
-	private double velocity = 0.5;
+	private int ticksPerRev = 4096;
+	private double wheelDiameter = 5.75*0.0254; //0.0254 meters = 1 inch
+	private double velocity = 1;
 	private double wheelbaseWidth = 0.2921;
 
 	//Trajectory
@@ -97,10 +97,15 @@ public class FollowPath extends CommandBase {
 	// Called every time the scheduler runs while the command is scheduled.
 	@Override
 	public void execute() {
-		System.out.println("[FollowPath] execute");
+		// System.out.println("[FollowPath] execute");
 
-		double left_speed = this.leftFollower.calculate((int)drivetrain.getLeftEncoderValue());
-		double right_speed = this.rightFollower.calculate((int)drivetrain.getRightEncoderValue());
+		int leftTicks = (int)drivetrain.getLeftEncoderValue() * ticksPerRev;
+		int rightTicks = (int)drivetrain.getRightEncoderValue() * ticksPerRev;
+
+		double left_speed = this.leftFollower.calculate(leftTicks);
+		double right_speed = this.rightFollower.calculate(rightTicks);
+
+		System.out.println("[FollowPath] left_speed: " + left_speed + " right_speed: " + right_speed);
 		
 		drivetrain.tankDrive(-left_speed, -right_speed);
 	}
@@ -109,14 +114,14 @@ public class FollowPath extends CommandBase {
 	@Override
 	public void end(boolean interrupted) {
 		drivetrain.tankDrive(0,0);
-    	System.out.println("PATH IS DONE");
+    	// System.out.println("PATH IS DONE");
 	}
 
 	// Returns true when the command should end.
 	@Override
 	public boolean isFinished() {
 		boolean isFinished = this.leftFollower.isFinished() && this.rightFollower.isFinished();
-		System.out.println("[FollowPath] isFinished: " + isFinished);
+		// System.out.println("[FollowPath] isFinished: " + isFinished);
 		
 		return isFinished;
 	}
