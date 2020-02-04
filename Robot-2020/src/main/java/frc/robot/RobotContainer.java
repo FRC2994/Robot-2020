@@ -93,10 +93,11 @@ public class RobotContainer {
         /*HOPPER*/
 
         /*DRIVETRAIN*/
-        this.jsButnDriveHighAndLowGear.whileHeld(new InstantCommand(drivetrain::configureFastProfile, drivetrain));
-        this.jsButnDriveHighAndLowGear.whenReleased(new InstantCommand(drivetrain::configureSlowProfile, drivetrain));
+        this.jsButnDriveHighAndLowGear.whenPressed(new InstantCommand(drivetrain::configureFastProfile, drivetrain));
+        this.jsButnDriveHighAndLowGear.whenPressed(new InstantCommand(drivetrain::configureSlowProfile, drivetrain));
         /*INTAKE*/
-        this.jsButnIntakePowerCell.whenPressed(new InstantCommand());
+        this.jsButnIntakePowerCell.whileHeld(new InstantCommand(intake::motorOn, intake));
+        this.jsButnIntakePowerCell.whenReleased(new InstantCommand(intake::motorOff, intake));
         this.gpButnIntakeDownAndUp.whenPressed(new intakeArm(intake));
     }
 }
