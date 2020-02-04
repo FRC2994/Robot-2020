@@ -40,7 +40,7 @@ public class RobotContainer {
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
     private final JoystickButton jsButnIntakePowerCell = new JoystickButton(this.joystick, 1);
-    private final JoystickButton jsButnSpinControlPanel = new JoystickButton(this.joystick, 4);
+    private final JoystickButton jsButnRotationControl = new JoystickButton(this.joystick, 4);
     private final JoystickButton jsButnDriveHighAndLowGear = new JoystickButton(this.joystick, 5);
     private final JoystickButton jsButnDetectColour = new JoystickButton(this.joystick, 6);
     private final JoystickButton jsButnLowerClimb = new JoystickButton(this.joystick, 7);
@@ -54,6 +54,7 @@ public class RobotContainer {
     private final JoystickButton gpButnHighSpeedShooter = new JoystickButton(this.gamepad, 5);
     private final JoystickButton gpButnLowSpeedShooter = new JoystickButton(this.gamepad, 6);
     private final JoystickButton gpButnIntakeDownAndUp = new JoystickButton(this.gamepad, 7);
+    private final JoystickButton gpButnRunPixyCam = new JoystickButton(this.gamepad, 8);
     private final JoystickButton gpButnHopperDisturber = new JoystickButton(this.gamepad, 9);
     
 
@@ -84,7 +85,6 @@ public class RobotContainer {
         this.gpButnElevator.whenReleased(new InstantCommand(elevator:: stopMotor, elevator));
         /*CONTROL PANEL*/
         this.jsButnDetectColour.whileHeld(new GoToColor(controlpanel));
-
         /*CLIMBER*/
 
         /*HOPPER*/
@@ -92,7 +92,7 @@ public class RobotContainer {
         /*DRIVETRAIN*/
         this.jsButnDriveHighAndLowGear.whileHeld(new InstantCommand(drivetrain::configureFastProfile, drivetrain));
         this.jsButnDriveHighAndLowGear.whenReleased(new InstantCommand(drivetrain::configureSlowProfile, drivetrain));
-
         /*INTAKE*/
+        this.jsButnIntakePowerCell.whenPressed(new InstantCommand());
     }
 }
