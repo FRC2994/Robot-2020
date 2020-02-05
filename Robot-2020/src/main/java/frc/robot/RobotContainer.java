@@ -84,7 +84,7 @@ public class RobotContainer {
         this.gpButnServoIncrement.whileHeld(new InstantCommand(shooterhood::ServoInc, shooterhood));
         this.gpButnServoDecrement.whileHeld(new InstantCommand(shooterhood::ServoDec, shooterhood));
         /*ELEVATOR*/
-        this.gpButnElevator.whenPressed(new InstantCommand(elevator:: ascendingSpeed, elevator));
+        this.gpButnElevator.whileHeld(new InstantCommand(elevator:: ascendingSpeed, elevator));
         this.gpButnElevator.whenReleased(new InstantCommand(elevator:: stopMotor, elevator));
         /*CONTROL PANEL*/
         this.jsButnDetectColour.whileHeld(new GoToColor(controlpanel));
@@ -93,7 +93,7 @@ public class RobotContainer {
         /*HOPPER*/
 
         /*DRIVETRAIN*/
-        this.jsButnDriveHighAndLowGear.whenPressed(new InstantCommand(drivetrain::highGear, drivetrain));
+        this.jsButnDriveHighAndLowGear.whileHeld(new InstantCommand(drivetrain::highGear, drivetrain));
         this.jsButnDriveHighAndLowGear.whenReleased(new InstantCommand(drivetrain::lowGear, drivetrain));
         /*INTAKE*/
         this.jsButnIntakePowerCell.whileHeld(new InstantCommand(intake::motorOn, intake));
