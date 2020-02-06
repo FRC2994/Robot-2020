@@ -16,7 +16,7 @@ import frc.subsystems.ShooterWheel;
 import frc.subsystems.Elevator;
 import frc.subsystems.ShooterHood;
 import frc.subsystems.VisionArduino;
-import frc.subsystems.intakeSubsystem;
+import frc.subsystems.Intake;
 
 //Commands Imports
 import frc.commands.DefaultDrive;
@@ -42,7 +42,7 @@ public class RobotContainer {
     private final Elevator elevator = new Elevator();
     private final ShooterHood shooterhood = new ShooterHood();
     private final VisionArduino vision = new VisionArduino();
-    private final intakeSubsystem intake = new intakeSubsystem();
+    private final Intake intake = new Intake();
     
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);

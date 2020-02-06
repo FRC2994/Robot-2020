@@ -8,14 +8,14 @@
 package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import frc.subsystems.intakeSubsystem;
+import frc.subsystems.Intake;
 
 
 public class intakeArm extends InstantCommand {
   private boolean intakeArmExtend = false;
-  private intakeSubsystem intake;
+  private Intake intake;
 
-  public intakeArm(intakeSubsystem Arm) {
+  public intakeArm(Intake Arm) {
     intake = Arm;
     addRequirements(intake);
   }

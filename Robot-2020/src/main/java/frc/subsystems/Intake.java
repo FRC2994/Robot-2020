@@ -16,14 +16,14 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.Solenoid;
 
-public class intakeSubsystem extends SubsystemBase {
+public class Intake extends SubsystemBase {
   private double intakeMotorSpeed = 0;
   public boolean intakePistonExtend; 
   
   private VictorSPX intakeMotor;
   private Solenoid intakePiston;
 
-  public intakeSubsystem() {
+  public Intake() {
     intakeMotor = new VictorSPX(5); //TODO: find the actual CAN id for this
     intakePiston = new Solenoid(6); //Same thing
   }
