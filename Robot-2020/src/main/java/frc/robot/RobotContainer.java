@@ -15,13 +15,16 @@ import frc.subsystems.Drivetrain;
 import frc.subsystems.ShooterWheel;
 import frc.subsystems.Elevator;
 import frc.subsystems.ShooterHood;
+import frc.subsystems.VisionArduino;
 import frc.subsystems.intakeSubsystem;
-
 
 //Commands Imports
 import frc.commands.DefaultDrive;
 import frc.commands.Shoot;
+import frc.commands.DetectColor;
 import frc.commands.GoToColor;
+import frc.commands.FindTarget;
+import frc.commands.AlignPID;
 import frc.commands.intakeArm;
 
 /**
@@ -38,6 +41,7 @@ public class RobotContainer {
     private final ShooterWheel shooterwheel = new ShooterWheel();
     private final Elevator elevator = new Elevator();
     private final ShooterHood shooterhood = new ShooterHood();
+    private final VisionArduino vision = new VisionArduino();
     private final intakeSubsystem intake = new intakeSubsystem();
     
     //Joystick and Gamepad buttons
@@ -48,6 +52,8 @@ public class RobotContainer {
     private final JoystickButton jsButnDetectColour = new JoystickButton(this.joystick, 6);
     private final JoystickButton jsButnLowerClimb = new JoystickButton(this.joystick, 7);
     private final JoystickButton jsButnRaiseClimb = new JoystickButton(this.joystick, 8);
+  
+    //gamepad
     private final JoystickButton gpButnShooter = new JoystickButton(this.gamepad, 1);
     private final JoystickButton gpButnElevator = new JoystickButton(this.gamepad, 2);
     private final JoystickButton gpButnServoDecrement = new JoystickButton(this.gamepad, 3);
@@ -104,8 +110,6 @@ public class RobotContainer {
         this.jsButnIntakePowerCell.whenReleased(new InstantCommand(intake::motorOff, intake));
         this.gpButnIntakeDownAndUp.whenPressed(new intakeArm(intake));
         /*PIXYCAM*/
-        this.gpButnRunPixyCam.whileHeld();
-        this.gpButnRunPixyCam.whenReleased();
-        
+        this.gpButnRunPixyCam.whileHeld(new FindTarget(this.vision, this.drivetrain));
     }
 }
