@@ -32,8 +32,8 @@ public class Hopper extends SubsystemBase {
   }
   public void HopperDisturberIntake(){
     if(HopperPosition >= 0.3); {
-    HopperDisturber.set(HopperPosition);
-    ConstantChange = 0.1;
+      HopperPosition += ConstantChange;
+      HopperDisturber.set(HopperPosition);
     }
   }
   
