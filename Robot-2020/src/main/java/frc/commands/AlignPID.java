@@ -15,7 +15,11 @@ public class AlignPID extends CommandBase {
   private VisionArduino arduino;
   private Drivetrain drive;
   double kP = 0.1;
-  double min_command = 0.10;
+  double kI = 0;
+  double kD = 0;
+  double integral, derivative, previous_error = 0;
+
+  double error;
 
   public AlignPID(VisionArduino ad, Drivetrain dt) {
     this.arduino = ad;
@@ -27,24 +31,38 @@ public class AlignPID extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    this.integral = 0;
+    this.derivative = 0;
+    this.previous_error = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    this.previous_error = this.error;
     int currentPos = arduino.getPos();
-    int error = 158 - currentPos; 
-    double steer = kP*error - min_command;
-    System.out.println("Error: " + error + " Pos:" + currentPos);
-    // if(error > 10){// The target is left so robot goes left
-
-    // }
-    // else if (error < -10){ //The target is right so robot goes right
-
-    // }
-    // else{
-    //   drive.tankDrive(0,0);
-    // }
+    double steer;
+    System.out.println("currentPos:" + currentPos);
+    
+    if(currentPos < 148){// The target is left so robot goes left
+      this.error = 148-currentPos;
+      this.integral += (error*.02); 
+      this.derivative = (error - this.previous_error) / .02;
+      
+      steer = kP*error + kI*this.integral + kD*derivative;
+      drive.arcadeDrive(0, steer);
+    }
+    else if (currentPos > 168){ //The target is right so robot goes right
+      this.error = 168-currentPos;
+      this.integral += (error*.02); 
+      this.derivative = (error - this.previous_error) / .02;
+      
+      steer = kP*error + kI*this.integral + kD*derivative;
+      drive.arcadeDrive(0, steer);
+    }
+    else{
+      drive.tankDrive(0,0);
+    }
   }
 
   // Called once the command ends or is interrupted.
