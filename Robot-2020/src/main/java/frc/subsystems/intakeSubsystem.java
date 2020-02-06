@@ -8,27 +8,34 @@
 package frc.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
+
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class intakeSubsystem extends SubsystemBase {
   private double intakeMotorSpeed = 0;
   public boolean intakePistonExtend; 
   
-  VictorSPX intakeMotor;
-  Solenoid intakePiston;
+  private VictorSPX intakeMotor;
+  private Solenoid intakePiston;
 
   public intakeSubsystem() {
-    intakeMotor = new VictorSPX(5); //Y on the controller
-    intakePiston = new Solenoid(6); //Aon the controllerr
+    intakeMotor = new VictorSPX(5); //TODO: find the actual CAN id for this
+    intakePiston = new Solenoid(6); //Same thing
   }
 
   public void motorOn() {
-    intakeMotorSpeed = 0.75; 
+    intakeMotorSpeed = 0.75;
+    intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
   }
 
   public void motorOff(){
     intakeMotorSpeed = 0;
+    intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
   }
 
   public void lowerIntake() {
