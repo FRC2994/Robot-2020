@@ -92,7 +92,9 @@ public class RobotContainer {
         this.jsButnRotationControl.whenReleased();
         /*CLIMBER*/
         this.jsButnRaiseClimb.whileHeld();
+        this.jsButnRaiseClimb.whenReleased();
         this.jsButnLowerClimb.whileHeld();
+        this.jsButnLowerClimb.whenReleased();
         this.jsButnOpenClaws.whenPressed();
         this.jsButnCloseClaws.whenPressed();
         /*HOPPER*/
