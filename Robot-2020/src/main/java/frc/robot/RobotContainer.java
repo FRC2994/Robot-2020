@@ -89,7 +89,7 @@ public class RobotContainer {
         this.gpButnServoIncrement.whileHeld(new InstantCommand(shooterhood::ServoInc, shooterhood));
         this.gpButnServoDecrement.whileHeld(new InstantCommand(shooterhood::ServoDec, shooterhood));
         /*ELEVATOR*/
-        this.gpButnElevator.whileHeld(new InstantCommand(elevator:: ascendingSpeed, elevator));
+        this.gpButnElevator.whileHeld(new InstantCommand(elevator:: startMotor, elevator));
         this.gpButnElevator.whenReleased(new InstantCommand(elevator:: stopMotor, elevator));
         /*CONTROL PANEL*/
         this.jsButnDetectColour.whileHeld(new GoToColor(controlpanel));
