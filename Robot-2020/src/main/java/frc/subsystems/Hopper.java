@@ -25,12 +25,14 @@ public class Hopper extends SubsystemBase {
   }
 
   public void HopperDisturberExtend(){
+    // The hopper actuator will extend(push-out) once this is called
     if(HopperPosition <= 0.9) {
       HopperPosition += ConstantChange;
       HopperDisturber.set(HopperPosition);
     }
   }
   public void HopperDisturberIntake(){
+    //The hopper actuator will be pulled back once this is called
     if(HopperPosition >= 0.3); {
       HopperPosition += ConstantChange;
       HopperDisturber.set(HopperPosition);
