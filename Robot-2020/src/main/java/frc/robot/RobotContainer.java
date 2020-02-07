@@ -46,6 +46,7 @@ public class RobotContainer {
     
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
+    //joystick
     private final JoystickButton jsButnIntakePowerCell = new JoystickButton(this.joystick, 1);
     private final JoystickButton jsButnRotationControl = new JoystickButton(this.joystick, 4);
     private final JoystickButton jsButnDriveHighAndLowGear = new JoystickButton(this.joystick, 5);
