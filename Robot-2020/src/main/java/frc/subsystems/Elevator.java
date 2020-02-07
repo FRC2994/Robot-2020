@@ -10,16 +10,30 @@ package frc.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Elevator extends SubsystemBase {
   private VictorSPX motorcontroller;
   /**
    * Creates a new Elevator
    */
+
+  DigitalInput limitSwitch = new DigitalInput(1);
+  Counter counter = new counter(limitSwitch);
+  
   public Elevator() {
     motorcontroller = new VictorSPX(0);
   }
   
+  public boolean isSwitchSet(){
+    return counter.get() > 0;
+  }
+
+  public void initializeCounter(){
+    counter.reset();
+  }
+
   public void startMotor()
   {
     motorcontroller.set(ControlMode.PercentOutput, 0.8);
