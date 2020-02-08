@@ -37,7 +37,8 @@ public class SpinControlPanel extends CommandBase {
 		
     this.motor = controlPanel.motor();
 		this.sensor = controlPanel.colorSensor();
-		this.matcher = new ColorMatch();
+    this.matcher = new ColorMatch();
+    colorAmount = 0;
 	} 
     // Use addRequirements() here to declare subsystem dependencies.
 
