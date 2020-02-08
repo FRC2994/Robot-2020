@@ -17,6 +17,7 @@ import frc.subsystems.Elevator;
 import frc.subsystems.ShooterHood;
 import frc.subsystems.VisionArduino;
 import frc.subsystems.Intake;
+import frc.subsystems.Hopper;
 
 //Commands Imports
 import frc.commands.DefaultDrive;
@@ -43,6 +44,7 @@ public class RobotContainer {
     private final ShooterHood shooterhood = new ShooterHood();
     private final VisionArduino vision = new VisionArduino();
     private final Intake intake = new Intake();
+    private final Hopper hopper = new Hopper();
     
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
@@ -101,8 +103,8 @@ public class RobotContainer {
         this.jsButnLowerClimb.whileHeld();
         this.jsButnLowerClimb.whenReleased();
         /*HOPPER*/
-        this.gpButnHopperDisturber.whileHeld();
-        this.gpButnHopperDisturber.whenReleased();
+        this.gpButnHopperDisturber.whileHeld(new InstantCommand(hopper:: HopperDisturberExtend, hopper));
+        this.gpButnHopperDisturber.whenReleased(new InstantCommand(hopper:: HopperDisturberIntake, hopper));
         /*DRIVETRAIN*/
         this.jsButnDriveHighAndLowGear.whileHeld(new InstantCommand(drivetrain::highGear, drivetrain));
         this.jsButnDriveHighAndLowGear.whenReleased(new InstantCommand(drivetrain::lowGear, drivetrain));
