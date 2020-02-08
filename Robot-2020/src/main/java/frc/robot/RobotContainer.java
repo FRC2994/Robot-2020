@@ -24,6 +24,7 @@ import frc.commands.DefaultDrive;
 import frc.commands.Shoot;
 import frc.commands.DetectColor;
 import frc.commands.GoToColor;
+import frc.commands.SpinControlPanel;
 import frc.commands.FindTarget;
 import frc.commands.AlignPID;
 import frc.commands.intakeArm;
@@ -58,6 +59,7 @@ public class RobotContainer {
   
     //gamepad
     private final JoystickButton gpButnShooter = new JoystickButton(this.gamepad, 1);
+
     private final JoystickButton gpButnElevator = new JoystickButton(this.gamepad, 2);
     private final JoystickButton gpButnServoDecrement = new JoystickButton(this.gamepad, 3);
     private final JoystickButton gpButnServoIncrement = new JoystickButton(this.gamepad, 4);
