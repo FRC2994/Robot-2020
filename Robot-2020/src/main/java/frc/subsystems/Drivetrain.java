@@ -32,7 +32,7 @@ public class Drivetrain extends SubsystemBase {
 	private CANEncoder rightENC = FrontRight.getEncoder();
 	private CANEncoder leftENC = FrontLeft.getEncoder();
 
-	Solenoid gearShiftSolenoid = new Solenoid(0, 1);
+	Solenoid gearShiftSolenoid = new Solenoid(0, 0);
 	public static enum GearShiftState { HI, LO };
 
 	public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
@@ -78,6 +78,7 @@ public class Drivetrain extends SubsystemBase {
 		FrontRight.setOpenLoopRampRate(0.1);
 
 		reverse = false;
+		gearShiftSolenoid.set(true); //for now
 	}
 	
 	public void setDesiredPosition(int position) {
@@ -159,11 +160,11 @@ public class Drivetrain extends SubsystemBase {
 	}
 
 	public void highGear() {
-		gearShiftSolenoid.set(true);
+		gearShiftSolenoid.set(false); //for now
 	}
 
 	public void lowGear() {
-		gearShiftSolenoid.set(false);
+		gearShiftSolenoid.set(true); //for now
 	}
 
 	public void reverseDrive(boolean state) {
