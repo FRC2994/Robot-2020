@@ -59,7 +59,6 @@ public class RobotContainer {
   
     //gamepad
     private final JoystickButton gpButnShooter = new JoystickButton(this.gamepad, 1);
-
     private final JoystickButton gpButnElevator = new JoystickButton(this.gamepad, 2);
     private final JoystickButton gpButnServoDecrement = new JoystickButton(this.gamepad, 3);
     private final JoystickButton gpButnServoIncrement = new JoystickButton(this.gamepad, 4);
