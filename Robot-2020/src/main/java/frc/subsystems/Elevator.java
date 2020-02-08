@@ -20,7 +20,7 @@ public class Elevator extends SubsystemBase {
     motorcontroller = new VictorSPX(0); //TODO: Find a CAN ID for the Elevator
   }
   
-  public void ascendingSpeed()
+  public void startMotor()
   {
     motorcontroller.set(ControlMode.PercentOutput, 0.8);
   }
