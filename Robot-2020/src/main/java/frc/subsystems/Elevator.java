@@ -9,17 +9,34 @@ package frc.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.CANDigitalInput.LimitSwitch;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class Elevator extends SubsystemBase {
   private VictorSPX motorcontroller;
   /**
    * Creates a new Elevator
    */
+
+  DigitalInput limitSwitch = new DigitalInput(1);
+  Counter counter = new Counter(limitSwitch);
+  
   public Elevator() {
     motorcontroller = new VictorSPX(0); //TODO: Find a CAN ID for the Elevator
   }
-  
+
+  public void LimitSwitch() {
+    if (!limitSwitch.get()) {
+      motorcontroller.set(ControlMode.PercentOutput, 0.8);
+  }
+  else {
+    motorcontroller.set(ControlMode.PercentOutput, 0);
+  }
+  }
+
   public void startMotor()
   {
     motorcontroller.set(ControlMode.PercentOutput, 0.8);
