@@ -97,8 +97,7 @@ public class RobotContainer {
         this.gpButnElevator.whenReleased(new InstantCommand(elevator:: stopMotor, elevator));
         /*CONTROL PANEL*/
         this.jsButnDetectColour.whileHeld(new GoToColor(controlpanel));
-        this.jsButnRotationControl.whileHeld();
-        this.jsButnRotationControl.whenReleased();
+        this.jsButnRotationControl.whileHeld(new SpinControlPanel(controlpanel));
         /*CLIMBER*/
         this.jsButnRaiseClimb.whileHeld();
         this.jsButnRaiseClimb.whenReleased();
