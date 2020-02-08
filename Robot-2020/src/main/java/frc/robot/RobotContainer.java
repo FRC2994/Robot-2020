@@ -21,10 +21,8 @@ import frc.subsystems.intakeSubsystem;
 //Commands Imports
 import frc.commands.DefaultDrive;
 import frc.commands.Shoot;
-import frc.commands.GoToColor;
 import frc.commands.FindTarget;
 import frc.commands.AlignPID;
-import frc.commands.intakeArm;
 
 /**
  * Add your docs here.
