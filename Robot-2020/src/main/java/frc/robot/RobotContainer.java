@@ -58,6 +58,7 @@ public class RobotContainer {
     private final JoystickButton jsButnDetectColour = new JoystickButton(this.joystick, 6);
     private final JoystickButton jsButnLowerClimb = new JoystickButton(this.joystick, 7);
     private final JoystickButton jsButnRaiseClimb = new JoystickButton(this.joystick, 8);
+    private final JoystickButton jsButnClimbHeavyAndLightGear = new JoystickButton(this.joystick, 9);
   
     //gamepad
     private final JoystickButton gpButnShooter = new JoystickButton(this.gamepad, 1);
@@ -102,6 +103,8 @@ public class RobotContainer {
         /*CLIMBER*/
         this.jsButnRaiseClimb.whileHeld();
         this.jsButnLowerClimb.whileHeld();
+        this.jsButnClimbHeavyAndLightGear.whileHeld();
+        this.jsButnClimbHeavyAndLightGear.whenReleased();
         /*HOPPER*/
         this.gpButnHopperDisturber.whileHeld(new InstantCommand(hopper:: HopperDisturberExtend, hopper));
         this.gpButnHopperDisturber.whenReleased(new InstantCommand(hopper:: HopperDisturberIntake, hopper));
