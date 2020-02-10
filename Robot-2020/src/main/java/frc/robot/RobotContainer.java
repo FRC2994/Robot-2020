@@ -101,9 +101,7 @@ public class RobotContainer {
         this.jsButnRotationControl.whileHeld(new SpinControlPanel(controlpanel));
         /*CLIMBER*/
         this.jsButnRaiseClimb.whileHeld();
-        this.jsButnRaiseClimb.whenReleased();
         this.jsButnLowerClimb.whileHeld();
-        this.jsButnLowerClimb.whenReleased();
         /*HOPPER*/
         this.gpButnHopperDisturber.whileHeld(new InstantCommand(hopper:: HopperDisturberExtend, hopper));
         this.gpButnHopperDisturber.whenReleased(new InstantCommand(hopper:: HopperDisturberIntake, hopper));
