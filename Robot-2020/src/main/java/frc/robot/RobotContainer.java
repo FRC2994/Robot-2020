@@ -101,10 +101,10 @@ public class RobotContainer {
         this.jsButnDetectColour.whileHeld(new GoToColor(controlpanel));
         this.jsButnRotationControl.whileHeld(new SpinControlPanel(controlpanel));
         /*CLIMBER*/
-        this.jsButnRaiseClimb.whileHeld();
-        this.jsButnLowerClimb.whileHeld();
-        this.jsButnClimbHeavyAndLightGear.whileHeld();
-        this.jsButnClimbHeavyAndLightGear.whenReleased();
+        this.jsButnRaiseClimb.whileHeld(new InstantCommand(climber:: moveUp, climber));
+        this.jsButnLowerClimb.whileHeld(new InstantCommand(climber:: moveDown, climber));
+        this.jsButnClimbHeavyAndLightGear.whileHeld(new InstantCommand(climber:: setPIDHeavy, climber));
+        this.jsButnClimbHeavyAndLightGear.whenReleased(new InstantCommand(climber:: setPIDLight, climber));
         /*HOPPER*/
         this.gpButnHopperDisturber.whileHeld(new InstantCommand(hopper:: HopperDisturberExtend, hopper));
         this.gpButnHopperDisturber.whenReleased(new InstantCommand(hopper:: HopperDisturberIntake, hopper));
