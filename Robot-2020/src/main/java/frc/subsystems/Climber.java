@@ -73,9 +73,13 @@ public class Climber extends PIDSubsystem {
       foundBottom = true;
     }  else {
       foundBottom = false;
-      //System.out.println("Bottom not found");
+      System.out.println("Bottom not found");
     }
     return foundBottom;
+  }
+
+  public void setPosition() {
+    m_motor.set(ControlMode.Position, getDesiredPosition());
   }
 
   public void moveUp() {
@@ -85,8 +89,8 @@ public class Climber extends PIDSubsystem {
     setPIDLight();
    
       if (currentPosition < m_maxEncoder) {
-        //setPosition ...
-        m_motor.set(ControlMode.Position, currentPosition);
+        setPosition();
+        //m_motor.set(ControlMode.Position, getDesiredPosition());
       } 
       
       //do nothing if foundBottom is false
@@ -94,28 +98,28 @@ public class Climber extends PIDSubsystem {
 
   }
 
-public void setPosition() {
-  //sjglsdkjfhglsdj
-}
+
+  public void pullUp() {
+    System.out.println("Arm PULLING up to " + getDesiredPosition());
+    setPIDHeavy();
+    setPosition();
+  }
 
 
-public void pullUp() {
-  System.out.println("Arm PULLING up to " + getDesiredPosition());
-  setPIDHeavy();
-}
+  public void moveDown() {
+    if (m_limitSwitch.get()) {
+      foundBottom = true;
+      
+      //reset encoder
+      //m_encoder.get() = ;
 
-/*
+      setPosition();
+    }
+  }
 
-public void moveDown() {
-  if (m_limitSwitch.get()) {
-    foundBottom = true;
-    m_encoder.get() =  ;
-}
-*/
-
-public void pullDown() {
-  
-}
+  public void pullDown() {
+    
+  }
 
   @Override
   public void useOutput(double output, double setpoint) {
