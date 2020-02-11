@@ -53,6 +53,7 @@ public class RobotContainer {
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
     //joystick
     private final JoystickButton jsButnIntakePowerCell = new JoystickButton(this.joystick, 1);
+    private final JoystickButton jsButnRaiseAndLowerControlPanel = new JoystickButton(this.joystick, 3);
     private final JoystickButton jsButnRotationControl = new JoystickButton(this.joystick, 4);
     private final JoystickButton jsButnDriveHighAndLowGear = new JoystickButton(this.joystick, 5);
     private final JoystickButton jsButnDetectColour = new JoystickButton(this.joystick, 6);
@@ -100,6 +101,7 @@ public class RobotContainer {
         /*CONTROL PANEL*/
         this.jsButnDetectColour.whileHeld(new GoToColor(controlpanel));
         this.jsButnRotationControl.whileHeld(new SpinControlPanel(controlpanel));
+        this.jsButnRaiseAndLowerControlPanel.whenPressed();
         /*CLIMBER*/
         this.jsButnRaiseClimb.whileHeld(new InstantCommand(climber:: moveUp, climber));
         this.jsButnLowerClimb.whileHeld(new InstantCommand(climber:: moveDown, climber));
