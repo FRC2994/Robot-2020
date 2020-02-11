@@ -29,7 +29,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public void LimitSwitch() {
-    if (!limitSwitch.get()) {
+    if (limitSwitch.get()) {
       motorcontroller.set(ControlMode.PercentOutput, 0.8);
   }
   else {
