@@ -29,10 +29,10 @@ public class FollowPath extends CommandBase {
 	private EncoderFollower rightFollower;
 
 	//Robot info
-	private int ticksPerRev = 4096;
-	private double wheelDiameter = 5.75*0.0254; //0.0254 meters = 1 inch
+	private int ticksPerRev = 13;  // real value is 12.85.  TODO: use 1285 and a factor of 100.
+	private double wheelDiameter = 6*0.0254; //0.0254 meters = 1 inch
 	private double velocity = 1;
-	private double wheelbaseWidth = 0.2921;
+	private double wheelbaseWidth = 28*0.0254;
 
 	//Trajectory
 	private Trajectory trajL;
