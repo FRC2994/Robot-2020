@@ -23,7 +23,7 @@ public class SpinControlPanel extends CommandBase {
   private final VictorSPX motor;
   private final ColorSensorV3 sensor;
   private ColorMatch matcher;
-  private int colorAmount;
+  private int colorAmount = 0;
 
   private Color blueTarget;
   private Color greenTarget;
@@ -38,7 +38,6 @@ public class SpinControlPanel extends CommandBase {
     this.motor = controlPanel.motor();
 		this.sensor = controlPanel.colorSensor();
     this.matcher = new ColorMatch();
-    colorAmount = 0;
 	} 
     // Use addRequirements() here to declare subsystem dependencies.
 
