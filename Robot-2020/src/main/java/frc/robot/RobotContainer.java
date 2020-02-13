@@ -105,8 +105,8 @@ public class RobotContainer {
         /*CLIMBER*/
         this.jsButnRaiseClimb.whileHeld(new InstantCommand(climber:: moveUp, climber));
         this.jsButnLowerClimb.whileHeld(new InstantCommand(climber:: moveDown, climber));
-        this.jsButnClimbHeavyAndLightGear.whileHeld(new InstantCommand(climber:: setPIDHeavy, climber));
-        this.jsButnClimbHeavyAndLightGear.whenReleased(new InstantCommand(climber:: setPIDLight, climber));
+        this.jsButnClimbHeavyAndLightGear.whileHeld(new InstantCommand(climber:: setPIDLight, climber));
+        this.jsButnClimbHeavyAndLightGear.whenReleased(new InstantCommand(climber:: setPIDHeavy, climber));
         /*HOPPER*/
         this.gpButnHopperDisturber.whileHeld(new InstantCommand(hopper:: HopperDisturberExtend, hopper));
         this.gpButnHopperDisturber.whenReleased(new InstantCommand(hopper:: HopperDisturberIntake, hopper));
