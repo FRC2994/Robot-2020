@@ -60,7 +60,7 @@ public class AlignPID extends CommandBase {
       steer = kP*error + kI*this.integral + kD*derivative;
       drive.arcadeDrive(0, steer);
     }
-    else{
+    else{ // target is roughly in front of us
       drive.tankDrive(0,0);
     }
   }
