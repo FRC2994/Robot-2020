@@ -22,21 +22,25 @@ public class AutoShooterSpeed extends SubsystemBase {
   private int LowSpeedRPM = 3000;
   private int HighSpeedRPM = 5000;
   private CANSparkMax ShooterWheel;
+  
+  public String getX() {
+    splitter();
+    return x;
+  }
+  public double getY() {
+    splitter();
+    return y;
+  }
+  public double getDistance() {
+    splitter();
+    return d;
   }
 
   public AutoShooterSpeed() {
-    byte[] data = new byte[MAX_BYTES];//create a byte array to hold the incoming data
-		Wire.read(4, MAX_BYTES, data);//use address 4 on i2c and store it in data
-		String output = new String(data);//create a string from the byte array
-		// return Integer.parseInt(output);
-    if(Integer.parseInt(output) <= 7){
-      ShooterWheel.set(LowSpeedRPM);
-    }
-    else if(Integer.parseInt(output) > 7){
-      ShooterWheel.set(HighSpeedRPM);
-      }
+   
+      
   }
-
+  
 	
   @Override
   public void periodic() {
