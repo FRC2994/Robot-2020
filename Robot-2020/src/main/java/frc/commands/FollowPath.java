@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class FollowPath extends CommandBase {
 	//Drivetrain
 	private Drivetrain drivetrain;
+	private boolean encodersZeroed;
 
 	private EncoderFollower leftFollower;
 	private EncoderFollower rightFollower;
@@ -61,6 +62,7 @@ public class FollowPath extends CommandBase {
 			// this.trajL = Pathfinder.readFromCSV(leftTraj);
 			// this.trajR = Pathfinder.readFromCSV(rightTraj);
 			File trajFile = new File(deployDir.getAbsolutePath() + "/PathWeaver/output/GenericPath.pf1.csv");
+			// File trajFile = new File(deployDir.getAbsolutePath() + "/output/Slighty.csv");
 			Trajectory mainTraj = Pathfinder.readFromCSV(trajFile);
 
 			// Create the Modifier Object
@@ -81,17 +83,18 @@ public class FollowPath extends CommandBase {
 		this.rightFollower = new EncoderFollower(trajR);
 
 		System.out.println("[FollowPath] constructor complete");
+		drivetrain.resetEncoders();
 	}
 
 	// Called when the command is initially scheduled.
 	@Override
 	public void initialize() {
-		drivetrain.resetEncoders();
     
 		this.leftFollower.configureEncoder((int)drivetrain.getLeftEncoderValue(), ticksPerRev, wheelDiameter);
 		this.leftFollower.configurePIDVA(kP, kI, kD, 1 / velocity, 0);
 		this.rightFollower.configureEncoder((int)drivetrain.getRightEncoderValue(), ticksPerRev, wheelDiameter);
 		this.rightFollower.configurePIDVA(kP, kI, kD, 1 / velocity, 0);
+		this.encodersZeroed = false;
 	}
 
 	// Called every time the scheduler runs while the command is scheduled.
@@ -99,15 +102,24 @@ public class FollowPath extends CommandBase {
 	public void execute() {
 		// System.out.println("[FollowPath] execute");
 
-		int leftTicks = (int)drivetrain.getLeftEncoderValue() * ticksPerRev;
-		int rightTicks = (int)drivetrain.getRightEncoderValue() * ticksPerRev;
-
-		double left_speed = this.leftFollower.calculate(leftTicks);
-		double right_speed = this.rightFollower.calculate(rightTicks);
-
-		System.out.println("[FollowPath] left_speed: " + left_speed + " right_speed: " + right_speed);
-		
-		drivetrain.tankDrive(-left_speed, -right_speed);
+	    double leftTicks = (int)drivetrain.getLeftEncoderValue();
+		double rightTicks = (int)drivetrain.getRightEncoderValue();
+		if ( ! encodersZeroed && ((int)leftTicks == 0 && (int)rightTicks == 0) ) {
+			encodersZeroed = true;
+		}
+	    if ( encodersZeroed ) {
+       
+	        double left_speed = this.leftFollower.calculate((int)leftTicks);
+	        double right_speed = this.rightFollower.calculate((int)rightTicks);
+     
+			System.out.println("[FollowPath] left_speed right_speed leftEncoder rightEncoder x y" 
+			+ left_speed + ", " + right_speed  + ", " + leftTicks + ", " + rightTicks + ", "
+			+ ", " + leftTicks*wheelDiameter + ", " + rightTicks*wheelDiameter);
+	        
+	        drivetrain.tankDrive(-left_speed, -right_speed);
+	    } else {
+	    	 System.out.println("Encoder not zeroed at beginning. leftTicks: " + leftTicks + " rightTicks " + rightTicks);
+	    }
 	}
 
 	// Called once the command ends or is interrupted.

@@ -32,7 +32,7 @@ public class Drivetrain extends SubsystemBase {
 	private CANEncoder rightENC = FrontRight.getEncoder();
 	private CANEncoder leftENC = FrontLeft.getEncoder();
 
-	Solenoid gearShiftSolenoid = new Solenoid(0, 1);
+	Solenoid gearShiftSolenoid = new Solenoid(0, 0);
 	public static enum GearShiftState { HI, LO };
 
 	public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
@@ -78,6 +78,7 @@ public class Drivetrain extends SubsystemBase {
 		FrontRight.setOpenLoopRampRate(0.1);
 
 		reverse = false;
+		gearShiftSolenoid.set(false);
 	}
 	
 	public void setDesiredPosition(int position) {
@@ -109,11 +110,11 @@ public class Drivetrain extends SubsystemBase {
 		rightENC.setPosition(0);
 
 		if (getLeftEncoderValue() != 0) {
-			System.out.println("ERROR - Could not reset Left encoder!!");
+			System.out.println("ERROR - Could not reset Left encoder!!" + (int)leftENC.getPosition());
 		}
 
 		if (getRightEncoderValue() != 0) {
-			System.out.println("ERROR - Could not reset Right encoder!!");
+			System.out.println("ERROR - Could not reset Right encoder!!" +(int)rightENC.getPosition());
 		}
 	}
 
