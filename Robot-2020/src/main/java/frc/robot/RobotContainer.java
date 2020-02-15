@@ -25,7 +25,6 @@ import frc.subsystems.Climber;
 //Commands Imports
 import frc.commands.DefaultDrive;
 import frc.commands.Shoot;
-import frc.commands.DetectColor;
 import frc.commands.GoToColor;
 import frc.commands.SpinControlPanel;
 import frc.commands.FindTarget;
