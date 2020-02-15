@@ -14,6 +14,9 @@ import frc.subsystems.Drivetrain;
 public class FindTarget extends CommandBase {
   private VisionArduino arduino;
   private Drivetrain drive;
+  private int counter;
+  private int maxCount;
+  private boolean finished;
   public FindTarget(VisionArduino target, Drivetrain dt) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arduino = target;
@@ -25,6 +28,9 @@ public class FindTarget extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    counter = 0;
+    maxCount = 50;
+    finished = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,10 +47,15 @@ public class FindTarget extends CommandBase {
     else if(data.equals("CENTER")){
       System.out.println("STOP");
       drive.arcadeDrive(0, 0);
+      counter++;
     }
     else if(data.equals("RIGHT")){
       System.out.println("GO RIGHT");
       drive.arcadeDrive(0, 0.3);
+    }
+
+    if(counter == 25) {
+      finished = true;
     }
   }
 
@@ -56,6 +67,6 @@ public class FindTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return finished;
   }
 }
