@@ -24,7 +24,7 @@ import frc.subsystems.Climber;
 
 //Commands Imports
 import frc.commands.DefaultDrive;
-import frc.commands.Shoot;
+import frc.commands.ShootSpeed;
 import frc.commands.GoToColor;
 import frc.commands.SpinControlPanel;
 import frc.commands.FindTarget;
@@ -67,8 +67,6 @@ public class RobotContainer {
     private final JoystickButton gpButnElevator = new JoystickButton(this.gamepad, 2);
     private final JoystickButton gpButnServoDecrement = new JoystickButton(this.gamepad, 3);
     private final JoystickButton gpButnServoIncrement = new JoystickButton(this.gamepad, 4);
-    private final JoystickButton gpButnHighSpeedShooter = new JoystickButton(this.gamepad, 5);
-    private final JoystickButton gpButnLowSpeedShooter = new JoystickButton(this.gamepad, 6);
     private final JoystickButton gpButnIntakeDownAndUp = new JoystickButton(this.gamepad, 7);
     private final JoystickButton gpButnRunPixyCam = new JoystickButton(this.gamepad, 8);
     private final JoystickButton gpButnHopperDisturber = new JoystickButton(this.gamepad, 9);
@@ -79,7 +77,7 @@ public class RobotContainer {
         configureButtons();
 
         this.drivetrain.setDefaultCommand(new DefaultDrive(drivetrain, joystick));
-        this.shooterwheel.setDefaultCommand(new Shoot(this.shooterwheel, this.gamepad));
+        this.shooterwheel.setDefaultCommand(new ShootSpeed(this.shooterwheel, this.gamepad));
         this.controlpanel.setDefaultCommand(new GoToColor(this.controlpanel));
     }
 
@@ -90,9 +88,8 @@ public class RobotContainer {
         // this.jsButnShifter.whenPressed(new InstantCommand(m_drivetrain::highGear, m_drivetrain));
         // this.jsButnShifter.whenReleased(new InstantCommand(m_drivetrain::lowGear, m_drivetrain));
         /*SHOOTER*/
-        this.gpButnShooter.whileHeld(new InstantCommand(shooterwheel::toggle, shooterwheel));
-        this.gpButnHighSpeedShooter.whenPressed(new InstantCommand(shooterwheel::setLevelThree, shooterwheel));
-        this.gpButnLowSpeedShooter.whenPressed(new InstantCommand(shooterwheel::setLevelOne, shooterwheel));
+        this.gpButnShooter.whileHeld(new InstantCommand(shooterwheel::shoot, shooterwheel));
+        this.gpButnShooter.whenReleased(new InstantCommand(shooterwheel::stopMotor, shooterwheel));
         /*SHOOTER HOOD*/
         this.gpButnServoIncrement.whileHeld(new InstantCommand(shooterhood::ServoInc, shooterhood));
         this.gpButnServoDecrement.whileHeld(new InstantCommand(shooterhood::ServoDec, shooterhood));

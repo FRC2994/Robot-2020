@@ -11,11 +11,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.subsystems.ShooterWheel;
 
-public class Shoot extends CommandBase {
+public class ShootSpeed extends CommandBase {
   private Joystick joystick;
   private ShooterWheel shoot;
 
-  public Shoot(ShooterWheel subsystem, Joystick gamepad) {
+  public ShootSpeed(ShooterWheel subsystem, Joystick gamepad) {
     this.shoot = subsystem;
     this.joystick = gamepad;
     addRequirements(this.shoot);
@@ -29,7 +29,12 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.shoot.shoot();
+    if(joystick.getPOV() == 0 && shoot.status == true){ //Top D-Pad
+      shoot.incrementSpeed();
+    }
+    if(joystick.getPOV() == 180 && shoot.status == true){ //Bottom D-Pad
+      shoot.decrementSpeed();
+    }
   }
 
   // Called once the command ends or is interrupted.
