@@ -17,18 +17,22 @@ public class AutoShooterSpeed extends SubsystemBase {
 
   private static I2C Wire = new I2C(Port.kMXP, 4);
   private static final int MAX_BYTES = 32;
+  }
 
-  
-  public int getPos(){ //function to read the data from arduino
-		byte[] data = new byte[MAX_BYTES];//create a byte array to hold the incoming data
+  public AutoShooterSpeed() {
+    byte[] data = new byte[MAX_BYTES];//create a byte array to hold the incoming data
 		Wire.read(4, MAX_BYTES, data);//use address 4 on i2c and store it in data
 		String output = new String(data);//create a string from the byte array
-		return Integer.parseInt(output);
-  }
-  public AutoShooterSpeed() {
-    if Integer.parseInt(output) <= 50
+		// return Integer.parseInt(output);
+    if(Integer.parseInt(output), <= 7){
+      ShooterWheel.set(ControlMode.PercentOuput, 0.5);
+    }
+      else(Integer.parseInt(output), > 7){
+      ShooterWheel.set(ControlMode.PercentOutput, 1);
+      }
   }
 
+	
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
