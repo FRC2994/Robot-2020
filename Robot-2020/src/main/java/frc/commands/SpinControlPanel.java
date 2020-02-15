@@ -23,7 +23,7 @@ public class SpinControlPanel extends CommandBase {
   private final VictorSPX motor;
   private final ColorSensorV3 sensor;
   private ColorMatch matcher;
-  private int colorAmount;
+  private int colorAmount = 0;
 
   private Color blueTarget;
   private Color greenTarget;
@@ -38,7 +38,6 @@ public class SpinControlPanel extends CommandBase {
     this.motor = controlPanel.motor();
 		this.sensor = controlPanel.colorSensor();
     this.matcher = new ColorMatch();
-    colorAmount = 0;
 	} 
     // Use addRequirements() here to declare subsystem dependencies.
 
@@ -64,18 +63,20 @@ public class SpinControlPanel extends CommandBase {
     Color currentColor = this.sensor.getColor();
   	ColorMatchResult matchResult = this.matcher.matchClosestColor(currentColor);
 
-    if (matchResult == blueTarget) {
-      System.out.println("Blue: Incrementing");
-      colorAmount++;
-    } else if (matchResult == greenTarget) {
-      System.out.println("Green: Incrementing");
-      colorAmount++;
-    } else if (matchResult == yellowTarget) {
-      System.out.println("Yellow: Incrementing");
-      colorAmount++;
-    } else if (matchResult == redTarget)  {
-      System.out.println("Red: Incrementing");
-      colorAmount++;
+    if (matchResult.color == blueTarget) {
+      ++colorAmount;
+      System.out.println("Blue: " + colorAmount);
+    } else if (matchResult.color == greenTarget) {
+      ++colorAmount;
+      System.out.println("Green: " + colorAmount);
+    } else if (matchResult.color == yellowTarget) {
+      ++colorAmount;
+      System.out.println("Yellow: " + colorAmount);
+    } else if (matchResult.color == redTarget)  {
+      ++colorAmount;
+      System.out.println("Red: " + colorAmount);
+    } else {
+      System.out.println("None");
     }
 
     if (colorAmount <= 12) {
