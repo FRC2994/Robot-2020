@@ -32,7 +32,7 @@ public class FindTarget extends CommandBase {
   public void execute() {
     System.out.println("[FindTarget] execute");
 
-    String data = arduino.read();
+    String data = arduino.getX();
 
     if(data.equals("LEFT")){
       System.out.println("GO LEFT");
