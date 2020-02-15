@@ -20,6 +20,7 @@ import frc.subsystems.ShooterHood;
 import frc.subsystems.VisionArduino;
 import frc.subsystems.Intake;
 import frc.subsystems.Hopper;
+import frc.subsystems.Climber;
 
 //Commands Imports
 import frc.commands.DefaultDrive;
@@ -30,6 +31,7 @@ import frc.commands.SpinControlPanel;
 import frc.commands.FindTarget;
 import frc.commands.AlignPID;
 import frc.commands.intakeArm;
+import frc.commands.ControlPanelPiston;
 
 /**
  * Add your docs here.
@@ -48,6 +50,7 @@ public class RobotContainer {
     private final VisionArduino vision = new VisionArduino();
     private final Intake intake = new Intake();
     private final Hopper hopper = new Hopper();
+    private final Climber climber = new Climber();
     
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
@@ -101,7 +104,7 @@ public class RobotContainer {
         /*CONTROL PANEL*/
         this.jsButnDetectColour.whileHeld(new GoToColor(controlpanel));
         this.jsButnRotationControl.whileHeld(new SpinControlPanel(controlpanel));
-        this.jsButnRaiseAndLowerControlPanel.whenPressed();
+        this.jsButnRaiseAndLowerControlPanel.whenPressed(new ControlPanelPiston(controlpanel));
         /*CLIMBER*/
         this.jsButnRaiseClimb.whileHeld(new InstantCommand(climber:: moveUp, climber));
         this.jsButnLowerClimb.whileHeld(new InstantCommand(climber:: moveDown, climber));
