@@ -8,11 +8,12 @@
 package frc.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.utils.Constants;
 import edu.wpi.first.wpilibj.Servo;
 
 public class Hopper extends SubsystemBase {
 
-  private Servo HopperDisturber = new Servo(1);
+  private Servo HopperDisturber = new Servo(Constants.PWM_HOOPER);
   private double HopperPosition;
   private double ConstantChange;
   /**

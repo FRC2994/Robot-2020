@@ -20,12 +20,25 @@ public class Constants {
     public static final int CAN_CONTROL_PANEL               = 5;
     public static final int CAN_CLIMBER                     = 6;
     public static final int CAN_SHOOTER_WHEEL               = 7;
-    public static final int CAN_DRIVE_AUTONOMOUS            = 8;
-    public static final int CAN_DRIVE_TRAIN                 = 9;
-    public static final int CAN_ELEVATOR                    = 10;
-    public static final int CAN_HOPPER                      = 11;
-    public static final int CAN_INTAKE                      = 12;
-    public static final int CAN_SHOOTER_HOOD                = 13;
-    public static final int CAN_VISION_ARDUINO              = 14;
+    public static final int CAN_ELEVATOR                    = 8;
+    public static final int CAN_INTAKE                      = 9;
     
+    /*SERVO PORTS*/
+    public static final int PWM_HOOD                        = 0;
+    public static final int PWM_HOOPER                      = 1;
+
+    /*PNEUMATICS*/
+    public static final int SOLENOID_PORT                   = 0;
+    public static final int PCM_GEAR                        = 0;
+    public static final int PCM_CLIMB                       = 1;
+    public static final int PCM_CONTROL_PANEL               = 2;
+    public static final int PCM_INTAKE_ARM                  = 3;
+
+    /*DIGITAL IO PORTS*/
+    public static final int DIO_CLIMB_ENC_CHN_A             = 1;
+    public static final int DIO_CLIMB_ENC_CHN_B             = 2;
+    public static final int DIO_CLIMB_LIMIT                 = 3;
+    public static final int DIO_ELEVATOR                    = 4;
+
+
 }

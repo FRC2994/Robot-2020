@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.Solenoid;
-
+import frc.utils.Constants;
 
 public class Climber extends PIDSubsystem {
 
@@ -46,13 +46,13 @@ public class Climber extends PIDSubsystem {
         new PIDController(0, 0, 0));
 
       //assigning objects to variables
-        this.m_motor = new WPI_VictorSPX(8);
+        this.m_motor = new WPI_VictorSPX(Constants.CAN_CLIMBER);
         this.m_motor.setNeutralMode(NeutralMode.Brake);
-        this.m_encoder = new Encoder(1, 2);
+        this.m_encoder = new Encoder(Constants.DIO_CLIMB_ENC_CHN_A, Constants.DIO_CLIMB_ENC_CHN_B);
         this.m_encoder.reset();
         this.m_pid = new PIDController(0.5, 0, 0);
-        this.m_limitSwitch = new DigitalInput(3);
-        this.m_solenoid = new Solenoid(23);
+        this.m_limitSwitch = new DigitalInput(Constants.DIO_CLIMB_LIMIT);
+        this.m_solenoid = new Solenoid(Constants.SOLENOID_PORT, Constants.PCM_CLIMB);
         m_pid.setTolerance(10); // tolerence is 10 ticks
   }
 

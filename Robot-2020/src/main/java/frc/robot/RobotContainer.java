@@ -28,7 +28,6 @@ import frc.commands.Shoot;
 import frc.commands.GoToColor;
 import frc.commands.SpinControlPanel;
 import frc.commands.FindTarget;
-import frc.commands.AlignPID;
 import frc.commands.intakeArm;
 import frc.commands.ControlPanelPiston;
 

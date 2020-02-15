@@ -8,6 +8,7 @@
 package frc.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.utils.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -24,8 +25,8 @@ public class Intake extends SubsystemBase {
   private Solenoid intakePiston;
 
   public Intake() {
-    intakeMotor = new VictorSPX(5); //TODO: find the actual CAN id for this
-    intakePiston = new Solenoid(6); //Same thing
+    intakeMotor = new VictorSPX(Constants.CAN_INTAKE); //TODO: find the actual CAN id for this
+    intakePiston = new Solenoid(Constants.SOLENOID_PORT, Constants.PCM_INTAKE_ARM); //Same thing
   }
 
   public void motorOn() {

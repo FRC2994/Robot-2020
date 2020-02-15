@@ -32,7 +32,7 @@ public class Drivetrain extends SubsystemBase {
 	private CANEncoder rightENC = FrontRight.getEncoder();
 	private CANEncoder leftENC = FrontLeft.getEncoder();
 
-	Solenoid gearShiftSolenoid = new Solenoid(0, 1);
+	Solenoid gearShiftSolenoid = new Solenoid(Constants.SOLENOID_PORT, Constants.PCM_GEAR);
 	public static enum GearShiftState { HI, LO };
 
 	public ADXRS450_Gyro gyro = new ADXRS450_Gyro();

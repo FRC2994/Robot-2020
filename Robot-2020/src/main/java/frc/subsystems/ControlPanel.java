@@ -9,6 +9,7 @@ package frc.subsystems;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.utils.Constants;
 import edu.wpi.first.wpilibj.Solenoid;
 
 import com.revrobotics.ColorSensorV3;
@@ -25,8 +26,8 @@ public class ControlPanel extends SubsystemBase {
 	 * Creates a new ControlPanel.
 	 */
 	public ControlPanel() {
-		this.motor = new VictorSPX(5);
-		piston = new Solenoid(1); 					//TODO: Find actual PCM ID
+		this.motor = new VictorSPX(Constants.CAN_CONTROL_PANEL);
+		piston = new Solenoid(Constants.SOLENOID_PORT, Constants.PCM_CONTROL_PANEL); 
 		I2C.Port i2cPort = I2C.Port.kOnboard;
 		this.sensor = new ColorSensorV3(i2cPort);
 	}
