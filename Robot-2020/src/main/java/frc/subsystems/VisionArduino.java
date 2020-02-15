@@ -10,13 +10,14 @@ package frc.subsystems;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class VisionArduino extends SubsystemBase {
   private static I2C Wire = new I2C(Port.kMXP, 4);//uses the i2c port on the RoboRIO
   //uses address 4 
   private static final int MAX_BYTES = 32;
-  double y,d;
-  String x;
+  double y = 0,d = 0;
+  String x = "";
 
 	private String read(){//function to read the data from arduino
 		byte[] data = new byte[MAX_BYTES];//create a byte array to hold the incoming data
@@ -55,6 +56,8 @@ public class VisionArduino extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
+    SmartDashboard.putString("X Position:", getX());
+    SmartDashboard.putNumber("Y Position:", getY());
+    SmartDashboard.putNumber("Distance:", getDistance());
   }
 }
