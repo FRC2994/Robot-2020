@@ -24,10 +24,10 @@ public class AutoShooterSpeed extends SubsystemBase {
 		Wire.read(4, MAX_BYTES, data);//use address 4 on i2c and store it in data
 		String output = new String(data);//create a string from the byte array
 		// return Integer.parseInt(output);
-    if(Integer.parseInt(output), <= 7){
+    if(Integer.parseInt(output) <= 7){
       ShooterWheel.set(ControlMode.PercentOuput, 0.5);
     }
-      else(Integer.parseInt(output), > 7){
+      else(Integer.parseInt(output) > 7){
       ShooterWheel.set(ControlMode.PercentOutput, 1);
       }
   }
