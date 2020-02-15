@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANDigitalInput.LimitSwitch;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -27,15 +28,15 @@ public class Climber extends PIDSubsystem {
   private final DigitalInput m_limitSwitch;
   private final Solenoid m_solenoid;
 
-  private final static int climberPosInc = 469;
-  private final static int climberPosDec = -469;
+  private final static double climberPosInc = 469;
+  private final static double climberPosDec = -469;
   //ticks are 469 or 156
   //gearbox ratio
 
-  private final int maxPosition = 5000;
+  private final double maxPosition = 5000;
 
-  private int bottomPosition = 0;
-  private int desiredPosition = 0;
+  private double bottomPosition = 0;
+  private double desiredPosition = 0;
   private boolean foundBottom = false;
 
 
@@ -46,18 +47,20 @@ public class Climber extends PIDSubsystem {
 
       //assigning objects to variables
         this.m_motor = new WPI_VictorSPX(8);
+        this.m_motor.setNeutralMode(NeutralMode.Brake);
         this.m_encoder = new Encoder(1, 2);
+        this.m_encoder.reset();
         this.m_pid = new PIDController(0.5, 0, 0);
         this.m_limitSwitch = new DigitalInput(3);
         this.m_solenoid = new Solenoid(23);
+        m_pid.setTolerance(10); // tolerence is 10 ticks
   }
 
-  public int getDesiredPosition() {
-    m_controller.getD();
+  public double getDesiredPosition() {
     return desiredPosition;
   }
 
-  public int getCurrentPosition() {
+  public double getCurrentPosition() {
     return m_encoder.get();
   }
 
@@ -74,8 +77,9 @@ public class Climber extends PIDSubsystem {
       foundBottom = true;
       bottomPosition = getCurrentPosition();
       System.out.println("Bottom found. Bottom position = " +bottomPosition);
-    }  else {
-      
+    }  
+    else {
+      foundBottom = false;
       System.out.println("Bottom not found");
     }
     return foundBottom;
@@ -85,25 +89,19 @@ public class Climber extends PIDSubsystem {
     m_pid.setSetpoint(setPoint);
   }
 
+
   public void moveUp() {
-    if (foundBottom) {
-
-    System.out.println("Arm LIFTING up to " + getDesiredPosition());
-
-   
-      if (getCurrentPosition() < maxPosition - bottomPosition) {
-        setPosition(getCurrentPosition() + climberPosInc);
+    if (getCurrentPosition() < maxPosition) {
+        desiredPosition = getCurrentPosition() + climberPosInc;
+        setPosition(desiredPosition);
       } 
-      
-      //do nothing if foundBottom is false
-    }
-
   }
 
 
   public void moveDown() {
-    if (!findBottom()) {
-      setPosition(getCurrentPosition() + climberPosDec);
+    if (m_limitSwitch.get() == false) {
+      desiredPosition = getCurrentPosition() + climberPosDec;
+      setPosition(desiredPosition);
     }
   }
 
@@ -114,6 +112,10 @@ public class Climber extends PIDSubsystem {
       m_motor.setVoltage(output);
 
     }
+  
+  public void move(double output){
+    m_motor.set(ControlMode.PercentOutput, output);
+  }
 
   @Override
   public double getMeasurement() {
