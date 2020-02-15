@@ -12,11 +12,16 @@ import frc.subsystems.VisionArduino;
 import frc.subsystems.ShooterWheel;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
+import com.revrobotics.CANSparkMax;
 
 public class AutoShooterSpeed extends SubsystemBase {
 
   private static I2C Wire = new I2C(Port.kMXP, 4);
   private static final int MAX_BYTES = 32;
+  private ShooterWheel shooterwheel = new ShooterWheel();
+  private int LowSpeedRPM = 3000;
+  private int HighSpeedRPM = 5000;
+  private CANSparkMax ShooterWheel;
   }
 
   public AutoShooterSpeed() {
@@ -25,10 +30,10 @@ public class AutoShooterSpeed extends SubsystemBase {
 		String output = new String(data);//create a string from the byte array
 		// return Integer.parseInt(output);
     if(Integer.parseInt(output) <= 7){
-      ShooterWheel.set(ControlMode.PercentOuput, 0.5);
+      ShooterWheel.set(LowSpeedRPM);
     }
-      else(Integer.parseInt(output) > 7){
-      ShooterWheel.set(ControlMode.PercentOutput, 1);
+    else if(Integer.parseInt(output) > 7){
+      ShooterWheel.set(HighSpeedRPM);
       }
   }
 
