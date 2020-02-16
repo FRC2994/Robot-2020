@@ -16,8 +16,6 @@ public class SpeedAutoShooter extends CommandBase {
   private VisionArduino PixyCam;
   private ShooterWheel Shooter;
   private double distance;
-  private int HighSpeedRPM = 5000;
-  private int LowSpeedRPM = 3500;
   ShootingTable table;
 
   public SpeedAutoShooter(VisionArduino AutoSpeed, ShooterWheel ShooterSpeed) {
@@ -37,16 +35,10 @@ public class SpeedAutoShooter extends CommandBase {
   @Override
   public void execute() {
 
-
-
-    if (distance <= 24){
-      int speed = table.getShoot
-      Shooter.shoot(table.)
+    distance = this.PixyCam.getDistance();
+    Shooter.shoot(table.getShooterWheelSpeed(distance));
+ 
     }
-
-    
-
-  }
 
   // Called once the command ends or is interrupted.
   @Override

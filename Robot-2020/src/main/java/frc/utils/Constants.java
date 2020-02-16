@@ -65,7 +65,7 @@ public class Constants {
         // Basic get methods for wheel speed and hood setting.
         // More advanced methods can be added to the enum is required.
 
-        Integer getShooterWheelSpeed(double distance) {
+        public Integer getShooterWheelSpeed(double distance) {
             if (distance < 24){ // adjust as necessary based on experimentation
                 return MIN_DISTANCE.shooterWheelSpeed;
             } else if (distance < 48){ // adjust as necessary based on experimentation
@@ -77,7 +77,7 @@ public class Constants {
             }
         }
 
-        Integer getHoodSetting() {
+        public Integer getHoodSetting() {
             return hoodSetting;
         }
     }
