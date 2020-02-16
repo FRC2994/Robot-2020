@@ -49,10 +49,10 @@ public class ClimberMove extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(js.getRawButton(12)){
+    if(js.getRawButton(8)){
       climb.moveUp();
     }
-    if(js.getRawButton(11)) {
+    if(js.getRawButton(7)) {
       climb.moveDown();
     }
 

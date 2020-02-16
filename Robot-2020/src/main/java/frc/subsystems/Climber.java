@@ -36,7 +36,7 @@ public class Climber extends PIDSubsystem {
   private final double maxPosition = 5000;
 
   private double bottomPosition = 0;
-  private double desiredPosition = 0;
+  private double desiredPosition = 0; // Re-think this - should it be a setting
   private boolean foundBottom = false;
 
 
