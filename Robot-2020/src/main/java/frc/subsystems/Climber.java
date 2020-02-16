@@ -65,10 +65,10 @@ public class Climber extends PIDSubsystem {
   }
 
   public void setPIDLight() {
-    m_pid.setPID(0.3, 0, 0);
+    m_pid.setPID(0.3, 0, 0); // May need adjustmnet
   }
 
-  public void setPIDHeavy() {
+  public void setPIDHeavy() { // May need adjustmnet
     m_pid.setPID(0.5, 0, 0);
   }
 
@@ -91,7 +91,7 @@ public class Climber extends PIDSubsystem {
 
 
   public void moveUp() {
-    if (getCurrentPosition() < maxPosition) {
+    if (getCurrentPosition() < maxPosition) { // Current setting 5000 ticks. Needs tuning/real numbers.
         desiredPosition = getCurrentPosition() + climberPosInc;
         setPosition(desiredPosition);
       } 
@@ -99,7 +99,7 @@ public class Climber extends PIDSubsystem {
 
 
   public void moveDown() {
-    if (m_limitSwitch.get() == false) {
+    if (m_limitSwitch.get() == false) { // Only move down if we haven't hit the limit switch.
       desiredPosition = getCurrentPosition() + climberPosDec;
       setPosition(desiredPosition);
     }
