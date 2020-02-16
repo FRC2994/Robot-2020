@@ -26,12 +26,12 @@ public class Constants {
       * type works best. Just be sure to change the ENUM below to match.
       */
 
-    private static final Integer MAX_SHOOTER_WHEEL_SPEED = 1000;
-    private static final Integer LOW_SHOOTER_WHEEL_SPEED = 500;
-    private static final Integer HIGHEST_HOOD_SETTING = 10;
-    private static final Integer HOOD_SETTING_7 = 7;
-    private static final Integer HOOD_SETTING_3 = 3;
-    private static final Integer LOWEST_HOOD_SETTING        = ;
+    private static final Integer MAX_SHOOTER_WHEEL_SPEED    = 1000;
+    private static final Integer LOW_SHOOTER_WHEEL_SPEED    = 500;
+    private static final Integer HIGHEST_HOOD_SETTING       = 10;
+    private static final Integer HOOD_SETTING_7             = 7;
+    private static final Integer HOOD_SETTING_3             = 3;
+    private static final Integer LOWEST_HOOD_SETTING        = 1;
 
     /**
      * Enum used by shooter to position the shooter hood and adjust shooter wheel
