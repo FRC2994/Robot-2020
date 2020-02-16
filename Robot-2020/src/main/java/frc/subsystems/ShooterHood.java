@@ -24,7 +24,7 @@ public class ShooterHood extends SubsystemBase {
   }
 
   public void ServoInc() {
-    if(HoodAngle <= 0.9) {
+    if (HoodAngle <= 0.9) {
       HoodAngle += ConstantChange;
       Hood.set(HoodAngle);
     }
@@ -35,9 +35,16 @@ public class ShooterHood extends SubsystemBase {
       HoodAngle -= ConstantChange;
       Hood.set(HoodAngle);
     }
+  }  
+  public void setAngle(double hoodSetting) {
+    Hood.set(hoodSetting);
   }
+
+  }
+
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Position", HoodAngle);
   }
+
 }

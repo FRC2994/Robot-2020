@@ -37,7 +37,7 @@ public class Constants {
      * speed. Key is an arbitrary distance for now but could be a return from
      * VisionArduino to keep things tight
      * 
-     * Each distance will have a shooterWheelSPeed and ShooterHoodAngle associated
+     * Each distance will have a shooterWheelSpeed and ShooterHoodAngle associated
      * 
      * More details on enums here:
      * https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html
@@ -51,13 +51,13 @@ public class Constants {
         // SETTING_NAME(WHEEL_SPEED_CONSTANT, HOOD_SETTING_CONSTANT)
         MAX_DISTANCE (MAX_SHOOTER_WHEEL_SPEED, HIGHEST_HOOD_SETTING), 
         MED_LONG     (MAX_SHOOTER_WHEEL_SPEED, HOOD_SETTING_7),
-        MED_CLOSE    (LOW_SHOOTER_WHEEL_SPEED, HOOD_SETTING_3), 
+        MED_CLOSE    (LOW_SHOOTER_WHEEL_SPEED, HOOD_SETTING_3),
         MIN_DISTANCE (LOW_SHOOTER_WHEEL_SPEED, LOWEST_HOOD_SETTING);
 
         private final Integer shooterWheelSpeed;
         private final Integer hoodSetting;
 
-        ShootingTable(Integer shooterWheelSpeed, Integer hoodSetting) {
+        ShootingTable(final Integer shooterWheelSpeed, final Integer hoodSetting) {
             this.shooterWheelSpeed = shooterWheelSpeed;
             this.hoodSetting = hoodSetting;
         }
@@ -65,7 +65,7 @@ public class Constants {
         // Basic get methods for wheel speed and hood setting.
         // More advanced methods can be added to the enum is required.
 
-        public Integer getShooterWheelSpeed(double distance) {
+        public Integer getShooterWheelSpeed(final double distance) {
             if (distance < 24){ // adjust as necessary based on experimentation
                 return MIN_DISTANCE.shooterWheelSpeed;
             } else if (distance < 48){ // adjust as necessary based on experimentation
@@ -77,8 +77,16 @@ public class Constants {
             }
         }
 
-        public Integer getHoodSetting() {
-            return hoodSetting;
+        public Integer getHoodSetting(double distance) {
+            if (hoodSetting <24){ // adjust as necessary based on experimentation
+                return MIN_DISTANCE.hoodSetting;
+            } else if (hoodSetting < 48){ // adjust as necessary based on experimentation
+                return MED_CLOSE.hoodSetting;
+            } else if (hoodSetting < 72){// adjust as necessary based on experimentation
+                return MED_LONG.hoodSetting;
+            } else { // This will always be the max
+                return MAX_DISTANCE.hoodSetting;
+            }
         }
     }
 }
