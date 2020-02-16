@@ -9,6 +9,7 @@ package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.subsystems.VisionArduino;
+import frc.utils.Constants.ShootingTable;
 import frc.subsystems.ShooterWheel;
 
 public class SpeedAutoShooter extends CommandBase {
@@ -17,6 +18,7 @@ public class SpeedAutoShooter extends CommandBase {
   private double distance;
   private int HighSpeedRPM = 5000;
   private int LowSpeedRPM = 3500;
+  ShootingTable table;
 
   public SpeedAutoShooter(VisionArduino AutoSpeed, ShooterWheel ShooterSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -34,14 +36,16 @@ public class SpeedAutoShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.distance = this.PixyCam.getDistance();
 
-    if (distance <= 200){
-      Shooter.shoot(LowSpeedRPM);
+
+
+    if (distance <= 24){
+      int speed = table.getShoot
+      Shooter.shoot(table.)
     }
-    else if (distance > 200){
-      Shooter.shoot(HighSpeedRPM);
-    }
+
+    
+
   }
 
   // Called once the command ends or is interrupted.

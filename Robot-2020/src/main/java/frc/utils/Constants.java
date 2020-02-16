@@ -43,7 +43,7 @@ public class Constants {
      * https://docs.oracle.com/javase/tutorial/java/javaOO/enum.html
      * 
      */
-    public enum shootingTable {
+    public enum ShootingTable {
 
         // Add as many enum values as necessary to define shooting couplets
         // Constants above are used to make ENUM table readable.
@@ -57,7 +57,7 @@ public class Constants {
         private final Integer shooterWheelSpeed;
         private final Integer hoodSetting;
 
-        shootingTable(Integer shooterWheelSpeed, Integer hoodSetting) {
+        ShootingTable(Integer shooterWheelSpeed, Integer hoodSetting) {
             this.shooterWheelSpeed = shooterWheelSpeed;
             this.hoodSetting = hoodSetting;
         }
@@ -65,8 +65,16 @@ public class Constants {
         // Basic get methods for wheel speed and hood setting.
         // More advanced methods can be added to the enum is required.
 
-        Integer getShooterWheelSpeed() {
-            return shooterWheelSpeed;
+        Integer getShooterWheelSpeed(double distance) {
+            if (distance < 24){ // adjust as necessary based on experimentation
+                return MIN_DISTANCE.shooterWheelSpeed;
+            } else if (distance < 48){ // adjust as necessary based on experimentation
+                return MED_CLOSE.shooterWheelSpeed;
+            } else if (distance < 72){// adjust as necessary based on experimentation
+                return MED_LONG.shooterWheelSpeed;
+            } else { // This will always be the max
+                return MAX_DISTANCE.shooterWheelSpeed;
+            }
         }
 
         Integer getHoodSetting() {
