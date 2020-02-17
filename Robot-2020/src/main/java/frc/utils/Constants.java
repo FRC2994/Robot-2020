@@ -25,7 +25,7 @@ public class Constants {
     
     /*SERVO PORTS*/
     public static final int PWM_HOOD                        = 0;
-    public static final int PWM_HOOPER                      = 1;
+    public static final int PWM_HOPPER                      = 1;
 
     /*PNEUMATICS*/
     public static final int SOLENOID_PORT                   = 0;
