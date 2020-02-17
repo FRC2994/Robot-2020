@@ -71,7 +71,7 @@ public class RobotContainer {
         this.ServoIncrement.whenPressed(new InstantCommand(m_shooterhood::ServoInc, m_shooterhood));
         this.ServoDecrement.whenPressed(new InstantCommand(m_shooterhood::ServoDec, m_shooterhood));
         /*ELEVATOR*/
-        this.gpButnElevator.whenPressed(new InstantCommand(m_elevator:: ascendingSpeed, m_elevator));
+        this.gpButnElevator.whenPressed(new InstantCommand(m_elevator:: startMotor, m_elevator));
         this.gpButnElevator.whenReleased(new InstantCommand(m_elevator:: stopMotor, m_elevator));
     }
 }
