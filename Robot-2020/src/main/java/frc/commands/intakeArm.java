@@ -26,10 +26,12 @@ public class intakeArm extends InstantCommand {
     if (intakeArmExtend == false){
       intakeArmExtend = true;
       intake.lowerIntake();
+      System.out.println("LOWER");
     }
     else if (intakeArmExtend == true){
       intakeArmExtend = false;
       intake.raiseIntake();
+      System.out.println("RAISE");
     }
   }
 }
