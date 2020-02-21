@@ -30,7 +30,7 @@ public class FollowPath extends CommandBase {
 	private EncoderFollower rightFollower;
 
 	//Robot info
-	private int ticksPerRev = 13;  // real value is 12.85.  TODO: use 1285 and a factor of 100.
+	private int ticksPerRev = (int)(12.85*42);  // real value is 12.85.  TODO: use 1285 and a factor of 100.
 	private double wheelDiameter = 6*0.0254; //0.0254 meters = 1 inch
 	private double velocity = 1;
 	private double wheelbaseWidth = 28*0.0254;
@@ -102,8 +102,8 @@ public class FollowPath extends CommandBase {
 	public void execute() {
 		// System.out.println("[FollowPath] execute");
 
-	    double leftTicks = (int)drivetrain.getLeftEncoderValue();
-		double rightTicks = (int)drivetrain.getRightEncoderValue();
+	    int leftTicks = (int)(drivetrain.getLeftEncoderValue()*42);
+		int rightTicks = (int)(drivetrain.getRightEncoderValue()*42);
 		if ( ! encodersZeroed && ((int)leftTicks == 0 && (int)rightTicks == 0) ) {
 			encodersZeroed = true;
 		}
@@ -112,9 +112,8 @@ public class FollowPath extends CommandBase {
 	        double left_speed = this.leftFollower.calculate((int)leftTicks);
 	        double right_speed = this.rightFollower.calculate((int)rightTicks);
      
-			System.out.println("[FollowPath] left_speed right_speed leftEncoder rightEncoder x y" 
-			+ left_speed + ", " + right_speed  + ", " + leftTicks + ", " + rightTicks + ", "
-			+ ", " + leftTicks*wheelDiameter + ", " + rightTicks*wheelDiameter);
+			System.out.format("[FollowPath] left_speed right_speed leftEncoder rightEncoder x y %2.2f,%2.2f,%0d,%0d,%2.2f,%2.2f", 
+			left_speed, right_speed, leftTicks, rightTicks, leftTicks*wheelDiameter, rightTicks*wheelDiameter);
 	        
 	        drivetrain.tankDrive(-left_speed, -right_speed);
 	    } else {
