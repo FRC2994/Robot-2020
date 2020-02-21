@@ -31,7 +31,7 @@ public class Elevator extends SubsystemBase {
 
   public void LimitSwitch() {
     if (limitSwitch.get()) {
-      motorcontroller.set(ControlMode.PercentOutput, 0.8);
+      motorcontroller.set(ControlMode.PercentOutput, 0.5);
     }
     else {
       motorcontroller.set(ControlMode.PercentOutput, 0);
@@ -40,12 +40,14 @@ public class Elevator extends SubsystemBase {
 
   public void startMotor()
   {
-    motorcontroller.set(ControlMode.PercentOutput, 0.8);
+    motorcontroller.set(ControlMode.PercentOutput, 0.5);
+    System.out.print("ELEVATOR ACTIVE");
   }
   
   public void stopMotor()
   {
     motorcontroller.set(ControlMode.PercentOutput, 0);
+    System.out.print("ELEVATOR OFF");
   }
 
   @Override

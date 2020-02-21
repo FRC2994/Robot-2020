@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Servo;
 
 public class Hopper extends SubsystemBase {
 
-  private Servo HopperDisturber = new Servo(Constants.PWM_HOOPER);
+  private Servo HopperDisturber = new Servo(Constants.PWM_HOPPER);
   private double HopperPosition;
   private double ConstantChange;
   /**

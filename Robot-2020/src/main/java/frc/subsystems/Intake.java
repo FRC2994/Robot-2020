@@ -27,10 +27,11 @@ public class Intake extends SubsystemBase {
   public Intake() {
     intakeMotor = new VictorSPX(Constants.CAN_INTAKE); //TODO: find the actual CAN id for this
     intakePiston = new Solenoid(Constants.SOLENOID_PORT, Constants.PCM_INTAKE_ARM); //Same thing
+    raiseIntake();
   }
 
   public void motorOn() {
-    intakeMotorSpeed = 0.75;
+    intakeMotorSpeed = 1;
     intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
   }
 
@@ -42,11 +43,13 @@ public class Intake extends SubsystemBase {
   public void lowerIntake() {
     intakePistonExtend = true;
     intakePiston.set(intakePistonExtend);
+    System.out.print("LOWER");
   }
 
   public void raiseIntake(){
     intakePistonExtend = false;
     intakePiston.set(intakePistonExtend);
+    System.out.print("RAISED");
   }
 
   @Override

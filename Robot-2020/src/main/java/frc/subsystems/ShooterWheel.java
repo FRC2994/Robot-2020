@@ -39,14 +39,12 @@ public class ShooterWheel extends SubsystemBase {
 	enc = Shooter.getEncoder();
 	pid = Shooter.getPIDController();
 
-	//Ensures the motor stops
-	stopMotor();
 
 	Shooter.restoreFactoryDefaults();
 	Shooter.setIdleMode(IdleMode.kCoast);
-	this.Shooter.setInverted(false);
-	desiredRPM = 0;
-
+	this.Shooter.setInverted(true);
+	desiredRPM = 5000;
+	stopMotor();
 	if(tuner == true)
 	{
 		kP = 6e-5; 
@@ -92,8 +90,9 @@ public class ShooterWheel extends SubsystemBase {
   public void shoot(){
 	status = true;
 
+	System.out.println("Shoot");
 	//Actually sets the velocity to the desired RPM
-	pid.setReference(desiredRPM, ControlType.kVelocity);
+	Shooter.set(0.6);
   }
 
   //Increments the speed
@@ -102,9 +101,10 @@ public class ShooterWheel extends SubsystemBase {
 	//Checks if the rpm isnt at max and if the motor is even on
 	if(desiredRPM != maxRPM && status == true)
 	{
-	  //increases the rpm and sets it
-	  desiredRPM = desiredRPM + increments;
-	  // pid.setReference(desiredRPM, ControlType.kVelocity);
+		System.out.println("Incremented");
+	  	//increases the rpm and sets it
+	  	desiredRPM = desiredRPM + increments;
+	  	// pid.setReference(desiredRPM, ControlType.kVelocity);
 	}
   }
 
@@ -114,9 +114,10 @@ public class ShooterWheel extends SubsystemBase {
 	//Checks if the rpm is low and if the motor is even on
 	if(desiredRPM != 500 && status == true)
 	{
-	  //decrease the rpm and set it
-	  desiredRPM = desiredRPM - increments;
-	  // pid.setReference(desiredRPM, ControlType.kVelocity);
+		System.out.println("Decremented");
+	  	//decrease the rpm and set it
+	  	desiredRPM = desiredRPM - increments;
+	  	// pid.setReference(desiredRPM, ControlType.kVelocity);
 	}
   }
 
