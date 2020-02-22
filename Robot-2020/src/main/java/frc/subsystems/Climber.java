@@ -50,10 +50,12 @@ public class Climber extends PIDSubsystem {
         this.m_motor.setNeutralMode(NeutralMode.Brake);
         this.m_encoder = new Encoder(Constants.DIO_CLIMB_ENC_CHN_A, Constants.DIO_CLIMB_ENC_CHN_B);
         this.m_encoder.reset();
-        this.m_pid = new PIDController(0.5, 0, 0);
+        this.m_pid = new PIDController(0.1, 0, 0);
         this.m_limitSwitch = new DigitalInput(Constants.DIO_CLIMB_LIMIT);
         this.m_solenoid = new Solenoid(Constants.SOLENOID_PORT, Constants.PCM_CLIMB);
         m_pid.setTolerance(10); // tolerence is 10 ticks
+        m_pid.enableContinuousInput(0, 10000);
+
   }
 
   public double getDesiredPosition() {
@@ -94,7 +96,9 @@ public class Climber extends PIDSubsystem {
     if (getCurrentPosition() < maxPosition) { // Current setting 5000 ticks. Needs tuning/real numbers.
         desiredPosition = getCurrentPosition() + climberPosInc;
         setPosition(desiredPosition);
-      } 
+        System.out.println("GOING UP");
+    } 
+      System.out.println("encValues " + m_encoder.get() );
   }
 
 
@@ -102,24 +106,43 @@ public class Climber extends PIDSubsystem {
     if (m_limitSwitch.get() == false) { // Only move down if we haven't hit the limit switch.
       desiredPosition = getCurrentPosition() + climberPosDec;
       setPosition(desiredPosition);
+      System.out.println("GOING DOWN");
     }
+    System.out.println(m_encoder.get());
   }
 
   @Override
   public void useOutput(double output, double setpoint) {
       // Use the output here
-      //m_motor.set(ControlMode.PercentOutput,output + m_feedForward.calculate(setpoint));  
-      m_motor.setVoltage(output);
-
+      //m_motor.set(ControlMode.PercentOutput,output + m_feedForward.calculate(setpoint));
+      double motorOutput = m_pid.calculate(getCurrentPosition());
+      System.out.println("Output:" + motorOutput);
+      m_motor.set(motorOutput);
     }
   
   public void move(double output){
     m_motor.set(ControlMode.PercentOutput, output);
   }
 
+  public void openLoopUp() {
+    move(0.7);
+    System.out.println(m_encoder.get());
+  }
+  public void openLoopDown() {
+    move(-0.7);
+    System.out.println(m_encoder.get());
+  }
+  public void stopMotor(){
+    move(0);
+  }
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
-    return 0;
+    return getCurrentPosition();
+  }
+  @Override
+  public void periodic() {
+    super.periodic();
+    System.out.println("Current Position: " + getCurrentPosition() + " Desired Position: " + m_pid.getSetpoint());
   }
 }

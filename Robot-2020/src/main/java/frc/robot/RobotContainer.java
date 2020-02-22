@@ -49,7 +49,7 @@ public class RobotContainer {
     private final VisionArduino vision = new VisionArduino();
     private final Intake intake = new Intake();
     // private final Hopper hopper = new Hopper();
-    // private final Climber climber = new Climber();
+    private final Climber climber = new Climber();
     
     //Joystick and Gamepad buttons
     // private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
@@ -80,6 +80,7 @@ public class RobotContainer {
         this.drivetrain.setDefaultCommand(new DefaultDrive(drivetrain, joystick));
         this.shooterwheel.setDefaultCommand(new ShootSpeed(this.shooterwheel, this.gamepad));
         // this.controlpanel.setDefaultCommand(new GoToColor(this.controlpanel));
+        climber.enable();
     }
 
 
@@ -104,8 +105,10 @@ public class RobotContainer {
         // this.jsButnRotationControl.whileHeld(new SpinControlPanel(controlpanel));
         // this.jsButnRaiseAndLowerControlPanel.whenPressed(new ControlPanelPiston(controlpanel));
         /*CLIMBER*/
-        // this.jsButnRaiseClimb.whileHeld(new InstantCommand(climber:: moveUp, climber));
-        // this.jsButnLowerClimb.whileHeld(new InstantCommand(climber:: moveDown, climber));
+        this.jsButnRaiseClimb.whileHeld(new InstantCommand(climber::moveUp, climber));
+        this.jsButnRaiseClimb.whenReleased(new InstantCommand(climber::stopMotor, climber));
+        this.jsButnLowerClimb.whileHeld(new InstantCommand(climber::moveDown, climber));
+        this.jsButnLowerClimb.whenReleased(new InstantCommand(climber::stopMotor, climber));
         // this.jsButnClimbHeavyAndLightGear.whileHeld(new InstantCommand(climber:: setPIDLight, climber));
         // this.jsButnClimbHeavyAndLightGear.whenReleased(new InstantCommand(climber:: setPIDHeavy, climber));
         /*HOPPER*/

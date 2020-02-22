@@ -28,9 +28,6 @@ public class FindTarget extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    counter = 0;
-    maxCount = 50;
-    finished = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,7 +36,7 @@ public class FindTarget extends CommandBase {
     System.out.println("[FindTarget] execute");
 
     String data = arduino.getX();
-
+    arduino.ledOn();
     if(data.equals("LEFT")){
       System.out.println("GO LEFT");
       drive.arcadeDrive(0, -0.3);
@@ -53,15 +50,12 @@ public class FindTarget extends CommandBase {
       System.out.println("GO RIGHT");
       drive.arcadeDrive(0, 0.3);
     }
-
-    if(counter == 25) {
-      finished = true;
-    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    arduino.ledOff();
   }
 
   // Returns true when the command should end.

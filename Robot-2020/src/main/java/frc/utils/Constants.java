@@ -35,8 +35,8 @@ public class Constants {
     public static final int PCM_INTAKE_ARM                  = 3;
 
     /*DIGITAL IO PORTS*/
-    public static final int DIO_CLIMB_ENC_CHN_A             = 1;
-    public static final int DIO_CLIMB_ENC_CHN_B             = 2;
+    public static final int DIO_CLIMB_ENC_CHN_A             = 0;
+    public static final int DIO_CLIMB_ENC_CHN_B             = 1;
     public static final int DIO_CLIMB_LIMIT                 = 3;
     public static final int DIO_ELEVATOR                    = 4;
 

@@ -8,6 +8,8 @@
 package frc.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.utils.Constants;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,6 +20,7 @@ public class VisionArduino extends SubsystemBase {
   private static final int MAX_BYTES = 32;
   double y = 0,d = 0;
   String x = "";
+  Solenoid led = new Solenoid(Constants.CAN_PCM, 7);
 
 	private String read(){//function to read the data from arduino
 		byte[] data = new byte[MAX_BYTES];//create a byte array to hold the incoming data
@@ -51,9 +54,15 @@ public class VisionArduino extends SubsystemBase {
     return d;
   }
   public VisionArduino() {
-
+    ledOff();
   }
 
+  public void ledOn(){
+    led.set(true);
+  }
+  public void ledOff(){
+    led.set(false);
+  }
   @Override
   public void periodic() {
     SmartDashboard.putString("X Position:", getX());
