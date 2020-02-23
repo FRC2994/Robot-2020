@@ -27,10 +27,10 @@ public class VisionArduino extends SubsystemBase {
 		Wire.read(4, MAX_BYTES, data);//use address 4 on i2c and store it in data
 		String output = new String(data);//create a string from the byte array
 		int pt = output.indexOf((char)255);
-		return (String) output.subSequence(0, pt < 0 ? 0 : pt);
+    return (String) output.subSequence(0, pt < 0 ? 0 : pt);
   }
   
-  private void splitter() {
+  public void splitter() {
     String info[] = read().split("\\|");
     if(info.length == 3){//if there is an x, y, and area value the length equals 3
 			x = info[0];//set x
@@ -40,17 +40,14 @@ public class VisionArduino extends SubsystemBase {
   }
 
   public String getX() {
-    splitter();
     return x;
   }
   
   public double getY() {
-    splitter();
     return y;
   }
 
   public double getDistance() {
-    splitter();
     return d;
   }
   public VisionArduino() {
@@ -65,8 +62,8 @@ public class VisionArduino extends SubsystemBase {
   }
   @Override
   public void periodic() {
-    SmartDashboard.putString("X Position:", getX());
-    SmartDashboard.putNumber("Y Position:", getY());
-    SmartDashboard.putNumber("Distance:", getDistance());
+    // SmartDashboard.putString("X Position:", getX());
+    // SmartDashboard.putNumber("Y Position:", getY());
+    // SmartDashboard.putNumber("Distance:", getDistance
   }
 }

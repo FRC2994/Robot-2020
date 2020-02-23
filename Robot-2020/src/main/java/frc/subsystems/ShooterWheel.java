@@ -45,16 +45,16 @@ public class ShooterWheel extends SubsystemBase {
 	this.Shooter.setInverted(true);
 	desiredRPM = 5000;
 	stopMotor();
-	if(tuner == true)
-	{
-		kP = 6e-5; 
+	// if(tuner == true)
+	// {
+		kP = 1; 
 		kI = 0;
 		kD = 0; 
 		kIz = 0; 
-		kFF = 0.000015; 
+		kFF = 1; 
 		kMaxOutput = 1; 
 		kMinOutput = -1;
-		maxRPM = 5700;
+		maxRPM = 5000;
 	
 		// set PID coefficients
 		pid.setP(kP);
@@ -73,7 +73,7 @@ public class ShooterWheel extends SubsystemBase {
 		SmartDashboard.putNumber("Max Output", kMaxOutput);
 		SmartDashboard.putNumber("Min Output", kMinOutput);
 		SmartDashboard.putNumber("Set Velocity", 0);
-	}
+	// }
   }
 
 
@@ -90,9 +90,10 @@ public class ShooterWheel extends SubsystemBase {
   public void shoot(){
 	status = true;
 
-	System.out.println("Shoot");
+	// System.out.println("Shoot");
 	//Actually sets the velocity to the desired RPM
-	Shooter.set(0.6);
+	// Shooter.set(1);
+	pid.setReference(5000, ControlType.kVelocity);
   }
 
   //Increments the speed
@@ -108,6 +109,9 @@ public class ShooterWheel extends SubsystemBase {
 	}
   }
 
+  public double getRPM() {
+	  return enc.getVelocity();
+  }
   //Decrements the speed
   public void decrementSpeed()
   {
@@ -161,5 +165,6 @@ public class ShooterWheel extends SubsystemBase {
   @Override
   public void periodic() {
 	printSpeeds();
+	// System.out.println(enc.getVelocity());
   }
 }

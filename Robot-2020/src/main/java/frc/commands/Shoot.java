@@ -15,6 +15,8 @@ import frc.subsystems.ShooterWheel;
 public class Shoot extends CommandBase {
   private Elevator elevator;
   private ShooterWheel shooter;
+  int ticks = 0;
+  int maxTicks = 100;
   public Shoot(Elevator _elevator, ShooterWheel _shooter) {
     elevator = _elevator;
     shooter = _shooter;
@@ -30,8 +32,32 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    // ticks++;
     shooter.shoot();
-    elevator.startMotor();
+    // if(ticks == 0 || ticks == 1){
+    //   // if(shooter.getRPM() > 5050){
+    //     elevator.startMotor();
+    //     System.out.println("SHOOT");
+    //   // }
+    // }
+    // else if (ticks == 75)
+    // {
+    //   elevator.stopMotor();
+    //   System.out.println("Stopped");
+    // }
+    // else if (ticks == 100)
+    // {
+    //   ticks = 0;
+    //   System.out.println("Stopped");
+    // }
+    // Sytsem.out.println(ticks);
+    if(shooter.getRPM() > 5050){
+      elevator.startMotor();
+      System.out.println("SHOOT");
+    }
+    else{
+      elevator.stopMotor();
+    }
   }
 
   // Called once the command ends or is interrupted.

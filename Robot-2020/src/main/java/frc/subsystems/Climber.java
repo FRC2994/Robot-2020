@@ -33,7 +33,7 @@ public class Climber extends PIDSubsystem {
   //ticks are 469 or 156
   //gearbox ratio
 
-  private final double maxPosition = 5000;
+  private final double maxPosition = 20000;
 
   private double bottomPosition = 0;
   private double desiredPosition = 0; // Re-think this - should it be a setting
@@ -116,7 +116,7 @@ public class Climber extends PIDSubsystem {
       // Use the output here
       //m_motor.set(ControlMode.PercentOutput,output + m_feedForward.calculate(setpoint));
       double motorOutput = m_pid.calculate(getCurrentPosition());
-      System.out.println("Output:" + motorOutput);
+      // System.out.println("Output:" + motorOutput);
       m_motor.set(motorOutput);
     }
   
@@ -125,11 +125,11 @@ public class Climber extends PIDSubsystem {
   }
 
   public void openLoopUp() {
-    move(0.7);
+    move(1);
     System.out.println(m_encoder.get());
   }
   public void openLoopDown() {
-    move(-0.7);
+    move(-1);
     System.out.println(m_encoder.get());
   }
   public void stopMotor(){
@@ -143,6 +143,6 @@ public class Climber extends PIDSubsystem {
   @Override
   public void periodic() {
     super.periodic();
-    System.out.println("Current Position: " + getCurrentPosition() + " Desired Position: " + m_pid.getSetpoint());
+    // System.out.println("Current Position: " + getCurrentPosition() + " Desired Position: " + m_pid.getSetpoint());
   }
 }

@@ -27,11 +27,12 @@ public class Elevator extends SubsystemBase {
   
   public Elevator() {
     motorcontroller = new VictorSPX(Constants.CAN_ELEVATOR); //TODO: Find a CAN ID for the Elevator
+    motorcontroller.configOpenloopRamp(0);
   }
 
   public void LimitSwitch() {
     if (limitSwitch.get()) {
-      motorcontroller.set(ControlMode.PercentOutput, 0.5);
+      motorcontroller.set(ControlMode.PercentOutput, 0.8);
     }
     else {
       motorcontroller.set(ControlMode.PercentOutput, 0);
@@ -40,18 +41,17 @@ public class Elevator extends SubsystemBase {
 
   public void startMotor()
   {
-    motorcontroller.set(ControlMode.PercentOutput, 0.5);
-    System.out.print("ELEVATOR ACTIVE");
+    motorcontroller.set(ControlMode.PercentOutput, 0.6);
+    // System.out.print("ELEVATOR ACTIVE");
   }
   
   public void stopMotor()
   {
     motorcontroller.set(ControlMode.PercentOutput, 0);
-    System.out.print("ELEVATOR OFF");
+    // System.out.print("ELEVATOR OFF");
   }
 
   @Override
-
   public void periodic() {
     // This method will be called once per scheduler run
   }

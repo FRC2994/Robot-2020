@@ -41,7 +41,7 @@ public class Drivetrain extends SubsystemBase {
 	private int startPosition;
 	private int desiredPosition = 0; 
 	private boolean stopArcadeDrive;
-	private boolean reverse;
+	private boolean reverse = false;
 	
 	private static final double leftDistancePerPulse = (4.0 / 12.0 * Math.PI) / 360.0;
 	private static final double rightDistancePerPulse = (4.0 / 12.0 * Math.PI) / 360.0;
@@ -129,7 +129,13 @@ public class Drivetrain extends SubsystemBase {
 	
 
 	public void arcadeDrive(double forward, double rotation) {
-		differentialDrive.arcadeDrive(-forward , rotation);
+		if(reverse == false){
+			differentialDrive.arcadeDrive(forward, rotation);
+		}
+		else{
+			differentialDrive.arcadeDrive(-forward , rotation);
+		}// differentialDrive.feed();
+		// differentialDrive.feedWatchdog();
 	}
 
 	public void getJoystickValues(Joystick joystick) {
@@ -207,6 +213,13 @@ public class Drivetrain extends SubsystemBase {
 		stopArcadeDrive = value;
 	}
 
+	public void enableReverse(){
+		reverse = true;
+	}
+	public void disableReverse(){
+		reverse= false;
+	}
+
     /**
      * This function is called periodically by Scheduler.run
      */
@@ -216,6 +229,7 @@ public class Drivetrain extends SubsystemBase {
 		// Logger.appendRecord(
 		//  		getFrontLeftMotor().getMotorOutputVoltage() + "\t" + getFrontRightMotor().getMotorOutputVoltage() + 
 		//  		"\t" + getLeftEncoderValue() + "\t" + getRightEncoderValue() + "\t" + getHeading() + "\t");
+		// System.out.println(getLeftEncoderValue());
 	}
 
    /**

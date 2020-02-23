@@ -17,6 +17,7 @@ public class FindTarget extends CommandBase {
   private int counter;
   private int maxCount;
   private boolean finished;
+  String data;
   public FindTarget(VisionArduino target, Drivetrain dt) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arduino = target;
@@ -28,27 +29,36 @@ public class FindTarget extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    finished = false;
+    counter = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("[FindTarget] execute");
-
-    String data = arduino.getX();
+    // System.out.println("[FindTarget] execute");
+    arduino.splitter();
+    data = arduino.getX();
     arduino.ledOn();
     if(data.equals("LEFT")){
-      System.out.println("GO LEFT");
-      drive.arcadeDrive(0, -0.3);
+      // System.out.println("GO LEFT");
+      drive.arcadeDrive(0, -0.4);
+      finished = false;
     }
     else if(data.equals("CENTER")){
-      System.out.println("STOP");
+      // System.out.println("STOP");
       drive.arcadeDrive(0, 0);
+      // finished = true;
       counter++;
     }
     else if(data.equals("RIGHT")){
-      System.out.println("GO RIGHT");
-      drive.arcadeDrive(0, 0.3);
+      // System.out.println("GO RIGHT");
+      drive.arcadeDrive(0, 0.4);
+      finished = false;
+    }
+    System.out.println(data);
+    if(counter == 150){
+      finished = true;
     }
   }
 
@@ -56,6 +66,7 @@ public class FindTarget extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     arduino.ledOff();
+    System.out.println("DONE!");
   }
 
   // Returns true when the command should end.
