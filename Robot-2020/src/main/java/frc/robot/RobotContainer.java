@@ -85,14 +85,15 @@ public class RobotContainer {
 
     private void configureButtons() {
         //Instant commands
-        /*GEAR SHIFTER*/
+        /*GEAR SHIFTERS*/
         // this.jsButnShifter.whenPressed(new InstantCommand(m_drivetrain::highGear, m_drivetrain));
         // this.jsButnShifter.whenReleased(new InstantCommand(m_drivetrain::lowGear, m_drivetrain));
+        // this.jsButnClimbHeavyAndLightGear.whileHeld(new InstantCommand(climber:: setPIDLight, climber));
+        // this.jsButnClimbHeavyAndLightGear.whenReleased(new InstantCommand(climber:: setPIDHeavy, climber));
         /*SHOOTER*/
         this.gpButnShooter.whileHeld(new InstantCommand(shooterwheel::shoot, shooterwheel));
         this.gpButnShooter.whenReleased(new InstantCommand(shooterwheel::stopMotor, shooterwheel));
         this.gpButnShoot.whileHeld(new Shoot(elevator, shooterwheel));
-
         /*SHOOTER HOOD*/
         // this.gpButnServoIncrement.whileHeld(new InstantCommand(shooterhood::ServoInc, shooterhood));
         // this.gpButnServoDecrement.whileHeld(new InstantCommand(shooterhood::ServoDec, shooterhood));
@@ -108,8 +109,6 @@ public class RobotContainer {
         this.jsButnRaiseClimb.whenReleased(new InstantCommand(climber::stopMotor, climber));
         this.jsButnLowerClimb.whileHeld(new InstantCommand(climber::moveDown, climber));
         this.jsButnLowerClimb.whenReleased(new InstantCommand(climber::stopMotor, climber));
-        // this.jsButnClimbHeavyAndLightGear.whileHeld(new InstantCommand(climber:: setPIDLight, climber));
-        // this.jsButnClimbHeavyAndLightGear.whenReleased(new InstantCommand(climber:: setPIDHeavy, climber));
         /*HOPPER*/
         // this.gpButnHopperDisturber.whileHeld(new InstantCommand(hopper:: HopperDisturberExtend, hopper));
         // this.gpButnHopperDisturber.whenReleased(new InstantCommand(hopper:: HopperDisturberIntake, hopper));
