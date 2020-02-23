@@ -64,14 +64,13 @@ public class RobotContainer {
     private final JoystickButton jsButnClimbHeavyAndLightGear = new JoystickButton(this.joystick, 9);
   
     //gamepad
-    private final JoystickButton gpButnShooter = new JoystickButton(this.gamepad, 1);
-    private final JoystickButton gpButnElevator = new JoystickButton(this.gamepad, 2);
+    private final JoystickButton gpButnShoot = new JoystickButton(this.gamepad, 1);
     private final JoystickButton gpButnServoDecrement = new JoystickButton(this.gamepad, 3);
-    private final JoystickButton gpButnServoIncrement = new JoystickButton(this.gamepad, 4);
-    private final JoystickButton gpButnIntakeDownAndUp = new JoystickButton(this.gamepad, 7);
+    private final JoystickButton gpButnIntakeDownAndUp = new JoystickButton(this.gamepad, 4);
+    private final JoystickButton gpButnShooterAndElevator = new JoystickButton(this.gamepad, 5);
+    private final JoystickButton gpButnElevatorAndShooter = new JoystickButton(this.gamepad, 6);
     private final JoystickButton gpButnRunPixyCam = new JoystickButton(this.gamepad, 8);
-    private final JoystickButton gpButnShoot = new JoystickButton(this.gamepad, 6);
-    
+    private final JoystickButton gpButnServoIncrement = new JoystickButton(this.gamepad, 9);
     //Contains subsystems, OI devices, and commands.
     public RobotContainer(){
         configureButtons();
@@ -91,15 +90,15 @@ public class RobotContainer {
         // this.jsButnClimbHeavyAndLightGear.whileHeld(new InstantCommand(climber:: setPIDLight, climber));
         // this.jsButnClimbHeavyAndLightGear.whenReleased(new InstantCommand(climber:: setPIDHeavy, climber));
         /*SHOOTER*/
-        this.gpButnShooter.whileHeld(new InstantCommand(shooterwheel::shoot, shooterwheel));
-        this.gpButnShooter.whenReleased(new InstantCommand(shooterwheel::stopMotor, shooterwheel));
+        this.gpButnShooterAndElevator.whileHeld(new InstantCommand(shooterwheel::shoot, shooterwheel));
+        this.gpButnShooterAndElevator.whenReleased(new InstantCommand(shooterwheel::stopMotor, shooterwheel));
         this.gpButnShoot.whileHeld(new Shoot(elevator, shooterwheel));
         /*SHOOTER HOOD*/
         // this.gpButnServoIncrement.whileHeld(new InstantCommand(shooterhood::ServoInc, shooterhood));
         // this.gpButnServoDecrement.whileHeld(new InstantCommand(shooterhood::ServoDec, shooterhood));
         /*ELEVATOR*/
-        this.gpButnElevator.whileHeld(new InstantCommand(elevator::startMotor, elevator));
-        this.gpButnElevator.whenReleased(new InstantCommand(elevator::stopMotor, elevator));
+        this.gpButnElevatorAndShooter.whileHeld(new InstantCommand(elevator::startMotor, elevator));
+        this.gpButnElevatorAndShooter.whenReleased(new InstantCommand(elevator::stopMotor, elevator));
         /*CONTROL PANEL*/
         // this.jsButnDetectColour.whileHeld(new GoToColor(controlpanel));
         // this.jsButnRotationControl.whileHeld(new SpinControlPanel(controlpanel));
