@@ -16,7 +16,6 @@ import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.utils.Constants;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShooterWheel extends SubsystemBase {
@@ -29,7 +28,6 @@ public class ShooterWheel extends SubsystemBase {
   private double actualRPM;
   public boolean status;
   public int currentSet;
-  private boolean tuner = false; //true for debugging pid
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
   public ShooterWheel() {

@@ -62,8 +62,5 @@ public class VisionArduino extends SubsystemBase {
   }
   @Override
   public void periodic() {
-    // SmartDashboard.putString("X Position:", getX());
-    // SmartDashboard.putNumber("Y Position:", getY());
-    // SmartDashboard.putNumber("Distance:", getDistance
   }
 }

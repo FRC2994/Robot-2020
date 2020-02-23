@@ -51,6 +51,7 @@ public class RobotContainer {
     // private final ShooterHood shooterhood = new ShooterHood();
     private final VisionArduino vision = new VisionArduino();
     private final Intake intake = new Intake();
+    //TODO: figure out if the hopper even needs to be a subsystem now
     // private final Hopper hopper = new Hopper();
     private final Climber climber = new Climber();
     
@@ -61,34 +62,22 @@ public class RobotContainer {
     private final JoystickButton gpButnRunPixyCam = new JoystickButton(this.joystick, 2);
     private final JoystickButton jsButnRaiseAndLowerControlPanel = new JoystickButton(this.joystick, 3);
     private final JoystickButton jsButnRotationControl = new JoystickButton(this.joystick, 4);
-    // private final JoystickButton jsButnDriveHighAndLowGear = new JoystickButton(this.joystick, 5);
     private final JoystickButton jsButnReverse = new JoystickButton(this.joystick, 5);
     private final JoystickButton jsButnDetectColour = new JoystickButton(this.joystick, 6);
     private final JoystickButton jsButnLowerClimb = new JoystickButton(this.joystick, 7);
     private final JoystickButton jsButnRaiseClimb = new JoystickButton(this.joystick, 8);
   
     //gamepad
-    private final JoystickButton gpButnShoot = new JoystickButton(this.gamepad, 1);
-    private final JoystickButton gpButnServoDecrement = new JoystickButton(this.gamepad, 3);
-    private final JoystickButton gpButnServoIncrement = new JoystickButton(this.gamepad, 4);
-    private final JoystickButton gpButnIntakeDownAndUp = new JoystickButton(this.gamepad, 7);
-    private final JoystickButton gpButnHopperDisturber = new JoystickButton(this.gamepad, 9);
-    private final JoystickButton gpButnShoot = new JoystickButton(this.gamepad, 6);
-    
-    private final JoystickButton gpButnIntakeDownAndUp = new JoystickButton(this.gamepad, 4);
-    private final JoystickButton gpButnShooterAndElevator = new JoystickButton(this.gamepad, 5);
-    private final JoystickButton gpButnElevatorAndShooter = new JoystickButton(this.gamepad, 6);
-    private final JoystickButton gpButnRunPixyCam = new JoystickButton(this.gamepad, 8);
-    private final JoystickButton gpButnServoIncrement = new JoystickButton(this.gamepad, 9);
+    private final JoystickButton gpButnShoot                = new JoystickButton(this.gamepad, 1);
+    private final JoystickButton gpButnManualElevator       = new JoystickButton(this.gamepad, 2);
+    private final JoystickButton gpButnServoDecrement       = new JoystickButton(this.gamepad, 3);
+    private final JoystickButton gpButnServoIncrement       = new JoystickButton(this.gamepad, 4);
+    private final JoystickButton gpButnIntakeDownAndUp      = new JoystickButton(this.gamepad, 7);
+    private final JoystickButton gpButnShooter              = new JoystickButton(this.gamepad, 6);
     //Contains subsystems, OI devices, and commands.
+
     public RobotContainer(){
         configureButtons();
-
-        this.drivetrain.setDefaultCommand(new DefaultDrive(drivetrain, joystick));
-        this.shooterwheel.setDefaultCommand(new ShootSpeed(this.shooterwheel, this.gamepad));
-        // this.controlpanel.setDefaultCommand(new GoToColor(this.controlpanel));
-        // climber.enable();
-        this.intake.setDefaultCommand(new IntakeTrigger(intake, gamepad));
     }
 
 
@@ -99,22 +88,18 @@ public class RobotContainer {
         this.jsButnShifter.whenReleased(new InstantCommand(drivetrain::lowGear, drivetrain));
         this.jsButnReverse.whenPressed(new InstantCommand(drivetrain::enableReverse, drivetrain));
         this.jsButnReverse.whenReleased(new InstantCommand(drivetrain::disableReverse, drivetrain));
-        /*GEAR SHIFTERS*/
-        // this.jsButnShifter.whenPressed(new InstantCommand(m_drivetrain::highGear, m_drivetrain));
-        // this.jsButnShifter.whenReleased(new InstantCommand(m_drivetrain::lowGear, m_drivetrain));
-        // this.jsButnClimbHeavyAndLightGear.whileHeld(new InstantCommand(climber:: setPIDLight, climber));
-        // this.jsButnClimbHeavyAndLightGear.whenReleased(new InstantCommand(climber:: setPIDHeavy, climber));
         /*SHOOTER*/
-        this.gpButnShooterAndElevator.whileHeld(new InstantCommand(shooterwheel::shoot, shooterwheel));
-        this.gpButnShooterAndElevator.whenReleased(new InstantCommand(shooterwheel::stopMotor, shooterwheel));
-        this.gpButnShoot.whileHeld(new Shoot(elevator, shooterwheel));
+        this.gpButnShooter.whileHeld(new InstantCommand(shooterwheel::shoot, shooterwheel)); //Manual
+        this.gpButnShooter.whenReleased(new InstantCommand(shooterwheel::stopMotor, shooterwheel));
+        this.gpButnShoot.whileHeld(new Shoot(elevator, shooterwheel)); //With the elevator
         /*SHOOTER HOOD*/
         // this.gpButnServoIncrement.whileHeld(new InstantCommand(shooterhood::ServoInc, shooterhood));
         // this.gpButnServoDecrement.whileHeld(new InstantCommand(shooterhood::ServoDec, shooterhood));
         /*ELEVATOR*/
-        this.gpButnElevatorAndShooter.whileHeld(new InstantCommand(elevator::startMotor, elevator));
-        this.gpButnElevatorAndShooter.whenReleased(new InstantCommand(elevator::stopMotor, elevator));
+        this.gpButnManualElevator.whileHeld(new InstantCommand(elevator::startMotor, elevator)); //Manual
+        this.gpButnManualElevator.whenReleased(new InstantCommand(elevator::stopMotor, elevator));
         /*CONTROL PANEL*/
+        //TODO: test this
         // this.jsButnDetectColour.whileHeld(new GoToColor(controlpanel));
         // this.jsButnRotationControl.whileHeld(new SpinControlPanel(controlpanel));
         // this.jsButnRaiseAndLowerControlPanel.whenPressed(new ControlPanelPiston(controlpanel));
@@ -126,22 +111,43 @@ public class RobotContainer {
         /*HOPPER*/
         // this.gpButnHopperDisturber.whileHeld(new InstantCommand(hopper:: HopperDisturberExtend, hopper));
         // this.gpButnHopperDisturber.whenReleased(new InstantCommand(hopper:: HopperDisturberIntake, hopper));
-        /*DRIVETRAIN*/
-        // this.jsButnDriveHighAndLowGear.whileHeld(new InstantCommand(drivetrain::highGear, drivetrain));
-        // this.jsButnDriveHighAndLowGear.whenReleased(new InstantCommand(drivetrain::lowGear, drivetrain));
         /*INTAKE*/
-        this.jsButnIntakePowerCell.whileHeld(new InstantCommand(intake::motorOn, intake));
-        this.jsButnIntakePowerCell.whenReleased(new InstantCommand(intake::motorOff, intake));
+        // Removed this, this is a trigger now
+        // this.jsButnIntakePowerCell.whileHeld(new InstantCommand(intake::motorOn, intake));
+        // this.jsButnIntakePowerCell.whenReleased(new InstantCommand(intake::motorOff, intake));
         this.gpButnIntakeDownAndUp.whenPressed(new intakeArm(intake));
         /*PIXYCAM*/
         this.gpButnRunPixyCam.whileHeld(new FindTarget(this.vision, this.drivetrain));
     }
 
 
-
-    Command autoCommand = new SampleAuto(drivetrain, elevator, intake, vision, shooterwheel);
+    /*AUTONOMOUS STUFF*/
+    Command sampleAuto = new SampleAuto(drivetrain, elevator, intake, vision, shooterwheel);
     
-    public Command getAutoCommand() {
-        return autoCommand;
+    public Command getAutoCommand(int whichAuto) {
+        Command selectedAuto;
+        switch(whichAuto){
+            /*Lines up to target, shoots, goes back to get more balls*/
+            case 1:     selectedAuto = sampleAuto;
+                        break;
+            /*TODO: figure out?*/
+            case 2:     selectedAuto = null;
+                        break;
+            /*TODO: figure out?*/
+            case 3:     selectedAuto = null;
+                        break;
+            default:    selectedAuto = sampleAuto;
+                        break;
+        }
+        return selectedAuto;
     }
+
+    public void enableDefaultCommands() {
+        this.drivetrain.setDefaultCommand(new DefaultDrive(drivetrain, joystick));
+        this.shooterwheel.setDefaultCommand(new ShootSpeed(this.shooterwheel, this.gamepad));
+        // this.controlpanel.setDefaultCommand(new GoToColor(this.controlpanel));
+        // climber.enable();
+        this.intake.setDefaultCommand(new IntakeTrigger(intake, gamepad));
+    }
+
 }

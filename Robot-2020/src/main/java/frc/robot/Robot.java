@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj.AnalogInput;
 import frc.robot.RobotContainer;
 
 /**
@@ -42,10 +43,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		System.out.println("[robot] running robotInit");
-
-		m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-		m_chooser.addOption("My Auto", kCustomAuto);
-		SmartDashboard.putData("Auto choices", m_chooser);
 		
 		if(m_robotContainer == null) {
 			m_robotContainer = new RobotContainer();
@@ -80,10 +77,10 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		System.out.println("[robot] running autonomousInit");
 
-		m_autoSelected = m_chooser.getSelected();
-		// m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-		System.out.println("Auto selected: " + m_autoSelected);
-		m_robotContainer.getAutoCommand().schedule();
+		AnalogInput autoSwitch = new AnalogInput(0);
+		int selectedAuto = autoSwitch.getValue();
+		System.out.println("AUTO MODE: " + selectedAuto);
+		m_robotContainer.getAutoCommand(selectedAuto).schedule();
 	}
 
 	/**
@@ -106,7 +103,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		System.out.println("[robot] running teleopInit");
 
-		// this.driveWithJoystickCommand.schedule(); 
+		m_robotContainer.enableDefaultCommands();
 	}
 
 	/**

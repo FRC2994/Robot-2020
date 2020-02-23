@@ -16,7 +16,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANDigitalInput.LimitSwitch;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.utils.Constants;
 
@@ -66,13 +65,13 @@ public class Climber extends PIDSubsystem {
     return m_encoder.get();
   }
 
-  public void setPIDLight() {
-    m_pid.setPID(0.3, 0, 0); // May need adjustmnet
-  }
+  // public void setPIDLight() {
+  //   m_pid.setPID(0.3, 0, 0); // May need adjustmnet
+  // }
 
-  public void setPIDHeavy() { // May need adjustmnet
-    m_pid.setPID(0.5, 0, 0);
-  }
+  // public void setPIDHeavy() { // May need adjustmnet
+  //   m_pid.setPID(0.5, 0, 0);
+  // }
 
   public boolean findBottom() {
     if (m_limitSwitch.get()) {
@@ -124,6 +123,8 @@ public class Climber extends PIDSubsystem {
     m_motor.set(ControlMode.PercentOutput, output);
   }
 
+
+  /*Main Code for Now*/
   public void openLoopUp() {
     move(1);
     System.out.println(m_encoder.get());
@@ -135,6 +136,8 @@ public class Climber extends PIDSubsystem {
   public void stopMotor(){
     move(0);
   }
+
+
   @Override
   public double getMeasurement() {
     // Return the process variable measurement here
