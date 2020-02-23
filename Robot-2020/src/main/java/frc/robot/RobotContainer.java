@@ -70,19 +70,16 @@ public class RobotContainer {
     //gamepad
     private final JoystickButton gpButnShoot = new JoystickButton(this.gamepad, 1);
     private final JoystickButton gpButnServoDecrement = new JoystickButton(this.gamepad, 3);
-<<<<<<< HEAD
     private final JoystickButton gpButnServoIncrement = new JoystickButton(this.gamepad, 4);
     private final JoystickButton gpButnIntakeDownAndUp = new JoystickButton(this.gamepad, 7);
     private final JoystickButton gpButnHopperDisturber = new JoystickButton(this.gamepad, 9);
     private final JoystickButton gpButnShoot = new JoystickButton(this.gamepad, 6);
     
-=======
     private final JoystickButton gpButnIntakeDownAndUp = new JoystickButton(this.gamepad, 4);
     private final JoystickButton gpButnShooterAndElevator = new JoystickButton(this.gamepad, 5);
     private final JoystickButton gpButnElevatorAndShooter = new JoystickButton(this.gamepad, 6);
     private final JoystickButton gpButnRunPixyCam = new JoystickButton(this.gamepad, 8);
     private final JoystickButton gpButnServoIncrement = new JoystickButton(this.gamepad, 9);
->>>>>>> acd9632ab3879fd53b05e4ee0bf7ca89887ce789
     //Contains subsystems, OI devices, and commands.
     public RobotContainer(){
         configureButtons();
@@ -97,19 +94,16 @@ public class RobotContainer {
 
     private void configureButtons() {
         //Instant commands
-<<<<<<< HEAD
         /*GEAR SHIFTER*/
         this.jsButnShifter.whenPressed(new InstantCommand(drivetrain::highGear, drivetrain));
         this.jsButnShifter.whenReleased(new InstantCommand(drivetrain::lowGear, drivetrain));
         this.jsButnReverse.whenPressed(new InstantCommand(drivetrain::enableReverse, drivetrain));
         this.jsButnReverse.whenReleased(new InstantCommand(drivetrain::disableReverse, drivetrain));
-=======
         /*GEAR SHIFTERS*/
         // this.jsButnShifter.whenPressed(new InstantCommand(m_drivetrain::highGear, m_drivetrain));
         // this.jsButnShifter.whenReleased(new InstantCommand(m_drivetrain::lowGear, m_drivetrain));
         // this.jsButnClimbHeavyAndLightGear.whileHeld(new InstantCommand(climber:: setPIDLight, climber));
         // this.jsButnClimbHeavyAndLightGear.whenReleased(new InstantCommand(climber:: setPIDHeavy, climber));
->>>>>>> acd9632ab3879fd53b05e4ee0bf7ca89887ce789
         /*SHOOTER*/
         this.gpButnShooterAndElevator.whileHeld(new InstantCommand(shooterwheel::shoot, shooterwheel));
         this.gpButnShooterAndElevator.whenReleased(new InstantCommand(shooterwheel::stopMotor, shooterwheel));
