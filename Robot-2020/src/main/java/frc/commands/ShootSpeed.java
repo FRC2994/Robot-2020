@@ -8,20 +8,17 @@
 package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-import frc.subsystems.Elevator;
+import edu.wpi.first.wpilibj.Joystick;
 import frc.subsystems.ShooterWheel;
 
-public class Shoot extends CommandBase {
-  private Elevator elevator;
-  private ShooterWheel shooter;
-  int ticks = 0;
-  int maxTicks = 100;
-  public Shoot(Elevator _elevator, ShooterWheel _shooter) {
-    elevator = _elevator;
-    shooter = _shooter;
-    addRequirements(elevator);
-    addRequirements(shooter);
+public class ShootSpeed extends CommandBase {
+  private Joystick joystick;
+  private ShooterWheel shoot;
+
+  public ShootSpeed(ShooterWheel subsystem, Joystick gamepad) {
+    this.shoot = subsystem;
+    this.joystick = gamepad;
+    addRequirements(this.shoot);
   }
 
   // Called when the command is initially scheduled.
@@ -32,39 +29,18 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // ticks++;
-    shooter.shoot();
-    // if(ticks == 0 || ticks == 1){
-    //   // if(shooter.getRPM() > 5050){
-    //     elevator.startMotor();
-    //     System.out.println("SHOOT");
-    //   // }
-    // }
-    // else if (ticks == 75)
-    // {
-    //   elevator.stopMotor();
-    //   System.out.println("Stopped");
-    // }
-    // else if (ticks == 100)
-    // {
-    //   ticks = 0;
-    //   System.out.println("Stopped");
-    // }
-    // Sytsem.out.println(ticks);
-    if(shooter.getRPM() > 5050){
-      elevator.startMotor();
-      System.out.println("SHOOT");
+    if(joystick.getPOV() == 0 && shoot.status == true){ //Top D-Pad
+      shoot.incrementSpeed();
     }
-    else{
-      elevator.stopMotor();
+    if(joystick.getPOV() == 180 && shoot.status == true){ //Bottom D-Pad
+      shoot.decrementSpeed();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooter.stopMotor();
-    elevator.stopMotor();
+    
   }
 
   // Returns true when the command should end.

@@ -8,12 +8,13 @@
 package frc.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.utils.Constants;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;;
 
 public class ShooterHood extends SubsystemBase {
 
-  private Servo Hood = new Servo(1);
+  private Servo Hood = new Servo(Constants.PWM_HOOD);
   private double HoodAngle;
   private double ConstantChange;
 
