@@ -56,24 +56,24 @@ public class RobotContainer {
     private final Climber climber = new Climber();
     
     //Joystick and Gamepad buttons
-    private final JoystickButton jsButnShifter = new JoystickButton(this.joystick, 12);
     //joystick
-    private final JoystickButton jsButnIntakePowerCell = new JoystickButton(this.joystick, 1);
-    private final JoystickButton gpButnRunPixyCam = new JoystickButton(this.joystick, 2);
+    private final JoystickButton jsButnIntakePowerCell           = new JoystickButton(this.joystick, 1);
+    private final JoystickButton gpButnRunPixyCam                = new JoystickButton(this.joystick, 2);
     private final JoystickButton jsButnRaiseAndLowerControlPanel = new JoystickButton(this.joystick, 3);
-    private final JoystickButton jsButnRotationControl = new JoystickButton(this.joystick, 4);
-    private final JoystickButton jsButnReverse = new JoystickButton(this.joystick, 5);
-    private final JoystickButton jsButnDetectColour = new JoystickButton(this.joystick, 6);
-    private final JoystickButton jsButnLowerClimb = new JoystickButton(this.joystick, 7);
-    private final JoystickButton jsButnRaiseClimb = new JoystickButton(this.joystick, 8);
+    private final JoystickButton jsButnRotationControl           = new JoystickButton(this.joystick, 4);
+    private final JoystickButton jsButnReverse                   = new JoystickButton(this.joystick, 5);
+    private final JoystickButton jsButnDetectColour              = new JoystickButton(this.joystick, 6);
+    private final JoystickButton jsButnRaiseClimb                = new JoystickButton(this.joystick, 7);
+    private final JoystickButton jsButnLowerClimb                = new JoystickButton(this.joystick, 8);
+    private final JoystickButton jsButnShifter                   = new JoystickButton(this.joystick, 12);
   
     //gamepad
-    private final JoystickButton gpButnShoot                = new JoystickButton(this.gamepad, 1);
-    private final JoystickButton gpButnManualElevator       = new JoystickButton(this.gamepad, 2);
-    private final JoystickButton gpButnServoDecrement       = new JoystickButton(this.gamepad, 3);
-    private final JoystickButton gpButnServoIncrement       = new JoystickButton(this.gamepad, 4);
-    private final JoystickButton gpButnIntakeDownAndUp      = new JoystickButton(this.gamepad, 7);
-    private final JoystickButton gpButnShooter              = new JoystickButton(this.gamepad, 6);
+    private final JoystickButton gpButnShoot                     = new JoystickButton(this.gamepad, 1);
+    private final JoystickButton gpButnManualElevator            = new JoystickButton(this.gamepad, 2);
+    private final JoystickButton gpButnServoDecrement            = new JoystickButton(this.gamepad, 3);
+    private final JoystickButton gpButnIntakeDownAndUp           = new JoystickButton(this.gamepad, 4);
+    private final JoystickButton gpButnShooter                   = new JoystickButton(this.gamepad, 6);
+    private final JoystickButton gpButnServoIncrement            = new JoystickButton(this.gamepad, 9);
     //Contains subsystems, OI devices, and commands.
 
     public RobotContainer(){
