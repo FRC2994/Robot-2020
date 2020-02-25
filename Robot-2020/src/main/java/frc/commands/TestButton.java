@@ -60,6 +60,17 @@ public class TestButton extends SequentialCommandGroup {
       //wait 2 seconds
       new WaitCommand(2),
       new InstantCommand(climber::moveDown, climber),
+      //tests intake piston
+      new intakeArm(intake),
+      //wait 2 seconds
+      new WaitCommand(2),
+      new intakeArm(intake),
+      //tests control panel piston
+      new ControlPanelPiston(controlpanel),
+      //wait 2 seconds
+      new WaitCommand(2),
+      new ControlPanelPiston(controlpanel),
+
 
 
 
