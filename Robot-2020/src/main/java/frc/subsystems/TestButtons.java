@@ -52,18 +52,27 @@ public class TestButtons extends Subsystem {
   }
 
   public void intakeTest(){
-
-
-    boolean intakeTest = false;
-      System.out.println("Intake Working");
+  boolean intakeTest = false;
+  if (intakeTest == true){
+    System.out.println("Intake Working");
+  }
+  else if (intakeTest == false){
+      System.out.println("Intake failed");
+      //retry
+    }
   }
 
   public void shooterWheelTest(){
 
 
     boolean shooterWheelTest = false;
+    if (shooterWheelTest == true){
       System.out.println("Shooter Wheel Working");
-  }
+    }
+    else if (shooterWheelTest == false){
+        System.out.println("Intake failed");
+        //retry
+      }  }
 
 
   @Override
