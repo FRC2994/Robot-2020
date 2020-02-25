@@ -42,9 +42,23 @@ public class TestButtons extends Subsystem {
   public void elevatorTest(){
 
 
-    
+    boolean elevatorTest = true;
+      System.out.println("Elevator Working");
   }
 
+  public void intakeTest(){
+
+
+    boolean intakeTest = true;
+      System.out.println("Intake Working");
+  }
+
+  public void shooterWheelTest(){
+
+
+    boolean shooterWheelTest = true;
+      System.out.println("Shooter Wheel Working");
+  }
 
 
   @Override
