@@ -46,7 +46,7 @@ public class RobotContainer {
    
     //Subsystems
     private final Drivetrain drivetrain = new Drivetrain();
-    // private final ControlPanel controlpanel = new ControlPanel(); 
+    private final ControlPanel controlpanel = new ControlPanel(); 
     private final ShooterWheel shooterwheel = new ShooterWheel();
     private final Elevator elevator = new Elevator();
     // private final ShooterHood shooterhood = new ShooterHood();
@@ -122,12 +122,14 @@ public class RobotContainer {
         /*PIXYCAM*/
         this.gpButnRunPixyCam.whileHeld(new FindTarget(this.vision, this.drivetrain));
         /*SYSTEM TEST*/
-        this.jsSystemTestButton.(new TestButton(elevator, intake, shooterwheel, controlpanel, climber));
+        if (this.jsSystemTestButton.get() && this.gpSystemTestButton.get()){
+            new TestButton(elevator, intake, shooterwheel, controlpanel, climber);
+        }
+
 
     }
-
-
-    /*AUTONOMOUS STUFF*/
+    
+    /* AUTONOMOUS STUFF */
     Command sampleAuto = new SampleAuto(drivetrain, elevator, intake, vision, shooterwheel);
     
     public Command getAutoCommand(int whichAuto) {
