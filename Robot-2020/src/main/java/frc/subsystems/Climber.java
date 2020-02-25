@@ -36,7 +36,7 @@ public class Climber extends PIDSubsystem {
 
   private double bottomPosition = 0;
   private double desiredPosition = 0; // Re-think this - should it be a setting
-  private boolean foundBottom = false;
+  private boolean foundBottom;
 
 
   public Climber() {
@@ -44,16 +44,17 @@ public class Climber extends PIDSubsystem {
         // The PIDController used by the subsystem
         new PIDController(0, 0, 0));
 
-      //assigning objects to variables
-        this.m_motor = new WPI_VictorSPX(Constants.CAN_CLIMBER);
-        this.m_motor.setNeutralMode(NeutralMode.Brake);
-        this.m_encoder = new Encoder(Constants.DIO_CLIMB_ENC_CHN_A, Constants.DIO_CLIMB_ENC_CHN_B);
-        this.m_encoder.reset();
-        this.m_pid = new PIDController(0.1, 0, 0);
-        this.m_limitSwitch = new DigitalInput(Constants.DIO_CLIMB_LIMIT);
-        this.m_solenoid = new Solenoid(Constants.SOLENOID_PORT, Constants.PCM_CLIMB);
-        m_pid.setTolerance(10); // tolerence is 10 ticks
-        m_pid.enableContinuousInput(0, 10000);
+    //assigning objects to variables
+    this.m_motor = new WPI_VictorSPX(Constants.CAN_CLIMBER);
+    this.m_motor.setNeutralMode(NeutralMode.Brake);
+    this.m_encoder = new Encoder(Constants.DIO_CLIMB_ENC_CHN_A, Constants.DIO_CLIMB_ENC_CHN_B);
+    this.m_encoder.reset();
+    this.m_pid = new PIDController(0.1, 0, 0);
+    this.m_limitSwitch = new DigitalInput(Constants.DIO_CLIMB_LIMIT);
+    this.m_solenoid = new Solenoid(Constants.SOLENOID_PORT, Constants.PCM_CLIMB);
+    m_pid.setTolerance(10); // tolerence is 10 ticks
+    m_pid.enableContinuousInput(0, 10000);
+    this.foundBottom = false;
 
   }
 
@@ -76,12 +77,10 @@ public class Climber extends PIDSubsystem {
   public boolean findBottom() {
     if (m_limitSwitch.get()) {
       foundBottom = true;
-      bottomPosition = getCurrentPosition();
-      System.out.println("Bottom found. Bottom position = " +bottomPosition);
-    }  
-    else {
-      foundBottom = false;
-      System.out.println("Bottom not found");
+      m_encoder.reset();
+      System.out.println("Bottom found. Resetting encoders");
+    } else {
+       System.out.println("Bottom not found");
     }
     return foundBottom;
   }
@@ -90,16 +89,14 @@ public class Climber extends PIDSubsystem {
     m_pid.setSetpoint(setPoint);
   }
 
-
   public void moveUp() {
     if (getCurrentPosition() < maxPosition) { // Current setting 5000 ticks. Needs tuning/real numbers.
-        desiredPosition = getCurrentPosition() + climberPosInc;
-        setPosition(desiredPosition);
-        System.out.println("GOING UP");
-    } 
-      System.out.println("encValues " + m_encoder.get() );
+      desiredPosition = getCurrentPosition() + climberPosInc;
+      setPosition(desiredPosition);
+      System.out.println("GOING UP");
+    }
+    System.out.println("encValues " + m_encoder.get());
   }
-
 
   public void moveDown() {
     if (m_limitSwitch.get() == false) { // Only move down if we haven't hit the limit switch.
@@ -112,31 +109,45 @@ public class Climber extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
-      // Use the output here
-      //m_motor.set(ControlMode.PercentOutput,output + m_feedForward.calculate(setpoint));
-      double motorOutput = m_pid.calculate(getCurrentPosition());
-      // System.out.println("Output:" + motorOutput);
-      m_motor.set(motorOutput);
-    }
-  
-  public void move(double output){
+    // Use the output here
+    // m_motor.set(ControlMode.PercentOutput,output +
+    // m_feedForward.calculate(setpoint));
+    double motorOutput = m_pid.calculate(getCurrentPosition());
+    // System.out.println("Output:" + motorOutput);
+    m_motor.set(motorOutput);
+  }
+
+  public void move(double output) {
     m_motor.set(ControlMode.PercentOutput, output);
   }
 
-
-  /*Main Code for Now*/
+  /* Main Code for Now */
   public void openLoopUp() {
-    move(1);
-    System.out.println(m_encoder.get());
+    if (foundBottom == true && getCurrentPosition() < maxPosition) {
+      move(1);
+      System.out.println(m_encoder.get());
+    }
   }
+
   public void openLoopDown() {
-    move(-1);
-    System.out.println(m_encoder.get());
+    // findbottom checks if limit switch was found
+    findBottom(); 
+    // allows to go down if bottom is not found
+    if (foundBottom == false) { 
+      move(-1);
+      System.out.println(m_encoder.get());
+    }
+    // prevents from going past the switch and possibly hurting the robot
+    if (foundBottom == true && getCurrentPosition() < 0) { //not sure if ticks can be negative; please check
+      move(0);
+    }
   }
+
   public void stopMotor(){
     move(0);
   }
 
+  
 
   @Override
   public double getMeasurement() {
