@@ -69,7 +69,9 @@ public class TestButton extends SequentialCommandGroup {
       new InstantCommand(climber::moveUp, climber),
       //wait 2 seconds
       new WaitCommand(2),
-      new InstantCommand(climber::moveDown, climber),
+      new InstantCommand(climber::moveDown, climber)
+
+    );
 
 
 
