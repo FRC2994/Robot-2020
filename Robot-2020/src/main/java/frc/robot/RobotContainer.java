@@ -34,6 +34,7 @@ import frc.commands.intakeArm;
 import frc.commands.ControlPanelPiston;
 import frc.commands.Shoot;
 import frc.commands.IntakeTrigger;
+import frc.commands.TestButton;
 
 /**
  * Add your docs here.
@@ -65,6 +66,7 @@ public class RobotContainer {
     private final JoystickButton jsButnDetectColour              = new JoystickButton(this.joystick, 6);
     private final JoystickButton jsButnRaiseClimb                = new JoystickButton(this.joystick, 7);
     private final JoystickButton jsButnLowerClimb                = new JoystickButton(this.joystick, 8);
+    private final JoystickButton jsSystemTestButton               = new JoystickButton(this.joystick, 11);
     private final JoystickButton jsButnShifter                   = new JoystickButton(this.joystick, 12);
   
     //gamepad
@@ -74,6 +76,7 @@ public class RobotContainer {
     private final JoystickButton gpButnIntakeDownAndUp           = new JoystickButton(this.gamepad, 4);
     private final JoystickButton gpButnShooter                   = new JoystickButton(this.gamepad, 6);
     private final JoystickButton gpButnServoIncrement            = new JoystickButton(this.gamepad, 9);
+    private final JoystickButton gpSystemTestButton               = new JoystickButton(this.gamepad, 11);
     //Contains subsystems, OI devices, and commands.
 
     public RobotContainer(){
@@ -118,6 +121,9 @@ public class RobotContainer {
         this.gpButnIntakeDownAndUp.whenPressed(new intakeArm(intake));
         /*PIXYCAM*/
         this.gpButnRunPixyCam.whileHeld(new FindTarget(this.vision, this.drivetrain));
+        /*SYSTEM TEST*/
+        this.jsSystemTestButton.(new TestButton(elevator, intake, shooterwheel, controlpanel, climber));
+
     }
 
 
