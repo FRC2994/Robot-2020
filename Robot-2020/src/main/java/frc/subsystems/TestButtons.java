@@ -43,26 +43,25 @@ public class TestButtons extends Subsystem {
   public void elevatorTest(){
   boolean elevatorTest = false;
   if (elevatorTest == true){
-    intake.lowerIntake();
     System.out.println("Elevator Working");
+    //move on to the next one
   }
-  else if (intakeArmExtend == true){
-    intakeArmExtend = false;
-    intake.raiseIntake();
-    System.out.println("RAISE");
+  else if (elevatorTest == false){
+    System.out.println("Elevator failed");
+    //retry
   }
 
   public void intakeTest(){
 
 
-    boolean intakeTest = true;
+    boolean intakeTest = false;
       System.out.println("Intake Working");
   }
 
   public void shooterWheelTest(){
 
 
-    boolean shooterWheelTest = true;
+    boolean shooterWheelTest = false;
       System.out.println("Shooter Wheel Working");
   }
 
