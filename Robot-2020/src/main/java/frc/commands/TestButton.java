@@ -35,21 +35,31 @@ public class TestButton extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super();
     addCommands(
-      //tests the elevator
-      new InstantCommand(elevator:: startMotor, elevator),
+      //tests intake piston
+      new intakeArm(intake),
       //wait 2 seconds
       new WaitCommand(2),
-      new InstantCommand(elevator:: stopMotor, elevator),
+      new intakeArm(intake),
       //tests the intake
       new InstantCommand(intake:: motorOn, intake),
       //wait 2 seconds
       new WaitCommand(2),
       new InstantCommand(intake:: motorOff, intake),
+      //tests the elevator
+      new InstantCommand(elevator:: startMotor, elevator),
+      //wait 2 seconds
+      new WaitCommand(2),
+      new InstantCommand(elevator:: stopMotor, elevator),
       //tests the shooter
       new InstantCommand(shooterwheel::shoot, shooterwheel),
       //wait 2 seconds
       new WaitCommand(2),
       new InstantCommand(shooterwheel::stopMotor, shooterwheel),
+      //tests control panel piston
+      new ControlPanelPiston(controlpanel),
+      //wait 2 seconds
+      new WaitCommand(2),
+      new ControlPanelPiston(controlpanel),
       //tests the control panel
       new InstantCommand(controlpanel::testSpin, controlpanel),
       //wait 2 seconds
@@ -60,17 +70,6 @@ public class TestButton extends SequentialCommandGroup {
       //wait 2 seconds
       new WaitCommand(2),
       new InstantCommand(climber::moveDown, climber),
-      //tests intake piston
-      new intakeArm(intake),
-      //wait 2 seconds
-      new WaitCommand(2),
-      new intakeArm(intake),
-      //tests control panel piston
-      new ControlPanelPiston(controlpanel),
-      //wait 2 seconds
-      new WaitCommand(2),
-      new ControlPanelPiston(controlpanel),
-
 
 
 
