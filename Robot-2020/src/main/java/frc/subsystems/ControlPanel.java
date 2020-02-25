@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.utils.Constants;
 import edu.wpi.first.wpilibj.Solenoid;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import com.revrobotics.ColorSensorV3;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
@@ -41,6 +42,15 @@ public class ControlPanel extends SubsystemBase {
 		controlPanelExtend = false;
 		piston.set(controlPanelExtend);
 	}
+
+	public void testSpin(){
+		this.motor.set(ControlMode.PercentOutput, 0.5);
+	  }
+	
+	  public void testStop(){
+		this.motor.set(ControlMode.PercentOutput, 0);
+	  }
+	
 
 	@Override
 	public void periodic() {
