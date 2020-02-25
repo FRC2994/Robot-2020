@@ -16,6 +16,7 @@ import frc.subsystems.ShooterWheel;
 import frc.subsystems.Elevator;
 import frc.subsystems.ShooterHood;
 import frc.subsystems.VisionArduino;
+import jdk.internal.net.http.common.FlowTube.TubePublisher;
 import frc.subsystems.Intake;
 import frc.subsystems.Hopper;
 import frc.subsystems.Climber;
@@ -40,10 +41,15 @@ public class TestButtons extends Subsystem {
   // here. Call these from Commands
 
   public void elevatorTest(){
-
-
-    boolean elevatorTest = true;
-      System.out.println("Elevator Working");
+  boolean elevatorTest = false;
+  if (elevatorTest == true){
+    intake.lowerIntake();
+    System.out.println("Elevator Working");
+  }
+  else if (intakeArmExtend == true){
+    intakeArmExtend = false;
+    intake.raiseIntake();
+    System.out.println("RAISE");
   }
 
   public void intakeTest(){
