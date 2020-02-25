@@ -20,6 +20,18 @@ import frc.subsystems.Intake;
 import frc.subsystems.Hopper;
 import frc.subsystems.Climber;
 
+//Commands Imports
+import frc.commands.DefaultDrive;
+import frc.commands.ShootSpeed;
+import frc.commands.GoToColor;
+import frc.commands.SampleAuto;
+import frc.commands.SpinControlPanel;
+import frc.commands.FindTarget;
+import frc.commands.intakeArm;
+import frc.commands.ControlPanelPiston;
+import frc.commands.Shoot;
+import frc.commands.IntakeTrigger;
+
 /**
  * Add your docs here.
  */
