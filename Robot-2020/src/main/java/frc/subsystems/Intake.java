@@ -24,6 +24,8 @@ public class Intake extends SubsystemBase {
   private VictorSPX intakeMotor;
   private Solenoid intakePiston;
 
+  TestSubsystem test = new TestSubsystem();
+
   public Intake() {
     intakeMotor = new VictorSPX(Constants.CAN_INTAKE); //TODO: find the actual CAN id for this
     intakePiston = new Solenoid(Constants.SOLENOID_PORT, Constants.PCM_INTAKE_ARM); //Same thing
@@ -33,6 +35,7 @@ public class Intake extends SubsystemBase {
   public void motorOn() {
     intakeMotorSpeed = -0.65;
     intakeMotor.set(ControlMode.PercentOutput, intakeMotorSpeed);
+    test.intakeTest = true;
   }
 
   public void motorOff(){

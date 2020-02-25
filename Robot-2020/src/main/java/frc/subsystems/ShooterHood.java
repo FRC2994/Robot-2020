@@ -17,11 +17,13 @@ public class ShooterHood extends SubsystemBase {
   private Servo Hood = new Servo(Constants.PWM_HOOD);
   private double HoodAngle;
   private double ConstantChange;
+TestSubsystem test = new TestSubsystem();
 
   public ShooterHood() {
     HoodAngle = 0.3;
     Hood.set(HoodAngle);
     ConstantChange = 0.1;
+    test.shooterHoodTest = true;
   }
 
   public void ServoInc() {

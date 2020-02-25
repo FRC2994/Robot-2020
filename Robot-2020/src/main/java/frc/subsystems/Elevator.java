@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.utils.Constants;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
+import frc.subsystems.TestSubsystem;
 
 public class Elevator extends SubsystemBase {
   private VictorSPX motorcontroller;
@@ -24,6 +25,7 @@ public class Elevator extends SubsystemBase {
 
   DigitalInput limitSwitch = new DigitalInput(Constants.DIO_ELEVATOR);
   Counter counter = new Counter(limitSwitch);
+  TestSubsystem test = new TestSubsystem();
   
   public Elevator() {
     motorcontroller = new VictorSPX(Constants.CAN_ELEVATOR); //TODO: Find a CAN ID for the Elevator
@@ -42,11 +44,11 @@ public class Elevator extends SubsystemBase {
   public void startMotor()
   {
     motorcontroller.set(ControlMode.PercentOutput, 0.6);
+    test.elevatorTest = true;
     // System.out.print("ELEVATOR ACTIVE");
   }
   
-  public void stopMotor()
-  {
+  public void stopMotor()  {
     motorcontroller.set(ControlMode.PercentOutput, 0);
     // System.out.print("ELEVATOR OFF");
   }

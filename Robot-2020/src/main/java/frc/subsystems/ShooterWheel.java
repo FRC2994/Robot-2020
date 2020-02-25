@@ -30,6 +30,8 @@ public class ShooterWheel extends SubsystemBase {
   public int currentSet;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
+TestSubsystem test = new TestSubsystem();
+
   public ShooterWheel() {
 	
 	//Initialize the motor objects
@@ -92,6 +94,7 @@ public class ShooterWheel extends SubsystemBase {
 	//Actually sets the velocity to the desired RPM
 	// Shooter.set(1);
 	pid.setReference(5000, ControlType.kVelocity);
+	test.shooterWheelTest = true;
   }
 
   //Increments the speed

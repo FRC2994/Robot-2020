@@ -8,6 +8,10 @@
 package frc.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import org.graalvm.compiler.hotspot.replacements.HubGetClassNode;
 
 //Subsystems Imports
 import frc.subsystems.ControlPanel;
@@ -16,7 +20,6 @@ import frc.subsystems.ShooterWheel;
 import frc.subsystems.Elevator;
 import frc.subsystems.ShooterHood;
 import frc.subsystems.VisionArduino;
-import jdk.internal.net.http.common.FlowTube.TubePublisher;
 import frc.subsystems.Intake;
 import frc.subsystems.Hopper;
 import frc.subsystems.Climber;
@@ -36,44 +39,78 @@ import frc.commands.IntakeTrigger;
 /**
  * Add your docs here.
  */
-public class TestButtons extends Subsystem {
+public class TestSubsystem extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands
-
-  public void elevatorTest(){
   boolean elevatorTest = false;
+  boolean intakeTest = false;
+  boolean shooterWheelTest = false;   
+  boolean shooterHoodTest = false;
+  
+  public void elevatorTest(){
+  
   if (elevatorTest == true){
     System.out.println("Elevator Working");
-    //move on to the next one
   }
   else if (elevatorTest == false){
     System.out.println("Elevator failed");
-    //retry
+    }
   }
 
   public void intakeTest(){
-  boolean intakeTest = false;
+
   if (intakeTest == true){
     System.out.println("Intake Working");
   }
   else if (intakeTest == false){
       System.out.println("Intake failed");
-      //retry
     }
   }
 
   public void shooterWheelTest(){
 
-
-    boolean shooterWheelTest = false;
-    if (shooterWheelTest == true){
+  if (shooterWheelTest == true){
       System.out.println("Shooter Wheel Working");
     }
-    else if (shooterWheelTest == false){
-        System.out.println("Intake failed");
-        //retry
-      }  }
+  else if (shooterWheelTest == false){
+        System.out.println("Shooter Wheel failed");
+      } 
+  }
 
+  public void shooterHoodTest(){
+
+  if (shooterHoodTest == true){
+        System.out.println("Shooter Hood Working");
+      }
+  else if (shooterHoodTest == false){
+          System.out.println("Shooter Hood failed");
+        } 
+  }
+
+  public void ControlPanelTest(){
+    boolean elevatorTest = false;
+    motorcontroller.set(ControlMode.PercentOutput, 0.6);
+  
+    if (elevatorTest == true){
+      
+      System.out.println("Elevator Working");
+    }
+    else if (elevatorTest == false){
+      System.out.println("Elevator failed");
+
+    }
+
+    public void ClimberTest(){
+      boolean elevatorTest = false;
+      motorcontroller.set(ControlMode.PercentOutput, 0.6);
+    
+      if (elevatorTest == true){
+        
+        System.out.println("Elevator Working");
+      }
+      else if (elevatorTest == false){
+        System.out.println("Elevator failed");
+      }
 
   @Override
   public void initDefaultCommand() {
