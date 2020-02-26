@@ -80,7 +80,8 @@ public class Climber extends PIDSubsystem {
       m_encoder.reset();
       System.out.println("Bottom found. Resetting encoders");
     } else {
-       System.out.println("Bottom not found");
+      foundBottom = false;
+      System.out.println("Bottom not found");
     }
     return foundBottom;
   }
@@ -123,22 +124,24 @@ public class Climber extends PIDSubsystem {
 
   /* Main Code for Now */
   public void openLoopUp() {
-    if (foundBottom == true && getCurrentPosition() < maxPosition) {
+    if (getCurrentPosition() < maxPosition) {
       move(1);
       System.out.println(m_encoder.get());
+    }
+    else {
+      move(0);
     }
   }
 
   public void openLoopDown() {
-    // findbottom checks if limit switch was found
-    findBottom(); 
     // allows to go down if bottom is not found
-    if (foundBottom == false) { 
+    if (findBottom() == false) { 
       move(-1);
       System.out.println(m_encoder.get());
     }
-    // prevents from going past the switch and possibly hurting the robot
-    if (foundBottom == true && getCurrentPosition() < 0) { //not sure if ticks can be negative; please check
+//     // prevents from going past the switch and possibly hurting the robot
+//     if (foundBottom == true && getCurrentPosition() < 0) { //not sure if ticks can be negative; please check
+    else {
       move(0);
     }
   }
