@@ -88,9 +88,9 @@ public class RobotContainer {
         this.jsButnReverse.whenPressed(new InstantCommand(drivetrain::enableReverse, drivetrain));
         this.jsButnReverse.whenReleased(new InstantCommand(drivetrain::disableReverse, drivetrain));
         /*SHOOTER*/
-        this.gpButnShooter.whileHeld(new InstantCommand(shooterwheel::shoot, shooterwheel)); //Manual
-        this.gpButnShooter.whenReleased(new InstantCommand(shooterwheel::stopMotor, shooterwheel));
-        this.gpButnShoot.whileHeld(new Shoot(elevator, shooterwheel)); //With the elevator
+        this.gpButnShoot.whileHeld(new InstantCommand(shooterwheel::shoot, shooterwheel)); //Manual
+        this.gpButnShoot.whenReleased(new InstantCommand(shooterwheel::stopMotor, shooterwheel));
+        this.gpButnShooter.whileHeld(new Shoot(elevator, shooterwheel)); //With the elevator
         /*ELEVATOR*/
         this.gpButnManualElevator.whileHeld(new InstantCommand(elevator::startMotor, elevator)); //Manual
         this.gpButnManualElevator.whenReleased(new InstantCommand(elevator::stopMotor, elevator));
