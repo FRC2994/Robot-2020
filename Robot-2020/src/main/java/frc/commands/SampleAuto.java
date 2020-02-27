@@ -7,7 +7,6 @@
 
 package frc.commands;
 
-import edu.wpi.first.wpilibj2.command.FunctionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
@@ -31,12 +30,12 @@ public class SampleAuto extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     super();
     addCommands(
-      //Align
+      //Aligns the robot
       new FindTarget(vision, drive),
-      //Start Shooter
+      //Start Shooter motor with the elevator
       new InstantCommand(elv::startMotor, elv),
       new InstantCommand(shooter::shoot, shooter),
-      //Waits 5 seconds before stopping
+      //Waits 3 seconds for the balls to be shot
       new WaitCommand(3),
       new InstantCommand(elv::stopMotor, elv),
       new InstantCommand(shooter::stopMotor, shooter),
