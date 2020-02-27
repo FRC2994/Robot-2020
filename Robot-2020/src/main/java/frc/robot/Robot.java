@@ -12,8 +12,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj.AnalogInput;
 import frc.robot.RobotContainer;
+import frc.utils.AnalogSwitch;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,10 +29,12 @@ public class Robot extends TimedRobot {
 	private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
 	private RobotContainer m_robotContainer;	
+	private AnalogSwitch autoSwitch;
 	// private final DriveWithJoystick driveWithJoystickCommand; 
 
 	public Robot() {
 		m_robotContainer = new RobotContainer();
+		autoSwitch = new AnalogSwitch();
 	}
 
 
@@ -77,8 +79,7 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		System.out.println("[robot] running autonomousInit");
 
-		AnalogInput autoSwitch = new AnalogInput(0);
-		int selectedAuto = autoSwitch.getValue();
+		int selectedAuto = autoSwitch.getCurrentMode();
 		System.out.println("AUTO MODE: " + selectedAuto);
 		m_robotContainer.getAutoCommand(selectedAuto).schedule();
 	}
