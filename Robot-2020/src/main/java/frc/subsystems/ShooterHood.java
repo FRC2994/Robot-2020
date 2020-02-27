@@ -19,15 +19,16 @@ public class ShooterHood extends SubsystemBase {
   private double ConstantChange;
 
   public ShooterHood() {
-    HoodAngle = 0.3;
+    HoodAngle = 0.5;
     Hood.set(HoodAngle);
-    ConstantChange = 0.1;
+    ConstantChange = 0.05;
   }
 
   public void ServoInc() {
     if(HoodAngle <= 0.9) {
       HoodAngle += ConstantChange;
       Hood.set(HoodAngle);
+      System.out.println("Hood Extend");
     }
   }
 
