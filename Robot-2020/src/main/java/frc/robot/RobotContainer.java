@@ -34,6 +34,7 @@ import frc.commands.intakeArm;
 import frc.commands.ControlPanelPiston;
 import frc.commands.Shoot;
 import frc.commands.IntakeTrigger;
+import frc.commands.ShooterHoodChange;
 
 /**
  * Add your docs here.
@@ -48,7 +49,7 @@ public class RobotContainer {
     // private final ControlPanel controlpanel = new ControlPanel(); 
     private final ShooterWheel shooterwheel = new ShooterWheel();
     private final Elevator elevator = new Elevator();
-    // private final ShooterHood shooterhood = new ShooterHood();
+    private final ShooterHood shooterhood = new ShooterHood();
     private final VisionArduino vision = new VisionArduino();
     private final Intake intake = new Intake();
     //TODO: figure out if the hopper even needs to be a subsystem now
@@ -70,10 +71,8 @@ public class RobotContainer {
     //gamepad
     private final JoystickButton gpButnShoot                     = new JoystickButton(this.gamepad, 1);
     private final JoystickButton gpButnManualElevator            = new JoystickButton(this.gamepad, 2);
-    private final JoystickButton gpButnServoDecrement            = new JoystickButton(this.gamepad, 3);
     private final JoystickButton gpButnIntakeDownAndUp           = new JoystickButton(this.gamepad, 4);
     private final JoystickButton gpButnShooter                   = new JoystickButton(this.gamepad, 6);
-    private final JoystickButton gpButnServoIncrement            = new JoystickButton(this.gamepad, 9);
     //Contains subsystems, OI devices, and commands.
 
     public RobotContainer(){
@@ -92,9 +91,6 @@ public class RobotContainer {
         this.gpButnShooter.whileHeld(new InstantCommand(shooterwheel::shoot, shooterwheel)); //Manual
         this.gpButnShooter.whenReleased(new InstantCommand(shooterwheel::stopMotor, shooterwheel));
         this.gpButnShoot.whileHeld(new Shoot(elevator, shooterwheel)); //With the elevator
-        /*SHOOTER HOOD*/
-        // this.gpButnServoIncrement.whileHeld(new InstantCommand(shooterhood::ServoInc, shooterhood));
-        // this.gpButnServoDecrement.whileHeld(new InstantCommand(shooterhood::ServoDec, shooterhood));
         /*ELEVATOR*/
         this.gpButnManualElevator.whileHeld(new InstantCommand(elevator::startMotor, elevator)); //Manual
         this.gpButnManualElevator.whenReleased(new InstantCommand(elevator::stopMotor, elevator));
@@ -148,6 +144,7 @@ public class RobotContainer {
         // this.controlpanel.setDefaultCommand(new GoToColor(this.controlpanel));
         // climber.enable();
         this.intake.setDefaultCommand(new IntakeTrigger(intake, gamepad));
+        this.shooterhood.setDefaultCommand(new ShooterHoodChange(shooterhood, gamepad));
     }
 
 }
