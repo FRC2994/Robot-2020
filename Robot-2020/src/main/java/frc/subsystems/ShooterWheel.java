@@ -44,11 +44,11 @@ public class ShooterWheel extends SubsystemBase {
 	desiredRPM = 5000;
 	stopMotor();
 	//Note: https://www.chiefdelphi.com/t/tune-rev-spark-max-pid-for-shooter/379068
-	kP = 0; 
+	kP = 0.0000001; 
 	kI = 0;
 	kD = 0; 
 	kIz = 0; 
-	kFF = 1; 
+	kFF = 0.0001765; 
 	kMaxOutput = 1; 
 	kMinOutput = -1;
 	maxRPM = 5400;
@@ -62,21 +62,14 @@ public class ShooterWheel extends SubsystemBase {
 	pid.setOutputRange(kMinOutput, kMaxOutput);
 	
 	// display PID coefficients on SmartDashboard
-	SmartDashboard.putNumber("P Gain", kP);
-	SmartDashboard.putNumber("I Gain", kI);
-	SmartDashboard.putNumber("D Gain", kD);
-	SmartDashboard.putNumber("I Zone", kIz);
-	SmartDashboard.putNumber("Feed Forward", kFF);
-	SmartDashboard.putNumber("Max Output", kMaxOutput);
-	SmartDashboard.putNumber("Min Output", kMinOutput);
-	SmartDashboard.putNumber("Set Velocity", 0);
   }
 
 
   //Code that stops the motor
   public void stopMotor() {
 	//Stops the motor
-	Shooter.stopMotor();
+	// Shooter.stopMotor();
+	pid.setReference(0, ControlType.kVelocity);
 
 	//Variable changes:
 	status = false;
@@ -89,7 +82,7 @@ public class ShooterWheel extends SubsystemBase {
 	// System.out.println("Shoot");
 	//Actually sets the velocity to the desired RPM
 	// Shooter.set(1);
-	pid.setReference(5000, ControlType.kVelocity);
+	pid.setReference(5400, ControlType.kVelocity);
   }
 
   //Increments the speed
@@ -144,22 +137,22 @@ public class ShooterWheel extends SubsystemBase {
 		double ff = SmartDashboard.getNumber("Feed Forward", 0);
 		double max = SmartDashboard.getNumber("Max Output", 0);
 		double min = SmartDashboard.getNumber("Min Output", 0);
-		double setPoint = SmartDashboard.getNumber("Set Velocity", 0);
+		// double setPoint = SmartDashboard.getNumber("Set Velocity", 0);
 	
 		// if PID coefficients on SmartDashboard have changed, write new values to controller
 		if((p != kP)) { pid.setP(p); kP = p; }
 		if((i != kI)) { pid.setI(i); kI = i; }
 		if((d != kD)) { pid.setD(d); kD = d; }
 		if((iz != kIz)) { pid.setIZone(iz); kIz = iz; }
-		if((ff != kFF)) { pid.setFF(ff); kFF = ff; }
+		if((ff != kFF)) { pid.setFF(ff); kFF = ff; System.out.println("Changed");}
 		if((max != kMaxOutput) || (min != kMinOutput)) { 
 		  pid.setOutputRange(min, max); 
 		  kMinOutput = min; kMaxOutput = max; 
 		}
 	
-		pid.setReference(setPoint, ControlType.kVelocity);
+		// pid.setReference(setPoint, ControlType.kVelocity);
 		
-		SmartDashboard.putNumber("SetPoint", setPoint);
+		// SmartDashboard.putNumber("SetPoint", setPoint);
 		SmartDashboard.putNumber("ProcessVariable", enc.getVelocity());
 	}
   
@@ -167,6 +160,6 @@ public class ShooterWheel extends SubsystemBase {
   @Override
   public void periodic() {
 	printSpeeds();
-	tunePID();
+	// tunePID();
   }
 }

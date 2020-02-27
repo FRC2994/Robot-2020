@@ -15,29 +15,51 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.utils.Constants;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class Elevator extends SubsystemBase {
   private VictorSPX motorcontroller;
+  private Ultrasonic ultra;
   /**
    * Creates a new Elevator
    */
 
   DigitalInput limitSwitch = new DigitalInput(Constants.DIO_ELEVATOR);
   Counter counter = new Counter(limitSwitch);
+  double distance = ultra.getRangeInches();
   
   public Elevator() {
     motorcontroller = new VictorSPX(Constants.CAN_ELEVATOR); //TODO: Find a CAN ID for the Elevator
     motorcontroller.configOpenloopRamp(0);
   }
 
-  public void LimitSwitch() {
-    if (limitSwitch.get()) {
-      motorcontroller.set(ControlMode.PercentOutput, 0.8);
-    }
-    else {
+  
+
+  public double getDistance() {
+    ultra.getRangeInches();
+    return ultra.getRangeInches();
+  }
+
+  public void UltrasonicSensor(){
+    if (ultra.getRangeInches() < 1) {
       motorcontroller.set(ControlMode.PercentOutput, 0);
     }
+    else {
+      motorcontroller.set(ControlMode.PercentOutput, 0.6);
+    }
   }
+  
+
+  public void LimitSwitch() {
+    if (limitSwitch.get()) {
+      motorcontroller.set(ControlMode.PercentOutput, 0.6);
+  }
+  else {
+    motorcontroller.set(ControlMode.PercentOutput, 0);
+  }
+  }
+
+  
 
   public void startMotor()
   {

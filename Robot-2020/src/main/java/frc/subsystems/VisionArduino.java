@@ -31,25 +31,26 @@ public class VisionArduino extends SubsystemBase {
   }
   
   public void splitter() {
-    String info[] = read().split("\\|");
-    if(info.length == 3){//if there is an x, y, and area value the length equals 3
-			x = info[0];//set x
-			y = Double.parseDouble(info[1]);//set y
-      d = Double.parseDouble(info[2]);//set area
-    }
+    String info = read();
+    //.split("\\|");
+    // if(info.length == 3){//if there is an x, y, and area value the length equals 3
+			x = info;//set x
+			// y = Double.parseDouble(info[1]);//set y
+      // d = Double.parseDouble(info[2]);//set area
+
   }
 
   public String getX() {
     return x;
   }
   
-  public double getY() {
-    return y;
-  }
+  // public double getY() {
+  //   return y;
+  // }
 
-  public double getDistance() {
-    return d;
-  }
+  // public double getDistance() {
+  //   return d;
+  // }
   public VisionArduino() {
     ledOff();
   }

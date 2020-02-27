@@ -62,6 +62,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
+		// SmartDashboard.putNumber("Analog Switch", autoSwitch.getCurrentMode());
 	}
 
 	/**
@@ -79,9 +80,9 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		System.out.println("[robot] running autonomousInit");
 
-		int selectedAuto = autoSwitch.getCurrentMode();
-		System.out.println("AUTO MODE: " + selectedAuto);
-		m_robotContainer.getAutoCommand(selectedAuto).schedule();
+		// int selectedAuto = autoSwitch.getCurrentMode();
+		// System.out.println("AUTO MODE: " + selectedAuto);
+		m_robotContainer.getAutoCommand().schedule();
 	}
 
 	/**
@@ -89,15 +90,15 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		switch (m_autoSelected) {
-			case kCustomAuto:
-				// Put custom auto code here
-				break;
-			case kDefaultAuto:
-			default:
-				// Put default auto code here
-				break;
-		}
+		// switch (m_autoSelected) {
+		// 	case kCustomAuto:
+		// 		// Put custom auto code here
+		// 		break;
+		// 	case kDefaultAuto:
+		// 	default:
+		// 		// Put default auto code here
+		// 		break;
+		// }
 	}
 
 	@Override

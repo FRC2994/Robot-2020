@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.commands.FindTarget;
+import frc.commands.Autonomous.AutoDriving;
 
 import frc.subsystems.Drivetrain;
 import frc.subsystems.Elevator;
@@ -30,14 +31,20 @@ public class AutoShooting extends SequentialCommandGroup {
     super();
     addCommands(
       //Aligns the robot
-      new FindTarget(vision, drive),
+      // new FindTarget(vision, drive),
       //Start Shooter motor with the elevator
       new InstantCommand(elv::startMotor, elv),
       new InstantCommand(shooter::shoot, shooter),
       //Waits 3 seconds for the balls to be shot
       new WaitCommand(3),
       new InstantCommand(elv::stopMotor, elv),
-      new InstantCommand(shooter::stopMotor, shooter)
+      new InstantCommand(shooter::stopMotor, shooter),
+      // new StartEndCommand(
+      //   () -> drive.arcadeDrive(1, 0), 
+      //   () -> drive.arcadeDrive(0,0),
+      //   drive)
+      //   .withTimeout(1.5)   
+      new AutoDriving(drive)
     );
   }
 }

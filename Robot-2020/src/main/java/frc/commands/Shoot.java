@@ -53,7 +53,7 @@ public class Shoot extends CommandBase {
     // Sytsem.out.println(ticks);
     if(shooter.getRPM() > 5050){
       elevator.startMotor();
-      System.out.println("SHOOT");
+      // System.out.println("SHOOT");
     }
     else{
       elevator.stopMotor();

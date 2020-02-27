@@ -19,7 +19,7 @@ public class ShooterHood extends SubsystemBase {
   private double ConstantChange;
 
   public ShooterHood() {
-    HoodAngle = 0.3;
+    HoodAngle = 0.8;
     Hood.set(HoodAngle);
     ConstantChange = 0.1;
   }
@@ -28,7 +28,7 @@ public class ShooterHood extends SubsystemBase {
     if(Hood.get() <= 0.8) {
       HoodAngle += ConstantChange;
       Hood.set(Hood.get() + ConstantChange);
-      System.out.println("Hood Extend");
+      // System.out.println("Hood Extend");
     }
   }
 

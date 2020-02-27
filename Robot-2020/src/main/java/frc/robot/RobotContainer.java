@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.cscore.UsbCamera;
 
 //Subsystems Imports
 import frc.subsystems.ControlPanel;
@@ -55,6 +57,7 @@ public class RobotContainer {
     //TODO: figure out if the hopper even needs to be a subsystem now
     // private final Hopper hopper = new Hopper();
     private final Climber climber = new Climber();
+    private UsbCamera camera;
     
     //Joystick and Gamepad buttons
     //joystick
@@ -77,6 +80,9 @@ public class RobotContainer {
 
     public RobotContainer(){
         configureButtons();
+        camera = CameraServer.getInstance().startAutomaticCapture();
+        camera.setFPS(30);
+        
     }
 
 
@@ -120,21 +126,21 @@ public class RobotContainer {
     /*AUTONOMOUS STUFF*/
     // Command sampleAuto = new SampleAuto(drivetrain, elevator, intake, vision, shooterwheel);
     
-    public Command getAutoCommand(int whichAuto) {
-        Command selectedAuto;
-        switch(whichAuto){
-            /*Lines up to target, shoots, goes back to get more balls*/
-            case 0:     selectedAuto = new AutoShooting(drivetrain, elevator, vision, shooterwheel);
-                        break;
-            /*TODO: figure out?*/
-            case 1:     selectedAuto = new SampleAuto(drivetrain, elevator, intake, vision, shooterwheel);
-                        break;
-            /*TODO: figure out?*/
-            case 2:     selectedAuto = null;
-                        break;
-            default:    selectedAuto = new AutoShooting(drivetrain, elevator, vision, shooterwheel);
-                        break;
-        }
+    public Command getAutoCommand() {
+        Command selectedAuto = new AutoShooting(drivetrain, elevator, vision, shooterwheel);
+        // switch(whichAuto){
+        //     /*Lines up to target, shoots, goes back to get more balls*/
+        //     case 0:     selectedAuto = new AutoShooting(drivetrain, elevator, vision, shooterwheel);
+        //                 break;
+        //     /*TODO: figure out?*/
+        //     case 1:     selectedAuto = new SampleAuto(drivetrain, elevator, intake, vision, shooterwheel);
+        //                 break;
+        //     /*TODO: figure out?*/
+        //     case 2:     selectedAuto = null;
+        //                 break;
+        //     default:    selectedAuto = new AutoShooting(drivetrain, elevator, vision, shooterwheel);
+        //                 break;
+        // }
         return selectedAuto;
     }
 

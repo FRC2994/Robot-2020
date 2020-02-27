@@ -130,10 +130,10 @@ public class Drivetrain extends SubsystemBase {
 
 	public void arcadeDrive(double forward, double rotation) {
 		if(reverse == false){
-			differentialDrive.arcadeDrive(forward, rotation);
+			differentialDrive.arcadeDrive(-forward, rotation);
 		}
 		else{
-			differentialDrive.arcadeDrive(-forward , rotation);
+			differentialDrive.arcadeDrive(forward , rotation);
 		}// differentialDrive.feed();
 		// differentialDrive.feedWatchdog();
 	}

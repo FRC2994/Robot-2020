@@ -8,6 +8,7 @@
 package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.subsystems.VisionArduino;
 import frc.subsystems.Drivetrain;
 
@@ -31,6 +32,8 @@ public class FindTarget extends CommandBase {
   public void initialize() {
     finished = false;
     counter = 0;
+    arduino.ledOn();
+    new WaitCommand(1);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -39,10 +42,9 @@ public class FindTarget extends CommandBase {
     // System.out.println("[FindTarget] execute");
     arduino.splitter();
     data = arduino.getX();
-    arduino.ledOn();
     if(data.equals("LEFT")){
       // System.out.println("GO LEFT");
-      drive.arcadeDrive(0, -0.4);
+      drive.arcadeDrive(0, -0.3);
       finished = false;
     }
     else if(data.equals("CENTER")){
@@ -53,11 +55,11 @@ public class FindTarget extends CommandBase {
     }
     else if(data.equals("RIGHT")){
       // System.out.println("GO RIGHT");
-      drive.arcadeDrive(0, 0.4);
+      drive.arcadeDrive(0, 0.3);
       finished = false;
     }
-    System.out.println(data);
-    if(counter == 150){
+    // System.out.println(data);
+    if(counter == 15){
       finished = true;
     }
   }
