@@ -14,28 +14,50 @@ import com.revrobotics.CANDigitalInput.LimitSwitch;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class Elevator extends SubsystemBase {
   private VictorSPX motorcontroller;
+  private Ultrasonic ultra;
   /**
    * Creates a new Elevator
    */
 
   DigitalInput limitSwitch = new DigitalInput(1);
   Counter counter = new Counter(limitSwitch);
+  double distance = ultra.getRangeInches();
   
   public Elevator() {
     motorcontroller = new VictorSPX(0);
   }
 
+  
+
+  public double getDistance() {
+    ultra.getRangeInches();
+    return ultra.getRangeInches();
+  }
+
+  public void UltrasonicSensor(){
+    if (ultra.getRangeInches() < 1) {
+      motorcontroller.set(ControlMode.PercentOutput, 0);
+    }
+    else {
+      motorcontroller.set(ControlMode.PercentOutput, 0.6);
+    }
+  }
+  
+
   public void LimitSwitch() {
     if (limitSwitch.get()) {
-      motorcontroller.set(ControlMode.PercentOutput, 0.8);
+      motorcontroller.set(ControlMode.PercentOutput, 0.6);
   }
   else {
     motorcontroller.set(ControlMode.PercentOutput, 0);
   }
   }
+
+  
 
   public void startMotor()
   {
