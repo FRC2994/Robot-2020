@@ -43,35 +43,33 @@ public class ShooterWheel extends SubsystemBase {
 	this.Shooter.setInverted(true);
 	desiredRPM = 5000;
 	stopMotor();
-	// if(tuner == true)
-	// {
-		kP = 1; 
-		kI = 0;
-		kD = 0; 
-		kIz = 0; 
-		kFF = 1; 
-		kMaxOutput = 1; 
-		kMinOutput = -1;
-		maxRPM = 5000;
+	//Note: https://www.chiefdelphi.com/t/tune-rev-spark-max-pid-for-shooter/379068
+	kP = 0; 
+	kI = 0;
+	kD = 0; 
+	kIz = 0; 
+	kFF = 1; 
+	kMaxOutput = 1; 
+	kMinOutput = -1;
+	maxRPM = 5400;
 	
-		// set PID coefficients
-		pid.setP(kP);
-		pid.setI(kI);
-		pid.setD(kD);
-		pid.setIZone(kIz);
-		pid.setFF(kFF);
-		pid.setOutputRange(kMinOutput, kMaxOutput);
+	// set PID coefficients
+	pid.setP(kP);
+	pid.setI(kI);
+	pid.setD(kD);
+	pid.setIZone(kIz);
+	pid.setFF(kFF);
+	pid.setOutputRange(kMinOutput, kMaxOutput);
 	
-		// display PID coefficients on SmartDashboard
-		SmartDashboard.putNumber("P Gain", kP);
-		SmartDashboard.putNumber("I Gain", kI);
-		SmartDashboard.putNumber("D Gain", kD);
-		SmartDashboard.putNumber("I Zone", kIz);
-		SmartDashboard.putNumber("Feed Forward", kFF);
-		SmartDashboard.putNumber("Max Output", kMaxOutput);
-		SmartDashboard.putNumber("Min Output", kMinOutput);
-		SmartDashboard.putNumber("Set Velocity", 0);
-	// }
+	// display PID coefficients on SmartDashboard
+	SmartDashboard.putNumber("P Gain", kP);
+	SmartDashboard.putNumber("I Gain", kI);
+	SmartDashboard.putNumber("D Gain", kD);
+	SmartDashboard.putNumber("I Zone", kIz);
+	SmartDashboard.putNumber("Feed Forward", kFF);
+	SmartDashboard.putNumber("Max Output", kMaxOutput);
+	SmartDashboard.putNumber("Min Output", kMinOutput);
+	SmartDashboard.putNumber("Set Velocity", 0);
   }
 
 
@@ -131,6 +129,12 @@ public class ShooterWheel extends SubsystemBase {
 	SmartDashboard.putNumber("Actual RPM:", actualRPM);
   }
 
+  /*
+	  Tru FF to 0.00000481 
+	  and P gain to 0.00002.
+	  If not, set PID to 0, and keep changing FF till it reaches the goal,
+	  then once that is complete, increase the P, start very very low, then increase I afterwards if there is a bit of error
+  */
   public void tunePID() {
 	    // read PID coefficients from SmartDashboard
 		double p = SmartDashboard.getNumber("P Gain", 0);
