@@ -27,7 +27,6 @@ import frc.subsystems.Climber;
 import frc.commands.DefaultDrive;
 import frc.commands.ShootSpeed;
 import frc.commands.GoToColor;
-import frc.commands.SampleAuto;
 import frc.commands.SpinControlPanel;
 import frc.commands.FindTarget;
 import frc.commands.intakeArm;
@@ -35,6 +34,8 @@ import frc.commands.ControlPanelPiston;
 import frc.commands.Shoot;
 import frc.commands.IntakeTrigger;
 import frc.commands.ShooterHoodChange;
+import frc.commands.Autonomous.SampleAuto;
+import frc.commands.Autonomous.AutoShooting;
 
 /**
  * Add your docs here.
@@ -118,21 +119,21 @@ public class RobotContainer {
 
 
     /*AUTONOMOUS STUFF*/
-    Command sampleAuto = new SampleAuto(drivetrain, elevator, intake, vision, shooterwheel);
+    // Command sampleAuto = new SampleAuto(drivetrain, elevator, intake, vision, shooterwheel);
     
     public Command getAutoCommand(int whichAuto) {
         Command selectedAuto;
         switch(whichAuto){
             /*Lines up to target, shoots, goes back to get more balls*/
-            case 1:     selectedAuto = sampleAuto;
+            case 0:     selectedAuto = new AutoShooting(drivetrain, elevator, vision, shooterwheel);
+                        break;
+            /*TODO: figure out?*/
+            case 1:     selectedAuto = new SampleAuto(drivetrain, elevator, intake, vision, shooterwheel);
                         break;
             /*TODO: figure out?*/
             case 2:     selectedAuto = null;
                         break;
-            /*TODO: figure out?*/
-            case 3:     selectedAuto = null;
-                        break;
-            default:    selectedAuto = sampleAuto;
+            default:    selectedAuto = new AutoShooting(drivetrain, elevator, vision, shooterwheel);
                         break;
         }
         return selectedAuto;

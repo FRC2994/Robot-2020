@@ -14,6 +14,7 @@ import frc.subsystems.ShooterHood;
 public class ShooterHoodChange extends CommandBase {
   private ShooterHood hood;
   private Joystick gamepad;
+  int x = 0;
   public ShooterHoodChange(ShooterHood _hood, Joystick _gamepad) {
     this.hood = _hood;
     this.gamepad = _gamepad;
@@ -24,17 +25,22 @@ public class ShooterHoodChange extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    x = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    x++;
     int DPAD_STATE = this.gamepad.getPOV();
-    if(DPAD_STATE == 270){
+    if(DPAD_STATE == 270 && x == 1){
       this.hood.ServoDec();
     }
-    if(DPAD_STATE == 90){
+    if(DPAD_STATE == 90 && x == 1){
       this.hood.ServoInc();
+    }
+    if(x == 15){
+      x=0;
     }
   }
 

@@ -163,6 +163,6 @@ public class ShooterWheel extends SubsystemBase {
   @Override
   public void periodic() {
 	printSpeeds();
-	// System.out.println(enc.getVelocity());
+	tunePID();
   }
 }
