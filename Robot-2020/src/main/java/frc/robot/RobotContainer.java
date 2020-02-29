@@ -20,7 +20,6 @@ import frc.subsystems.Elevator;
 import frc.subsystems.ShooterHood;
 import frc.subsystems.VisionArduino;
 import frc.subsystems.Intake;
-import frc.subsystems.Hopper;
 import frc.subsystems.Climber;
 
 //Commands Imports
