@@ -20,55 +20,33 @@ import edu.wpi.first.wpilibj.Ultrasonic;
 public class Elevator extends SubsystemBase {
   private VictorSPX motorcontroller;
   private Ultrasonic ultra;
-  /**
-   * Creates a new Elevator
-   */
-
   DigitalInput limitSwitch = new DigitalInput(Constants.DIO_ELEVATOR);
   Counter counter = new Counter(limitSwitch);
-  double distance = ultra.getRangeInches();
   
   public Elevator() {
     motorcontroller = new VictorSPX(Constants.CAN_ELEVATOR); //TODO: Find a CAN ID for the Elevator
     motorcontroller.configOpenloopRamp(0);
+    ultra = new Ultrasonic(7, 6);
   }
 
-  
 
-  public double getDistance() {
-    ultra.getRangeInches();
-    return ultra.getRangeInches();
+  public void semiIntake() {
+    motorcontroller.set(ControlMode.PercentOutput, 0.4);
   }
 
-  public void UltrasonicSensor(){
+  public boolean isBallIn(){  
+    boolean returnValue = false;
     if (ultra.getRangeInches() < 1) {
-      motorcontroller.set(ControlMode.PercentOutput, 0);
+      returnValue = true;
     }
-    else {
-      motorcontroller.set(ControlMode.PercentOutput, 0.6);
-    }
+    return returnValue;
   }
-  
-
-  public void LimitSwitch() {
-    if (limitSwitch.get()) {
-      motorcontroller.set(ControlMode.PercentOutput, 0.6);
-  }
-  else {
-    motorcontroller.set(ControlMode.PercentOutput, 0);
-  }
-  }
-
-  
-
-  public void startMotor()
-  {
+  public void startMotor() {
     motorcontroller.set(ControlMode.PercentOutput, 0.6);
     // System.out.print("ELEVATOR ACTIVE");
   }
   
-  public void stopMotor()
-  {
+  public void stopMotor() {
     motorcontroller.set(ControlMode.PercentOutput, 0);
     // System.out.print("ELEVATOR OFF");
   }
@@ -76,5 +54,6 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    // System.out.println(ultra.getRangeInches());
   }
 }

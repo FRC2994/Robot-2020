@@ -37,6 +37,8 @@ import frc.commands.IntakeTrigger;
 import frc.commands.ShooterHoodChange;
 import frc.commands.Autonomous.SampleAuto;
 import frc.commands.Autonomous.AutoShooting;
+import frc.commands.BallElevator;
+import frc.commands.IntakeAndElevator;
 
 /**
  * Add your docs here.
@@ -100,6 +102,8 @@ public class RobotContainer {
         /*ELEVATOR*/
         this.gpButnManualElevator.whileHeld(new InstantCommand(elevator::startMotor, elevator)); //Manual
         this.gpButnManualElevator.whenReleased(new InstantCommand(elevator::stopMotor, elevator));
+        // this.gpButnManualElevator.whileHeld(new BallElevator(elevator));
+
         /*CONTROL PANEL*/
         //TODO: test this
         // this.jsButnDetectColour.whileHeld(new GoToColor(controlpanel));
@@ -150,6 +154,7 @@ public class RobotContainer {
         // this.controlpanel.setDefaultCommand(new GoToColor(this.controlpanel));
         // climber.enable();
         this.intake.setDefaultCommand(new IntakeTrigger(intake, gamepad));
+        // this.intake.setDefaultCommand(new IntakeAndElevator(elevator, gamepad, intake));
         this.shooterhood.setDefaultCommand(new ShooterHoodChange(shooterhood, gamepad));
     }
 
