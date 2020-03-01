@@ -9,52 +9,55 @@ package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.subsystems.Elevator;
-import edu.wpi.first.wpilibj.Joystick;
-import frc.subsystems.Intake;
+import frc.subsystems.ShooterWheel;
 
-public class IntakeAndElevator extends CommandBase {
-  Elevator elevator;
-  Joystick gamepad;
-  Intake intake;
-  boolean elevatorStatus;
-  public IntakeAndElevator(Elevator _elevator, Joystick _gamepad, Intake _intake) {
-    // Use addRequirements() here to declare subsystem dependencies.
+public class ShootAndFeed extends CommandBase {
+  private ShooterWheel shooter;
+  private Elevator elevator;
+  private double rpm_offset = 10;
+  private double desiredRPM = 5200;
+  private boolean ballQueued = false;
+  private boolean justShot = false;
+  private int timerTicks;
+  public ShootAndFeed(ShooterWheel _shooter, Elevator _elevator) {
+    shooter = _shooter;
     elevator = _elevator;
-    gamepad = _gamepad;
-    intake = _intake;
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(shooter);
     addRequirements(elevator);
-    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    timerTicks = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    intake.intakeSpeed(gamepad.getRawAxis(3));
-    if(Math.abs(gamepad.getRawAxis(3)) > 0.1){
-      if(elevator.isBallIn() == false){
+    shooter.shoot();
+    ballQueued = elevator.isBallIn();
+    if(ballQueued == true){
+      elevator.stopMotor();
+      //Checks shooter RPM to see if it is ready to fire
+      if((shooter.getRPM() >= desiredRPM-rpm_offset) && (shooter.getRPM() <= desiredRPM+rpm_offset)){
+          elevator.startMotor();
+      }
+      else{
+        elevator.stopMotor();
+      }
+    } 
+    else {
         elevator.semiIntake();
-      } else{
-        elevator.stopMotor();
-      }
-      elevatorStatus = true;
-    } else {
-      if(elevatorStatus == true){
-        elevator.stopMotor();
-        elevatorStatus = false;
-      }
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    shooter.stopMotor();
     elevator.stopMotor();
-    intake.motorOff();
   }
 
   // Returns true when the command should end.
