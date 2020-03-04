@@ -12,11 +12,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.commands.FindTarget;
+import frc.commands.Shoot;
 import frc.commands.Autonomous.AutoDriving;
 
 import frc.subsystems.Drivetrain;
 import frc.subsystems.Elevator;
-import frc.subsystems.VisionArduino;
+// import frc.subsystems.VisionArduino;
 import frc.subsystems.ShooterWheel;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -25,7 +26,7 @@ public class AutoShooting extends SequentialCommandGroup {
   /**
    * Creates a new SampleAuto.
    */
-  public AutoShooting(Drivetrain drive, Elevator elv, VisionArduino vision, ShooterWheel shooter) {
+  public AutoShooting(Drivetrain drive, Elevator elv, ShooterWheel shooter) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super();
@@ -33,12 +34,13 @@ public class AutoShooting extends SequentialCommandGroup {
       //Aligns the robot
       // new FindTarget(vision, drive),
       //Start Shooter motor with the elevator
-      new InstantCommand(elv::startMotor, elv),
-      new InstantCommand(shooter::shoot, shooter),
+      // new InstantCommand(elv::startMotor, elv),
+      // new InstantCommand(shooter::shoot, shooter),
       //Waits 3 seconds for the balls to be shot
-      new WaitCommand(3),
-      new InstantCommand(elv::stopMotor, elv),
-      new InstantCommand(shooter::stopMotor, shooter),
+      // new WaitCommand(3),
+      // new InstantCommand(elv::stopMotor, elv),
+      // new InstantCommand(shooter::stopMotor, shooter),
+      new Shoot(elv, shooter).withTimeout(4),
       // new StartEndCommand(
       //   () -> drive.arcadeDrive(1, 0), 
       //   () -> drive.arcadeDrive(0,0),

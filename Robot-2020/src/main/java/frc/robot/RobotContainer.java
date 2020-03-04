@@ -33,12 +33,13 @@ import frc.commands.FindTarget;
 import frc.commands.intakeArm;
 import frc.commands.ControlPanelPiston;
 import frc.commands.Shoot;
+// import frc.commands.ShootAndFeed;
 import frc.commands.IntakeTrigger;
 import frc.commands.ShooterHoodChange;
 import frc.commands.Autonomous.SampleAuto;
 import frc.commands.Autonomous.AutoShooting;
-import frc.commands.BallElevator;
-import frc.commands.IntakeAndElevator;
+// import frc.commands.BallElevator;
+// import frc.commands.IntakeAndElevator;
 
 /**
  * Add your docs here.
@@ -54,7 +55,7 @@ public class RobotContainer {
     private final ShooterWheel shooterwheel = new ShooterWheel();
     private final Elevator elevator = new Elevator();
     private final ShooterHood shooterhood = new ShooterHood();
-    private final VisionArduino vision = new VisionArduino();
+    // private final VisionArduino vision = new VisionArduino();
     private final Intake intake = new Intake();
     //TODO: figure out if the hopper even needs to be a subsystem now
     // private final Hopper hopper = new Hopper();
@@ -76,6 +77,7 @@ public class RobotContainer {
     //gamepad
     private final JoystickButton gpButnShoot                     = new JoystickButton(this.gamepad, 1);
     private final JoystickButton gpButnManualElevator            = new JoystickButton(this.gamepad, 2);
+    // private final JoystickButton gpButnShootFeedButton           = new JoystickButton(this.gamepad, 3);
     private final JoystickButton gpButnIntakeDownAndUp           = new JoystickButton(this.gamepad, 4);
     private final JoystickButton gpButnShooter                   = new JoystickButton(this.gamepad, 6);
     //Contains subsystems, OI devices, and commands.
@@ -83,6 +85,7 @@ public class RobotContainer {
     public RobotContainer(){
         configureButtons();
         camera = CameraServer.getInstance().startAutomaticCapture();
+        camera.setResolution(160, 120);
         camera.setFPS(30);
         
     }
@@ -99,6 +102,7 @@ public class RobotContainer {
         this.gpButnShoot.whileHeld(new InstantCommand(shooterwheel::shoot, shooterwheel)); //Manual
         this.gpButnShoot.whenReleased(new InstantCommand(shooterwheel::stopMotor, shooterwheel));
         this.gpButnShooter.whileHeld(new Shoot(elevator, shooterwheel)); //With the elevator
+        // this.gpButnShootFeedButton.whileHeld(new ShootAndFeed(shooterwheel, elevator));
         /*ELEVATOR*/
         this.gpButnManualElevator.whileHeld(new InstantCommand(elevator::startMotor, elevator)); //Manual
         this.gpButnManualElevator.whenReleased(new InstantCommand(elevator::stopMotor, elevator));
@@ -123,7 +127,7 @@ public class RobotContainer {
         // this.jsButnIntakePowerCell.whenReleased(new InstantCommand(intake::motorOff, intake));
         this.gpButnIntakeDownAndUp.whenPressed(new intakeArm(intake));
         /*PIXYCAM*/
-        this.gpButnRunPixyCam.whileHeld(new FindTarget(this.vision, this.drivetrain));
+        // this.gpButnRunPixyCam.whileHeld(new FindTarget(this.vision, this.drivetrain));
     }
 
 
@@ -131,7 +135,7 @@ public class RobotContainer {
     // Command sampleAuto = new SampleAuto(drivetrain, elevator, intake, vision, shooterwheel);
     
     public Command getAutoCommand() {
-        Command selectedAuto = new AutoShooting(drivetrain, elevator, vision, shooterwheel);
+        Command selectedAuto = new AutoShooting(drivetrain, elevator, shooterwheel);
         // switch(whichAuto){
         //     /*Lines up to target, shoots, goes back to get more balls*/
         //     case 0:     selectedAuto = new AutoShooting(drivetrain, elevator, vision, shooterwheel);

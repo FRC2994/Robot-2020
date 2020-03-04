@@ -31,7 +31,7 @@ public class AutoDriving extends CommandBase {
   @Override
   public void execute() {
     counter++;
-    if(counter == 30){
+    if(counter == 60){
       isFinished = true;
     }
     else{

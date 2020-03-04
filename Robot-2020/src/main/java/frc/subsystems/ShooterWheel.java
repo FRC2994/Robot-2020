@@ -44,13 +44,13 @@ public class ShooterWheel extends SubsystemBase {
 	desiredRPM = 5000;
 	stopMotor();
 	//Note: https://www.chiefdelphi.com/t/tune-rev-spark-max-pid-for-shooter/379068
-	// kP = 0.0000001;
-	kP = 0;
+	kP = 0.0000001;
+	// kP = 0;
 	kI = 0;
 	kD = 0; 
 	kIz = 0; 
-	// kFF = 0.0001765; 
-	kFF = 0;
+	kFF = 0.0001765; 
+	// kFF = 0;
 	kMaxOutput = 1; 
 	kMinOutput = -1;
 	maxRPM = 5400;
@@ -64,13 +64,13 @@ public class ShooterWheel extends SubsystemBase {
 	pid.setOutputRange(kMinOutput, kMaxOutput);
 	
 	// display PID coefficients on SmartDashboard
-	SmartDashboard.putNumber("P Gain", kP);
-	SmartDashboard.putNumber("I Gain", kI);
-	SmartDashboard.putNumber("D Gain", kD);
-	SmartDashboard.putNumber("I Zone", kIz);
-	SmartDashboard.putNumber("Feed Forward", kFF );
-	SmartDashboard.putNumber("Max Output", kMaxOutput);
-	SmartDashboard.putNumber("Min Output", kMinOutput);
+	// SmartDashboard.putNumber("P Gain", kP);
+	// SmartDashboard.putNumber("I Gain", kI);
+	// SmartDashboard.putNumber("D Gain", kD);
+	// SmartDashboard.putNumber("I Zone", kIz);
+	// SmartDashboard.putNumber("Feed Forward", kFF );
+	// SmartDashboard.putNumber("Max Output", kMaxOutput);
+	// SmartDashboard.putNumber("Min Output", kMinOutput);
   }
 
 
@@ -169,6 +169,6 @@ public class ShooterWheel extends SubsystemBase {
   @Override
   public void periodic() {
 	printSpeeds();
-	tunePID();
+	// tunePID();
   }
 }
