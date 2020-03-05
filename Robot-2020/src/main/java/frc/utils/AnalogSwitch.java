@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.AnalogInput;
  */
 public class AnalogSwitch {
     AnalogInput autoSwitch;
-    int offset = 3;
+    int offset = 20;
     double[] analogValues = {
         2131, //Mode 0
         2456, //Mode 1

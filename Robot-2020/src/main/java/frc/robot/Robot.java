@@ -63,6 +63,13 @@ public class Robot extends TimedRobot {
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
 		// SmartDashboard.putNumber("Analog Switch", autoSwitch.getCurrentMode());
+
+		boolean debugCurrent = true;
+		if (debugCurrent) {
+			SmartDashboard.putNumber("elevatorCurrent", m_robotContainer.getPDPCurrent(7));
+			SmartDashboard.putNumber("shooterCurrent", m_robotContainer.getPDPCurrent(1));
+			SmartDashboard.putNumber("Analog Switch getCurrentMode", autoSwitch.getCurrentMode());
+		}
 	}
 
 	/**
@@ -113,7 +120,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-
 	}
 
 	/**

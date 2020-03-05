@@ -26,8 +26,8 @@ public class Elevator extends SubsystemBase {
   public Elevator() {
     motorcontroller = new VictorSPX(Constants.CAN_ELEVATOR); //TODO: Find a CAN ID for the Elevator
     motorcontroller.configOpenloopRamp(0);
-    // ultra = new Ultrasonic(7, 6);
-    // ultra.setAutomaticMode(true);
+    ultra = new Ultrasonic(7, 6);
+    ultra.setAutomaticMode(true);
   }
 
 
@@ -35,15 +35,25 @@ public class Elevator extends SubsystemBase {
     motorcontroller.set(ControlMode.PercentOutput, 0.2);
   }
 
-  // public boolean isBallIn(){  
-  //   boolean returnValue = false;
-  //   if (ultra.getRangeInches() < 3) {
-  //     returnValue = true;
-  //   }
-  //   return returnValue;
-  // }
+  public boolean isBallIn(){  
+    if (ultra.getRangeInches() < 3) {
+      return true;
+    }
+
+    return false;
+  }
+
   public void startMotor() {
     motorcontroller.set(ControlMode.PercentOutput, 0.7);
+  }
+
+  public void startMotorGated() {
+    if (this.isBallIn()) {
+      motorcontroller.set(ControlMode.PercentOutput, 0.0);
+      return;
+    }
+
+    motorcontroller.set(ControlMode.PercentOutput, 0.2);
     // System.out.print("ELEVATOR ACTIVE");
   }
   

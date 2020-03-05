@@ -41,7 +41,7 @@ public class ShooterWheel extends SubsystemBase {
 	Shooter.restoreFactoryDefaults();
 	Shooter.setIdleMode(IdleMode.kCoast);
 	this.Shooter.setInverted(true);
-	desiredRPM = 5000;
+	desiredRPM = 5400;
 	stopMotor();
 	//Note: https://www.chiefdelphi.com/t/tune-rev-spark-max-pid-for-shooter/379068
 	kP = 0.0000001;

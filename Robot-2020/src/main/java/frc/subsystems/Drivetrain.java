@@ -15,10 +15,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import com.analog.adis16448.frc.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.utils.Constants;
 
 public class Drivetrain extends SubsystemBase {
@@ -35,7 +37,7 @@ public class Drivetrain extends SubsystemBase {
 	Solenoid gearShiftSolenoid = new Solenoid(Constants.SOLENOID_PORT, Constants.PCM_GEAR);
 	public static enum GearShiftState { HI, LO };
 
-	public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	private final ADIS16448_IMU gyro = new ADIS16448_IMU();
 	public DifferentialDrive differentialDrive;
 
 	private int startPosition;
@@ -230,6 +232,7 @@ public class Drivetrain extends SubsystemBase {
 		//  		getFrontLeftMotor().getMotorOutputVoltage() + "\t" + getFrontRightMotor().getMotorOutputVoltage() + 
 		//  		"\t" + getLeftEncoderValue() + "\t" + getRightEncoderValue() + "\t" + getHeading() + "\t");
 		// System.out.println(getLeftEncoderValue());
+		SmartDashboard.putNumber("Rotation", gyro.getAngle());
 	}
 
    /**

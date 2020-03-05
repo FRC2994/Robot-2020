@@ -11,8 +11,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import frc.utils.GamepadRightAxis;
 
 //Subsystems Imports
 import frc.subsystems.ControlPanel;
@@ -39,7 +42,7 @@ import frc.commands.ShooterHoodChange;
 import frc.commands.Autonomous.SampleAuto;
 import frc.commands.Autonomous.AutoShooting;
 // import frc.commands.BallElevator;
-// import frc.commands.IntakeAndElevator;
+import frc.commands.IntakeAndElevator;
 
 /**
  * Add your docs here.
@@ -48,6 +51,8 @@ public class RobotContainer {
     //Joystick and Gamepad
     public final Joystick joystick = new Joystick(0); 
     public final Joystick gamepad = new Joystick(1);
+
+    public final PowerDistributionPanel PDP = new PowerDistributionPanel(0);
    
     //Subsystems
     private final Drivetrain drivetrain = new Drivetrain();
@@ -60,7 +65,9 @@ public class RobotContainer {
     //TODO: figure out if the hopper even needs to be a subsystem now
     // private final Hopper hopper = new Hopper();
     private final Climber climber = new Climber();
+
     private UsbCamera camera;
+    private GamepadRightAxis rightAxis = new GamepadRightAxis(gamepad);
     
     //Joystick and Gamepad buttons
     //joystick
@@ -81,6 +88,7 @@ public class RobotContainer {
     private final JoystickButton gpButnIntakeDownAndUp           = new JoystickButton(this.gamepad, 4);
     private final JoystickButton gpButnShooter                   = new JoystickButton(this.gamepad, 6);
     //Contains subsystems, OI devices, and commands.
+    private Trigger gamepadTrigger = new Trigger(rightAxis::get);
 
     public RobotContainer(){
         configureButtons();
@@ -128,6 +136,7 @@ public class RobotContainer {
         this.gpButnIntakeDownAndUp.whenPressed(new intakeArm(intake));
         /*PIXYCAM*/
         // this.gpButnRunPixyCam.whileHeld(new FindTarget(this.vision, this.drivetrain));
+        this.gamepadTrigger.whileActiveOnce(new IntakeAndElevator(elevator, gamepad, intake));
     }
 
 
@@ -157,9 +166,13 @@ public class RobotContainer {
         this.shooterwheel.setDefaultCommand(new ShootSpeed(this.shooterwheel, this.gamepad));
         // this.controlpanel.setDefaultCommand(new GoToColor(this.controlpanel));
         // climber.enable();
-        this.intake.setDefaultCommand(new IntakeTrigger(intake, gamepad));
+        // this.intake.setDefaultCommand(new IntakeTrigger(intake, gamepad));
         // this.intake.setDefaultCommand(new IntakeAndElevator(elevator, gamepad, intake));
         this.shooterhood.setDefaultCommand(new ShooterHoodChange(shooterhood, gamepad));
+    }
+
+    public double getPDPCurrent(int channel) {
+        return PDP.getCurrent(channel);
     }
 
 }
