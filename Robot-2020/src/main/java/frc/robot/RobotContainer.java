@@ -87,8 +87,7 @@ public class RobotContainer {
     // private final JoystickButton gpButnShootFeedButton           = new JoystickButton(this.gamepad, 3);
     private final JoystickButton gpButnIntakeDownAndUp           = new JoystickButton(this.gamepad, 4);
     private final JoystickButton gpButnShooter                   = new JoystickButton(this.gamepad, 6);
-    //Contains subsystems, OI devices, and commands.
-    private Trigger gamepadTrigger = new Trigger(rightAxis::get);
+    private final Trigger        gpButnIntake                    = new Trigger(rightAxis::get);
 
     public RobotContainer(){
         configureButtons();
@@ -131,12 +130,10 @@ public class RobotContainer {
         // this.gpButnHopperDisturber.whenReleased(new InstantCommand(hopper:: HopperDisturberIntake, hopper));
         /*INTAKE*/
         // Removed this, this is a trigger now
-        // this.jsButnIntakePowerCell.whileHeld(new InstantCommand(intake::motorOn, intake));
-        // this.jsButnIntakePowerCell.whenReleased(new InstantCommand(intake::motorOff, intake));
+        this.gpButnIntake.whileActiveOnce(new IntakeAndElevator(elevator, gamepad, intake));
         this.gpButnIntakeDownAndUp.whenPressed(new intakeArm(intake));
         /*PIXYCAM*/
         // this.gpButnRunPixyCam.whileHeld(new FindTarget(this.vision, this.drivetrain));
-        this.gamepadTrigger.whileActiveOnce(new IntakeAndElevator(elevator, gamepad, intake));
     }
 
 
