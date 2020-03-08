@@ -30,8 +30,8 @@ import frc.subsystems.Climber;
 //Commands Imports
 import frc.commands.DefaultDrive;
 import frc.commands.ShootSpeed;
-import frc.commands.GoToColor;
-import frc.commands.SpinControlPanel;
+// import frc.commands.GoToColor;
+// import frc.commands.SpinControlPanel;
 import frc.commands.FindTarget;
 import frc.commands.intakeArm;
 import frc.commands.ControlPanelPiston;
@@ -43,6 +43,7 @@ import frc.commands.Autonomous.SampleAuto;
 import frc.commands.Autonomous.AutoShooting;
 // import frc.commands.BallElevator;
 import frc.commands.IntakeAndElevator;
+import frc.commands.Autonomous.SixBallAuto;
 
 /**
  * Add your docs here.
@@ -56,11 +57,11 @@ public class RobotContainer {
    
     //Subsystems
     private final Drivetrain drivetrain = new Drivetrain();
-    // private final ControlPanel controlpanel = new ControlPanel(); 
+    private final ControlPanel controlpanel = new ControlPanel(); 
     private final ShooterWheel shooterwheel = new ShooterWheel();
     private final Elevator elevator = new Elevator();
     private final ShooterHood shooterhood = new ShooterHood();
-    // private final VisionArduino vision = new VisionArduino();
+    private final VisionArduino vision = new VisionArduino();
     private final Intake intake = new Intake();
     //TODO: figure out if the hopper even needs to be a subsystem now
     // private final Hopper hopper = new Hopper();
@@ -104,8 +105,8 @@ public class RobotContainer {
         /*GEAR SHIFTER*/
         this.jsButnShifter.whenPressed(new InstantCommand(drivetrain::highGear, drivetrain));
         this.jsButnShifter.whenReleased(new InstantCommand(drivetrain::lowGear, drivetrain));
-        this.jsButnReverse.whenPressed(new InstantCommand(drivetrain::enableReverse, drivetrain));
-        this.jsButnReverse.whenReleased(new InstantCommand(drivetrain::disableReverse, drivetrain));
+        this.jsButnReverse.whenPressed(new InstantCommand(drivetrain::resetEncoders, drivetrain));
+        // this.jsButnReverse.whenReleased(new InstantCommand(drivetrain::disableReverse, drivetrain));
         /*SHOOTER*/
         this.gpButnShoot.whileHeld(new InstantCommand(shooterwheel::shoot, shooterwheel)); //Manual
         this.gpButnShoot.whenReleased(new InstantCommand(shooterwheel::stopMotor, shooterwheel));
@@ -121,6 +122,8 @@ public class RobotContainer {
         // this.jsButnDetectColour.whileHeld(new GoToColor(controlpanel));
         // this.jsButnRotationControl.whileHeld(new SpinControlPanel(controlpanel));
         // this.jsButnRaiseAndLowerControlPanel.whenPressed(new ControlPanelPiston(controlpanel));
+        jsButnRotationControl.whileHeld(new InstantCommand(controlpanel::moveMotor, controlpanel));
+        jsButnRotationControl.whenReleased(new InstantCommand(controlpanel::stopMotor, controlpanel));
         /*CLIMBER*/
         this.jsButnRaiseClimb.whileHeld(new InstantCommand(climber::openLoopUp, climber));
         this.jsButnRaiseClimb.whenReleased(new InstantCommand(climber::stopMotor, climber));
@@ -135,7 +138,7 @@ public class RobotContainer {
         // this.jsButnIntakePowerCell.whenReleased(new InstantCommand(intake::motorOff, intake));
         this.gpButnIntakeDownAndUp.whenPressed(new intakeArm(intake));
         /*PIXYCAM*/
-        // this.gpButnRunPixyCam.whileHeld(new FindTarget(this.vision, this.drivetrain));
+        this.gpButnRunPixyCam.whileHeld(new FindTarget(this.vision, this.drivetrain));
         this.gamepadTrigger.whileActiveOnce(new IntakeAndElevator(elevator, gamepad, intake));
     }
 
@@ -144,7 +147,8 @@ public class RobotContainer {
     // Command sampleAuto = new SampleAuto(drivetrain, elevator, intake, vision, shooterwheel);
     
     public Command getAutoCommand() {
-        Command selectedAuto = new AutoShooting(drivetrain, elevator, shooterwheel);
+        // Command selectedAuto = new AutoShooting(drivetrain, elevator, shooterwheel);
+        Command selectedAuto = new SixBallAuto(drivetrain, elevator, intake, shooterwheel, vision);
         // switch(whichAuto){
         //     /*Lines up to target, shoots, goes back to get more balls*/
         //     case 0:     selectedAuto = new AutoShooting(drivetrain, elevator, vision, shooterwheel);

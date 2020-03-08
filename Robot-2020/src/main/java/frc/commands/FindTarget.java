@@ -44,7 +44,7 @@ public class FindTarget extends CommandBase {
     data = arduino.getX();
     if(data.equals("LEFT")){
       // System.out.println("GO LEFT");
-      drive.arcadeDrive(0, -0.3);
+      drive.arcadeDrive(0, -0.37);
       finished = false;
     }
     else if(data.equals("CENTER")){
@@ -55,7 +55,7 @@ public class FindTarget extends CommandBase {
     }
     else if(data.equals("RIGHT")){
       // System.out.println("GO RIGHT");
-      drive.arcadeDrive(0, 0.3);
+      drive.arcadeDrive(0, 0.37);
       finished = false;
     }
     // System.out.println(data);

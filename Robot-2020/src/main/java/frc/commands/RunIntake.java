@@ -5,49 +5,42 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.commands.Autonomous;
+package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.subsystems.Drivetrain;
+import frc.subsystems.Intake;
 
-public class AutoDriving extends CommandBase {
-  private Drivetrain drive;
-  int counter;
-  boolean isFinished;
-  public AutoDriving(Drivetrain _drive) {
+public class RunIntake extends CommandBase {
+  /**
+   * Creates a new RunIntake.
+   */
+  Intake intake;
+  public RunIntake(Intake _intake) {
     // Use addRequirements() here to declare subsystem dependencies.
-    drive = _drive;
-    addRequirements(drive);
+    intake = _intake;
+    addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    counter = 0;
-    isFinished = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    counter++;
-    if(counter == 170){
-      isFinished = true;
-    }
-    else{
-      drive.arcadeDrive(0.65, 0);
-    }
+    intake.motorOn();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drive.arcadeDrive(0, 0);
+    intake.motorOff();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return isFinished;
+    return false;
   }
 }

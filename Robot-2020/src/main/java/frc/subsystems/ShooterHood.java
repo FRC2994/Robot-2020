@@ -40,6 +40,6 @@ public class ShooterHood extends SubsystemBase {
   }
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Position", Hood.get());
+    // SmartDashboard.putNumber("Position", Hood.get());
   }
 }

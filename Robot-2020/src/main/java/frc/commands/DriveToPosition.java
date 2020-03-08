@@ -5,49 +5,49 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.commands.Autonomous;
+package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.subsystems.Drivetrain;
 
-public class AutoDriving extends CommandBase {
+public class DriveToPosition extends CommandBase {
   private Drivetrain drive;
-  int counter;
-  boolean isFinished;
-  public AutoDriving(Drivetrain _drive) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    drive = _drive;
+  private double target;
+  private double error;
+  private double kP = 0.08;
+  public DriveToPosition(Drivetrain _drive, double _desiredPos) {
+    drive =_drive;
+    target = _desiredPos;
     addRequirements(drive);
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    counter = 0;
-    isFinished = false;
+    drive.resetEncoders();
+    error = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    counter++;
-    if(counter == 170){
-      isFinished = true;
-    }
-    else{
-      drive.arcadeDrive(0.65, 0);
-    }
+    System.out.println("Called Position");
+    error = target - drive.getLeftEncoderValue();
+    double output = kP*error;
+    drive.arcadeDrive(-output, 0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drive.arcadeDrive(0, 0);
+    drive.tankDrive(0,0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return isFinished;
+    System.out.println(drive.getLeftEncoderValue());
+    return (drive.getLeftEncoderValue()-2  < target) && (drive.getLeftEncoderValue()+2 > target);
   }
 }

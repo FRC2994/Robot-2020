@@ -80,6 +80,7 @@ public class Drivetrain extends SubsystemBase {
 		FrontRight.setOpenLoopRampRate(0.1);
 
 		reverse = false;
+		differentialDrive.setSafetyEnabled(false);
 	}
 	
 	public void setDesiredPosition(int position) {
@@ -232,7 +233,10 @@ public class Drivetrain extends SubsystemBase {
 		//  		getFrontLeftMotor().getMotorOutputVoltage() + "\t" + getFrontRightMotor().getMotorOutputVoltage() + 
 		//  		"\t" + getLeftEncoderValue() + "\t" + getRightEncoderValue() + "\t" + getHeading() + "\t");
 		// System.out.println(getLeftEncoderValue());
-		SmartDashboard.putNumber("Rotation", gyro.getAngle());
+		// SmartDashboard.putNumber("RotationX", gyro.getGyroAngleX());
+		// SmartDashboard.putNumber("RotationY", gyro.getGyroAngleY());
+		// SmartDashboard.putNumber("RotationZ", gyro.getGyroAngleZ());
+		SmartDashboard.putNumber("Position", getLeftEncoderValue());
 	}
 
    /**
@@ -241,7 +245,7 @@ public class Drivetrain extends SubsystemBase {
     * @return The robots heading in degrees.
     */
     public double getHeading() {
-      return gyro.getAngle();
+      return gyro.getGyroAngleY();
     }
 
    /**

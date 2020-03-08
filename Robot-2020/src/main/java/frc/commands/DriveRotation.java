@@ -5,49 +5,50 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.commands.Autonomous;
+package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.subsystems.Drivetrain;
 
-public class AutoDriving extends CommandBase {
+public class DriveRotation extends CommandBase {
   private Drivetrain drive;
-  int counter;
-  boolean isFinished;
-  public AutoDriving(Drivetrain _drive) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  private double target;
+  private double error;
+  private double kP = 0.0196;
+  public DriveRotation(Drivetrain _drive, double _target) {
     drive = _drive;
-    addRequirements(drive);
+    target = _target;
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    counter = 0;
-    isFinished = false;
+    error = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    counter++;
-    if(counter == 170){
-      isFinished = true;
-    }
-    else{
-      drive.arcadeDrive(0.65, 0);
-    }
+    // System.out.println("Called Rotation");
+    error = target - (-(int)drive.getHeading());
+
+    double output = kP * error;
+    // System.out.println(output);
+    drive.arcadeDrive(0, output);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drive.arcadeDrive(0, 0);
+    drive.tankDrive(0, 0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return isFinished;
+    System.out.println(-(int)drive.getHeading());
+
+    return (-(int)drive.getHeading() +2 > target) && (-(int)drive.getHeading() - 2 < target);
   }
 }

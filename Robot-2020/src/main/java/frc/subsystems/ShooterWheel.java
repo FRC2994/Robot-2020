@@ -41,15 +41,16 @@ public class ShooterWheel extends SubsystemBase {
 	Shooter.restoreFactoryDefaults();
 	Shooter.setIdleMode(IdleMode.kCoast);
 	this.Shooter.setInverted(true);
+	Shooter.setSmartCurrentLimit(20);
 	desiredRPM = 5400;
 	stopMotor();
 	//Note: https://www.chiefdelphi.com/t/tune-rev-spark-max-pid-for-shooter/379068
-	kP = 0.0000001;
+	kP = 0.00001;
 	// kP = 0;
 	kI = 0;
 	kD = 0; 
 	kIz = 0; 
-	kFF = 0.0001765; 
+	kFF = 0.000298; 
 	// kFF = 0;
 	kMaxOutput = 1; 
 	kMinOutput = -1;
@@ -78,7 +79,9 @@ public class ShooterWheel extends SubsystemBase {
   public void stopMotor() {
 	//Stops the motor
 	// Shooter.stopMotor();
+	Shooter.set(0);
 	pid.setReference(0, ControlType.kVelocity);
+	// Shooter.set(0);
 
 	//Variable changes:
 	status = false;
@@ -92,6 +95,7 @@ public class ShooterWheel extends SubsystemBase {
 	//Actually sets the velocity to the desired RPM
 	// Shooter.set(1);
 	pid.setReference(5400, ControlType.kVelocity);
+	// Shooter.set(1);
   }
 
   //Increments the speed
@@ -168,7 +172,7 @@ public class ShooterWheel extends SubsystemBase {
 
   @Override
   public void periodic() {
-	printSpeeds();
+	// printSpeeds();
 	// tunePID();
   }
 }

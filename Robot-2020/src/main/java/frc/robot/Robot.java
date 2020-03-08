@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
 		CommandScheduler.getInstance().run();
 		// SmartDashboard.putNumber("Analog Switch", autoSwitch.getCurrentMode());
 
-		boolean debugCurrent = true;
+		boolean debugCurrent = false;
 		if (debugCurrent) {
 			SmartDashboard.putNumber("elevatorCurrent", m_robotContainer.getPDPCurrent(7));
 			SmartDashboard.putNumber("shooterCurrent", m_robotContainer.getPDPCurrent(1));
