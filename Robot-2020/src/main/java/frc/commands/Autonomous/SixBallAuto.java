@@ -36,10 +36,10 @@ public class SixBallAuto extends SequentialCommandGroup {
     super();
     addCommands(
       new Shoot(elevator, shooter).withTimeout(3.5),
-      new DriveRotation(drive, -88),
-      new DriveToPosition(drive, -39),
+      new DriveRotation(drive, -90),
+      new DriveToPosition(drive, -40),
       // new WaitCommand(0.4),
-      new DriveRotation(drive, -1),
+      new DriveRotation(drive, 0),
       new InstantCommand(intake::lowerIntake, intake),
       // new RunIntake(intake).raceWith()
       new AutoDriving(drive).alongWith(new RunIntake(intake).withTimeout(4.2)),

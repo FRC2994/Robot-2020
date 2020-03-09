@@ -10,56 +10,58 @@ package frc.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.subsystems.Drivetrain;
+import frc.subsystems.VisionArduino;
 
-public class DriveRotation extends CommandBase {
+public class AlignVision extends CommandBase {
   private Drivetrain drive;
-  private double target,error, integral, derivative, timechange, currentTime, lastTime, lastError, currentPosition;
+  private VisionArduino vision;
 
-  //PID VALUES
-  private double kP = 0.0196;
-  private double kI = 0;      //TODO: find values for these
-  private double iLimit = 10;
+  private double error, lastError, lastTime, currentTime, dt, position, rotationRate, rotationSum, currentPosition;
+
+  private double target = 144;
+  private double pixel_offset = 4;
+  private double kP = 0;
+  private double kI = 0;
+  private double iLimit = 0;
   private double kD = 0;
 
-  public DriveRotation(Drivetrain _drive, double _target) {
-    drive = _drive;
-    target = _target;
-    // Use addRequirements() here to declare subsystem dependencies.
+  public AlignVision(Drivetrain _drive, VisionArduino _vision) {
+    this.drive = _drive;
+    this.vision = _vision;
+    addRequirements(drive);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    //Resets variables
     error = 0;
-    timechange = 0;
-    integral = 0;
-    derivative = 0;
-    lastTime = 0;
     lastError = 0;
+    lastTime = 0;
+    currentTime = 0;
+    rotationRate = 0;
+    rotationSum = 0;
+    dt = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //Gets the position
-    currentPosition = -(int)drive.getHeading();
+    currentPosition = vision.getX();
+    currentTime = Timer.getFPGATimestamp();
+    dt = currentTime - lastTime;
 
-    //Does P calculation
+    //P Calculation
     error = target - currentPosition;
 
-    //Does I calculation
-    currentTime = Timer.getFPGATimestamp();
-    timechange = currentTime - lastTime;
-    if(Math.abs(error) < iLimit){
-      integral += error*timechange;
+    //I Calculation
+    if(Math.abs(error)<iLimit){
+      rotationSum += error*dt;
     }
 
-    //Does D calculation
-    derivative = (error - lastError) / timechange;
+    //D Calculation
+    rotationRate = (error - lastError) / dt;
 
-    //Outputs the output
-    double output = (kP * error) + (kI * integral) + (kD * derivative);
+    double output = kP*error + kI*rotationSum + kD*rotationRate;
     drive.arcadeDrive(0, output);
 
     lastError = error;
@@ -75,6 +77,6 @@ public class DriveRotation extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return currentPosition == target;
+    return (currentPosition < (target + pixel_offset)) && (currentPosition > (target - pixel_offset));
   }
 }

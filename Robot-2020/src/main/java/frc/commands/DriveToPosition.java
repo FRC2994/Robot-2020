@@ -7,16 +7,28 @@
 
 package frc.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.subsystems.Drivetrain;
 
 public class DriveToPosition extends CommandBase {
   private Drivetrain drive;
-  private double target;
-  private double error;
+  private double target,error, integral, derivative, timechange, currentTime, lastTime, lastError, currentPosition;
+  private double currentAngle, desiredAngle, angleError, previousAngleError, angleSum, angleRate;
+
+  //PID VALUES
   private double kP = 0.08;
+  private double kI = 0;
+  private double iLimit = 0;
+  private double kD = 0;
+
+  //PID VALUES FOR ANGLES (Makes sure that it is going straight, doesn't go off)
+  private double a_kP = 0.0196;
+  private double a_kI = 0;
+  private double a_kD = 0;
+
   public DriveToPosition(Drivetrain _drive, double _desiredPos) {
-    drive =_drive;
+    drive = _drive;
     target = _desiredPos;
     addRequirements(drive);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -26,16 +38,52 @@ public class DriveToPosition extends CommandBase {
   @Override
   public void initialize() {
     drive.resetEncoders();
+    //Resets variables
     error = 0;
+    timechange = 0;
+    integral = 0;
+    derivative = 0;
+    lastTime = 0;
+    lastError = 0;
+
+    desiredAngle = -(int)drive.getHeading();
+    angleError = 0;
+    previousAngleError = 0;
+    angleSum = 0;
+    angleRate = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("Called Position");
-    error = target - drive.getLeftEncoderValue();
-    double output = kP*error;
-    drive.arcadeDrive(-output, 0);
+    currentPosition = drive.getLeftEncoderValue();
+    currentAngle = -(int)drive.getHeading();
+
+    //Time stuff
+    currentTime = Timer.getFPGATimestamp();
+    timechange = currentTime - lastTime;
+
+    //P Calculations
+    error = target - currentPosition;
+    angleError = desiredAngle - currentAngle;
+
+    //I Calculations
+    if(Math.abs(error) < iLimit){
+      integral += error*timechange;
+    }
+    angleSum += angleError*timechange;
+
+    //D Calculations
+    derivative = (error - lastError) / timechange;
+    angleRate = (angleError - previousAngleError) /timechange;
+
+    double forwardOutput = kP*error + kI*integral + kD*derivative;
+    double rotationOutput = a_kP*angleError + a_kI*angleSum + a_kD*angleRate;
+    drive.arcadeDrive(-forwardOutput, rotationOutput);
+
+    lastTime = currentTime;
+    lastError = error;
+    previousAngleError = angleError;
   }
 
   // Called once the command ends or is interrupted.
@@ -47,7 +95,6 @@ public class DriveToPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    System.out.println(drive.getLeftEncoderValue());
-    return (drive.getLeftEncoderValue()-2  < target) && (drive.getLeftEncoderValue()+2 > target);
+    return (currentAngle == desiredAngle) && (currentPosition == target);
   }
 }
