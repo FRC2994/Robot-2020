@@ -9,22 +9,17 @@ package frc.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import com.revrobotics.CANDigitalInput.LimitSwitch;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.utils.Constants;
-import edu.wpi.first.wpilibj.Counter;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Ultrasonic;
 
 public class Elevator extends SubsystemBase {
   private VictorSPX motorcontroller;
   private Ultrasonic ultra;
-  DigitalInput limitSwitch = new DigitalInput(Constants.DIO_ELEVATOR);
-  Counter counter = new Counter(limitSwitch);
   
   public Elevator() {
-    motorcontroller = new VictorSPX(Constants.CAN_ELEVATOR); //TODO: Find a CAN ID for the Elevator
+    motorcontroller = new VictorSPX(Constants.CAN_ELEVATOR); 
     motorcontroller.configOpenloopRamp(0);
     ultra = new Ultrasonic(7, 6);
     ultra.setAutomaticMode(true);
@@ -39,7 +34,6 @@ public class Elevator extends SubsystemBase {
     if (ultra.getRangeInches() < 3) {
       return true;
     }
-
     return false;
   }
 
@@ -52,19 +46,15 @@ public class Elevator extends SubsystemBase {
       motorcontroller.set(ControlMode.PercentOutput, 0.0);
       return;
     }
-
     motorcontroller.set(ControlMode.PercentOutput, 0.2);
-    // System.out.print("ELEVATOR ACTIVE");
   }
   
   public void stopMotor() {
     motorcontroller.set(ControlMode.PercentOutput, 0);
-    // System.out.print("ELEVATOR OFF");
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // System.out.println(ultra.getRangeInches());
   }
 }
