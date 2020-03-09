@@ -41,44 +41,47 @@ public class ShooterWheel extends SubsystemBase {
 	Shooter.restoreFactoryDefaults();
 	Shooter.setIdleMode(IdleMode.kCoast);
 	this.Shooter.setInverted(true);
-	desiredRPM = 5000;
+	Shooter.setSmartCurrentLimit(20);
+	desiredRPM = 5400;
 	stopMotor();
-	// if(tuner == true)
-	// {
-		kP = 1; 
-		kI = 0;
-		kD = 0; 
-		kIz = 0; 
-		kFF = 1; 
-		kMaxOutput = 1; 
-		kMinOutput = -1;
-		maxRPM = 5000;
+	//Note: https://www.chiefdelphi.com/t/tune-rev-spark-max-pid-for-shooter/379068
+	kP = 0.00001;
+	// kP = 0;
+	kI = 0;
+	kD = 0; 
+	kIz = 0; 
+	kFF = 0.000298; 
+	// kFF = 0;
+	kMaxOutput = 1; 
+	kMinOutput = -1;
+	maxRPM = 5400;
 	
-		// set PID coefficients
-		pid.setP(kP);
-		pid.setI(kI);
-		pid.setD(kD);
-		pid.setIZone(kIz);
-		pid.setFF(kFF);
-		pid.setOutputRange(kMinOutput, kMaxOutput);
+	// set PID coefficients
+	pid.setP(kP);
+	pid.setI(kI);
+	pid.setD(kD);
+	pid.setIZone(kIz);
+	pid.setFF(kFF);
+	pid.setOutputRange(kMinOutput, kMaxOutput);
 	
-		// display PID coefficients on SmartDashboard
-		SmartDashboard.putNumber("P Gain", kP);
-		SmartDashboard.putNumber("I Gain", kI);
-		SmartDashboard.putNumber("D Gain", kD);
-		SmartDashboard.putNumber("I Zone", kIz);
-		SmartDashboard.putNumber("Feed Forward", kFF);
-		SmartDashboard.putNumber("Max Output", kMaxOutput);
-		SmartDashboard.putNumber("Min Output", kMinOutput);
-		SmartDashboard.putNumber("Set Velocity", 0);
-	// }
+	// display PID coefficients on SmartDashboard
+	// SmartDashboard.putNumber("P Gain", kP);
+	// SmartDashboard.putNumber("I Gain", kI);
+	// SmartDashboard.putNumber("D Gain", kD);
+	// SmartDashboard.putNumber("I Zone", kIz);
+	// SmartDashboard.putNumber("Feed Forward", kFF );
+	// SmartDashboard.putNumber("Max Output", kMaxOutput);
+	// SmartDashboard.putNumber("Min Output", kMinOutput);
   }
 
 
   //Code that stops the motor
   public void stopMotor() {
 	//Stops the motor
-	Shooter.stopMotor();
+	// Shooter.stopMotor();
+	Shooter.set(0);
+	pid.setReference(0, ControlType.kVelocity);
+	// Shooter.set(0);
 
 	//Variable changes:
 	status = false;
@@ -91,7 +94,8 @@ public class ShooterWheel extends SubsystemBase {
 	// System.out.println("Shoot");
 	//Actually sets the velocity to the desired RPM
 	// Shooter.set(1);
-	pid.setReference(5000, ControlType.kVelocity);
+	pid.setReference(5400, ControlType.kVelocity);
+	// Shooter.set(1);
   }
 
   //Increments the speed
@@ -131,6 +135,12 @@ public class ShooterWheel extends SubsystemBase {
 	SmartDashboard.putNumber("Actual RPM:", actualRPM);
   }
 
+  /*
+	  Tru FF to 0.00000481 
+	  and P gain to 0.00002.
+	  If not, set PID to 0, and keep changing FF till it reaches the goal,
+	  then once that is complete, increase the P, start very very low, then increase I afterwards if there is a bit of error
+  */
   public void tunePID() {
 	    // read PID coefficients from SmartDashboard
 		double p = SmartDashboard.getNumber("P Gain", 0);
@@ -140,29 +150,29 @@ public class ShooterWheel extends SubsystemBase {
 		double ff = SmartDashboard.getNumber("Feed Forward", 0);
 		double max = SmartDashboard.getNumber("Max Output", 0);
 		double min = SmartDashboard.getNumber("Min Output", 0);
-		double setPoint = SmartDashboard.getNumber("Set Velocity", 0);
+		// double setPoint = SmartDashboard.getNumber("Set Velocity", 0);
 	
 		// if PID coefficients on SmartDashboard have changed, write new values to controller
-		if((p != kP)) { pid.setP(p); kP = p; }
-		if((i != kI)) { pid.setI(i); kI = i; }
-		if((d != kD)) { pid.setD(d); kD = d; }
+		if((p != kP)) { pid.setP(p); kP = p; System.out.println("Changed");}
+		if((i != kI)) { pid.setI(i); kI = i; System.out.println("Changed");}
+		if((d != kD)) { pid.setD(d); kD = d; System.out.println("Changed");}
 		if((iz != kIz)) { pid.setIZone(iz); kIz = iz; }
-		if((ff != kFF)) { pid.setFF(ff); kFF = ff; }
+		if((ff != kFF)) { pid.setFF(ff); kFF = ff; System.out.println("Changed");}
 		if((max != kMaxOutput) || (min != kMinOutput)) { 
 		  pid.setOutputRange(min, max); 
 		  kMinOutput = min; kMaxOutput = max; 
 		}
 	
-		pid.setReference(setPoint, ControlType.kVelocity);
+		// pid.setReference(setPoint, ControlType.kVelocity);
 		
-		SmartDashboard.putNumber("SetPoint", setPoint);
+		// SmartDashboard.putNumber("SetPoint", setPoint);
 		SmartDashboard.putNumber("ProcessVariable", enc.getVelocity());
 	}
   
 
   @Override
   public void periodic() {
-	printSpeeds();
-	// System.out.println(enc.getVelocity());
+	// printSpeeds();
+	// tunePID();
   }
 }
