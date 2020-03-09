@@ -9,6 +9,7 @@ package frc.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.subsystems.Drivetrain;
 import frc.subsystems.VisionArduino;
 
@@ -16,7 +17,7 @@ public class AlignVision extends CommandBase {
   private Drivetrain drive;
   private VisionArduino vision;
 
-  private double error, lastError, lastTime, currentTime, dt, position, rotationRate, rotationSum, currentPosition;
+  private double error, lastError, lastTime, currentTime, dt, rotationRate, rotationSum, currentPosition;
 
   private double target = 144;
   private double pixel_offset = 4;
@@ -41,6 +42,8 @@ public class AlignVision extends CommandBase {
     rotationRate = 0;
     rotationSum = 0;
     dt = 0;
+    vision.ledOn();
+    new WaitCommand(0.5); //Waits for led to turn on
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -77,6 +80,6 @@ public class AlignVision extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (currentPosition < (target + pixel_offset)) && (currentPosition > (target - pixel_offset));
+    return ((currentPosition < (target + pixel_offset)) && (currentPosition > (target - pixel_offset))) || currentPosition == -1; // -1 means that is sees no target
   }
 }

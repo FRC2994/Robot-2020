@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.commands.FindTarget;
+// import frc.commands.FindTarget;
 
 import frc.subsystems.Drivetrain;
 import frc.subsystems.Elevator;
@@ -31,7 +31,7 @@ public class SampleAuto extends SequentialCommandGroup {
     super();
     addCommands(
       //Aligns the robot
-      new FindTarget(vision, drive),
+      // new FindTarget(vision, drive),
       //Start Shooter motor with the elevator
       new InstantCommand(elv::startMotor, elv),
       new InstantCommand(shooter::shoot, shooter),

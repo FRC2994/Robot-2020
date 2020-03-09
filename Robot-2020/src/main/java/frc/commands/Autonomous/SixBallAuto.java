@@ -17,9 +17,11 @@ import frc.subsystems.ShooterWheel;
 import frc.subsystems.VisionArduino;
 
 import frc.commands.Shoot;
+import frc.commands.AlignVision;
 import frc.commands.DriveRotation;
 import frc.commands.DriveToPosition;
-import frc.commands.FindTarget;
+// import frc.commands.FindTarget;
+import frc.commands.AlignVision;
 import frc.commands.RunIntake;
 import frc.commands.Autonomous.AutoDriving;
 
@@ -45,7 +47,7 @@ public class SixBallAuto extends SequentialCommandGroup {
       new AutoDriving(drive).alongWith(new RunIntake(intake).withTimeout(4.2)),
       new InstantCommand(intake::motorOff, intake),
       new DriveToPosition(drive, 80),
-      new FindTarget(vision, drive),
+      new AlignVision(drive, vision),
       new Shoot(elevator, shooter).withTimeout(4)
     );
   }

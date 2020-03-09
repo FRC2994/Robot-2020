@@ -32,8 +32,9 @@ import frc.commands.DefaultDrive;
 import frc.commands.ShootSpeed;
 // import frc.commands.GoToColor;
 // import frc.commands.SpinControlPanel;
-import frc.commands.FindTarget;
+// import frc.commands.FindTarget;
 import frc.commands.intakeArm;
+import frc.commands.AlignVision;
 import frc.commands.ControlPanelPiston;
 import frc.commands.Shoot;
 // import frc.commands.ShootAndFeed;
@@ -136,7 +137,7 @@ public class RobotContainer {
         this.gpButnIntake.whileActiveOnce(new IntakeAndElevator(elevator, gamepad, intake));
         this.gpButnIntakeDownAndUp.whenPressed(new intakeArm(intake));
         /*PIXYCAM*/
-        this.gpButnRunPixyCam.whileHeld(new FindTarget(this.vision, this.drivetrain));
+        this.gpButnRunPixyCam.whileHeld(new AlignVision(drivetrain, vision));
     }
 
 
