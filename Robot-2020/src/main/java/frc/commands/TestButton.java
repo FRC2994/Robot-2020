@@ -40,11 +40,13 @@ public class TestButton extends SequentialCommandGroup {
       //wait 2 seconds
       new WaitCommand(2),
       new intakeArm(intake),
+      new WaitCommand(2),
       //tests the intake
       new InstantCommand(intake:: motorOn, intake),
       //wait 2 seconds
       new WaitCommand(2),
       new InstantCommand(intake:: motorOff, intake),
+      new WaitCommand(2),
       //tests the elevator
       new InstantCommand(elevator:: startMotor, elevator),
       //wait 2 seconds
@@ -55,16 +57,6 @@ public class TestButton extends SequentialCommandGroup {
       //wait 2 seconds
       new WaitCommand(2),
       new InstantCommand(shooterwheel::stopMotor, shooterwheel),
-      //tests control panel piston
-      new ControlPanelPiston(controlpanel),
-      //wait 2 seconds
-      new WaitCommand(2),
-      new ControlPanelPiston(controlpanel),
-      //tests the control panel
-      new InstantCommand(controlpanel::testSpin, controlpanel),
-      //wait 2 seconds
-      new WaitCommand(2),
-      new InstantCommand(controlpanel::testStop, controlpanel),
       //tests climber
       new InstantCommand(climber::moveUp, climber),
       //wait 2 seconds
