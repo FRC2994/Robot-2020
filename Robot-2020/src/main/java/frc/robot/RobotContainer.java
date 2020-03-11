@@ -45,6 +45,7 @@ import frc.commands.Autonomous.AutoShooting;
 // import frc.commands.BallElevator;
 import frc.commands.IntakeAndElevator;
 import frc.commands.Autonomous.SixBallAuto;
+import frc.commands.TestButton;
 
 /**
  * Add your docs here.
@@ -81,6 +82,7 @@ public class RobotContainer {
     private final JoystickButton jsButnDetectColour              = new JoystickButton(this.joystick, 6);
     private final JoystickButton jsButnRaiseClimb                = new JoystickButton(this.joystick, 7);
     private final JoystickButton jsButnLowerClimb                = new JoystickButton(this.joystick, 8);
+    private final JoystickButton jsSystemTestButton               = new JoystickButton(this.joystick, 11);
     private final JoystickButton jsButnShifter                   = new JoystickButton(this.joystick, 12);
   
     //gamepad
@@ -90,6 +92,9 @@ public class RobotContainer {
     private final JoystickButton gpButnIntakeDownAndUp           = new JoystickButton(this.gamepad, 4);
     private final JoystickButton gpButnShooter                   = new JoystickButton(this.gamepad, 6);
     private final Trigger        gpButnIntake                    = new Trigger(rightAxis::get);
+    private final JoystickButton gpButnServoIncrement            = new JoystickButton(this.gamepad, 9);
+    private final JoystickButton gpSystemTestButton               = new JoystickButton(this.gamepad, 11);
+    //Contains subsystems, OI devices, and commands.
 
     public RobotContainer(){
         configureButtons();
@@ -141,8 +146,15 @@ public class RobotContainer {
     }
 
 
-    /*AUTONOMOUS STUFF*/
-    // Command sampleAuto = new SampleAuto(drivetrain, elevator, intake, vision, shooterwheel);
+        this.gpButnRunPixyCam.whileHeld(new FindTarget(this.vision, this.drivetrain));
+        /*SYSTEM TEST*/
+        if (this.jsSystemTestButton.get() && this.gpSystemTestButton.get()){
+            new TestButton(elevator, intake, shooterwheel, controlpanel, climber);
+        }
+
+
+    }
+    
     
     public Command getAutoCommand() {
         // Command selectedAuto = new AutoShooting(drivetrain, elevator, shooterwheel);
