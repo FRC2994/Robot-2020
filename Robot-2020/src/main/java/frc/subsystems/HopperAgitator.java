@@ -8,17 +8,31 @@
 package frc.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.utils.Constants;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class HopperAgitator extends SubsystemBase {
-  /**
-   * Creates a new HopperAgitator.
-   */
+private VictorSPX agitatorMotor;
+private double agitatorMotorSpeed = 0;
+
   public HopperAgitator() {
-//starrt stop motor   10 & 0.5 talon librayr
+    agitatorMotor = new VictorSPX(Constants.CAN_CLIMBER); 
+    //still have to update the constants and add a new CAN_ID for the agitator, right now the climber will be a placeholder
+  
+  public void motorOn() {
+    agitatorMotorSpeed = 10;
+    agitatorMotor.set(ControlMode.PercentOutput, agitatorMotorSpeed);
   }
+
+  public void motorOff() {
+    agitatorMotorSpeed = 0;
+    agitatorMotor.set(ControlMode.PercentOutput, agitatorMotorSpeed);
+  }
+  
+}
 
   @Override
   public void periodic() {
