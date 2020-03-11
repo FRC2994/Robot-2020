@@ -26,13 +26,14 @@ import frc.subsystems.ShooterHood;
 import frc.subsystems.VisionArduino;
 import frc.subsystems.Intake;
 import frc.subsystems.Climber;
+import frc.subsystems.HopperAgitator;
 
 //Commands Imports
 import frc.commands.DefaultDrive;
 import frc.commands.ShootSpeed;
 // import frc.commands.GoToColor;
 // import frc.commands.SpinControlPanel;
-// import frc.commands.FindTarget;
+import frc.commands.FindTarget;
 import frc.commands.intakeArm;
 import frc.commands.AlignVision;
 import frc.commands.ControlPanelPiston;
@@ -66,7 +67,7 @@ public class RobotContainer {
     private final VisionArduino vision = new VisionArduino();
     private final Intake intake = new Intake();
     //TODO: figure out if the hopper even needs to be a subsystem now
-    // private final Hopper hopper = new Hopper();
+    private final HopperAgitator hopper = new HopperAgitator();
     private final Climber climber = new Climber();
 
     private UsbCamera camera;
@@ -143,17 +144,18 @@ public class RobotContainer {
         this.gpButnIntakeDownAndUp.whenPressed(new intakeArm(intake));
         /*PIXYCAM*/
         this.gpButnRunPixyCam.whileHeld(new AlignVision(drivetrain, vision));
-    }
-
-
         this.gpButnRunPixyCam.whileHeld(new FindTarget(this.vision, this.drivetrain));
         /*SYSTEM TEST*/
         if (this.jsSystemTestButton.get() && this.gpSystemTestButton.get()){
-            new TestButton(elevator, intake, shooterwheel, controlpanel, climber);
+            new TestButton(elevator, intake, shooterwheel, controlpanel, climber, hopper);
         }
-
-
     }
+
+
+        
+
+
+    
     
     
     public Command getAutoCommand() {
