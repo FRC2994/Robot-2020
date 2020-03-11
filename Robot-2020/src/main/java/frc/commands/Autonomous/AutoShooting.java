@@ -5,62 +5,47 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.commands;
+package frc.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import frc.commands.FindTarget;
+import frc.commands.Shoot;
+import frc.commands.Autonomous.AutoDriving;
 
 import frc.subsystems.Drivetrain;
 import frc.subsystems.Elevator;
-import frc.subsystems.Intake;
-import frc.subsystems.VisionArduino;
+// import frc.subsystems.VisionArduino;
 import frc.subsystems.ShooterWheel;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class SampleAuto extends SequentialCommandGroup {
+public class AutoShooting extends SequentialCommandGroup {
   /**
    * Creates a new SampleAuto.
    */
-  public SampleAuto(Drivetrain drive, Elevator elv, Intake intake, VisionArduino vision, ShooterWheel shooter) {
+  public AutoShooting(Drivetrain drive, Elevator elv, ShooterWheel shooter) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super();
     addCommands(
       //Aligns the robot
-      new FindTarget(vision, drive),
+      // new FindTarget(vision, drive),
       //Start Shooter motor with the elevator
-      new InstantCommand(elv::startMotor, elv),
-      new InstantCommand(shooter::shoot, shooter),
+      // new InstantCommand(elv::startMotor, elv),
+      // new InstantCommand(shooter::shoot, shooter),
       //Waits 3 seconds for the balls to be shot
-      new WaitCommand(3),
-      new InstantCommand(elv::stopMotor, elv),
-      new InstantCommand(shooter::stopMotor, shooter),
-      //Drives back
-      new StartEndCommand(
-        () -> drive.arcadeDrive(-0.5, 0), 
-        () -> drive.arcadeDrive(0,0),
-        drive)
-        .beforeStarting(drive::resetEncoders)
-        .withTimeout(1.5),        
-      //Lowers Intake
-      new InstantCommand(intake::lowerIntake, intake),
-      new WaitCommand(0.5),
-      new InstantCommand(intake::motorOn, intake),
-      //Drives a bit to intake the ball
-      new StartEndCommand(
-        () -> drive.arcadeDrive(-0.5, 0), 
-        () -> drive.arcadeDrive(0,0),
-        drive)
-        .beforeStarting(drive::resetEncoders)
-        .withTimeout(1.5),
-
-      new InstantCommand(intake::motorOff, intake),
-      new WaitCommand(0.5),
-      new InstantCommand(intake::raiseIntake, intake)
+      // new WaitCommand(3),
+      // new InstantCommand(elv::stopMotor, elv),
+      // new InstantCommand(shooter::stopMotor, shooter),
+      new Shoot(elv, shooter).withTimeout(4),
+      // new StartEndCommand(
+      //   () -> drive.arcadeDrive(1, 0), 
+      //   () -> drive.arcadeDrive(0,0),
+      //   drive)
+      //   .withTimeout(1.5)   
+      new AutoDriving(drive)
     );
   }
 }

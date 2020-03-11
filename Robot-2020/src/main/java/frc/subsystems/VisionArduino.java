@@ -12,14 +12,13 @@ import frc.utils.Constants;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class VisionArduino extends SubsystemBase {
-  private static I2C Wire = new I2C(Port.kMXP, 4);//uses the i2c port on the RoboRIO
+  private static I2C Wire = new I2C(Port.kOnboard, 4);//uses the i2c port on the RoboRIO
   //uses address 4 
   private static final int MAX_BYTES = 32;
   double y = 0,d = 0;
-  String x = "";
+  double x;
   Solenoid led = new Solenoid(Constants.CAN_PCM, 7);
 
 	private String read(){//function to read the data from arduino
@@ -31,25 +30,26 @@ public class VisionArduino extends SubsystemBase {
   }
   
   public void splitter() {
-    String info[] = read().split("\\|");
-    if(info.length == 3){//if there is an x, y, and area value the length equals 3
-			x = info[0];//set x
-			y = Double.parseDouble(info[1]);//set y
-      d = Double.parseDouble(info[2]);//set area
-    }
+    String info = read();
+    //.split("\\|");
+    // if(info.length == 3){//if there is an x, y, and area value the length equals 3
+		x = Double.parseDouble(info);//set x
+			// y = Double.parseDouble(info[1]);//set y
+      // d = Double.parseDouble(info[2]);//set area
+
   }
 
-  public String getX() {
+  public double getX() {
     return x;
   }
   
-  public double getY() {
-    return y;
-  }
+  // public double getY() {
+  //   return y;
+  // }
 
-  public double getDistance() {
-    return d;
-  }
+  // public double getDistance() {
+  //   return d;
+  // }
   public VisionArduino() {
     ledOff();
   }

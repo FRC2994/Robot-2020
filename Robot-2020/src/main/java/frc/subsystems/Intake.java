@@ -9,6 +9,8 @@ package frc.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.utils.Constants;
+import frc.subsystems.HopperAgitator;
+import frc.subsystems.Elevator;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;

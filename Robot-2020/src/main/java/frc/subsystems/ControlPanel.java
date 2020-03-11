@@ -14,12 +14,13 @@ import edu.wpi.first.wpilibj.Solenoid;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import com.revrobotics.ColorSensorV3;
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class ControlPanel extends SubsystemBase {
 
 	private final VictorSPX motor;
-	private final ColorSensorV3 sensor;
+	// private final ColorSensorV3 sensor;
 	private Solenoid piston;
 	public boolean controlPanelExtend;
 
@@ -28,9 +29,9 @@ public class ControlPanel extends SubsystemBase {
 	 */
 	public ControlPanel() {
 		this.motor = new VictorSPX(Constants.CAN_CONTROL_PANEL);
-		piston = new Solenoid(Constants.SOLENOID_PORT, Constants.PCM_CONTROL_PANEL); 
-		I2C.Port i2cPort = I2C.Port.kOnboard;
-		this.sensor = new ColorSensorV3(i2cPort);
+		// piston = new Solenoid(Constants.SOLENOID_PORT, Constants.PCM_CONTROL_PANEL); 
+		// I2C.Port i2cPort = I2C.Port.kOnboard;
+		// this.sensor = new ColorSensorV3(i2cPort);
 	}
 
 	public void raiseControlPanel() {
@@ -41,6 +42,13 @@ public class ControlPanel extends SubsystemBase {
 	public void lowerControlPanel(){
 		controlPanelExtend = false;
 		piston.set(controlPanelExtend);
+	}
+	
+	public void moveMotor() {
+		motor.set(ControlMode.PercentOutput, 0.1);
+	}
+	public void stopMotor() {
+		motor.set(ControlMode.PercentOutput, 0);
 	}
 
 	public void testSpin(){
@@ -63,8 +71,8 @@ public class ControlPanel extends SubsystemBase {
 		return this.motor;
 	}
 
-	// returns the subsystem's color sensor
-	public ColorSensorV3 colorSensor() {
-		return this.sensor;
-	}
+	// // returns the subsystem's color sensor
+	// public ColorSensorV3 colorSensor() {
+	// 	return this.sensor;
+	// }
 }

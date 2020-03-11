@@ -126,11 +126,19 @@ public class Climber extends PIDSubsystem {
 
   /*Main Code for Now*/
   public void openLoopUp() {
-    move(1);
-    System.out.println(m_encoder.get());
+    if(m_encoder.get() < 11000){
+      move(1);
+      System.out.println(m_encoder.get());
+    }
   }
   public void openLoopDown() {
-    move(-1);
+    if(m_limitSwitch.get() == true){
+      move(-1);
+    }
+    else{
+      move(0);
+      m_encoder.reset();
+    }
     System.out.println(m_encoder.get());
   }
   public void stopMotor(){
