@@ -21,17 +21,16 @@ private double agitatorMotorSpeed = 0;
   public HopperAgitator() {
     agitatorMotor = new VictorSPX(Constants.CAN_CLIMBER); 
     //still have to update the constants and add a new CAN_ID for the agitator, right now the climber will be a placeholder
-  
-  public void motorOn() {
-    agitatorMotorSpeed = 10;
-    agitatorMotor.set(ControlMode.PercentOutput, agitatorMotorSpeed);
-  }
+}
 
-  public void motorOff() {
-    agitatorMotorSpeed = 0;
-    agitatorMotor.set(ControlMode.PercentOutput, agitatorMotorSpeed);
-  }
-  
+public void motorOn() {
+  agitatorMotorSpeed = 0.6;
+  agitatorMotor.set(ControlMode.PercentOutput, agitatorMotorSpeed);
+}
+
+public void motorOff() {
+  agitatorMotorSpeed = 0;
+  agitatorMotor.set(ControlMode.PercentOutput, agitatorMotorSpeed);
 }
 
   @Override
