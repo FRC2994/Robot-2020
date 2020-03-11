@@ -52,11 +52,13 @@ public class TestButton extends SequentialCommandGroup {
       //wait 2 seconds
       new WaitCommand(2),
       new InstantCommand(elevator:: stopMotor, elevator),
+      new WaitCommand(2),
       //tests the shooter
       new InstantCommand(shooterwheel::shoot, shooterwheel),
       //wait 2 seconds
       new WaitCommand(2),
       new InstantCommand(shooterwheel::stopMotor, shooterwheel),
+      new WaitCommand(2),
       //tests climber
       new InstantCommand(climber::moveUp, climber),
       //wait 2 seconds
