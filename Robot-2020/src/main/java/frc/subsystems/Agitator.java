@@ -19,7 +19,7 @@ private VictorSPX agitatorMotor;
 private double agitatorMotorSpeed = 0;
 
   public Agitator() {
-    agitatorMotor = new VictorSPX(Constants.CAN_CLIMBER); 
+    agitatorMotor = new VictorSPX(Constants.CAN_CONTROL_PANEL); 
     //still have to update the constants and add a new CAN_ID for the agitator, right now the climber will be a placeholder
 }
 
