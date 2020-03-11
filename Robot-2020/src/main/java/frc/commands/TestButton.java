@@ -23,6 +23,7 @@ import frc.subsystems.ControlPanel;
 import frc.subsystems.Elevator;
 import frc.subsystems.Intake;
 import frc.subsystems.ShooterWheel;
+import frc.subsystems.HopperAgitator;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
@@ -30,7 +31,7 @@ public class TestButton extends SequentialCommandGroup {
   /**
    * Creates a new TestButton.
    */
-  public TestButton(Elevator elevator, Intake intake, ShooterWheel shooterwheel, ControlPanel controlpanel, Climber climber) {
+  public TestButton(Elevator elevator, Intake intake, ShooterWheel shooterwheel, ControlPanel controlpanel, Climber climber, HopperAgitator hopper) {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
     super();
@@ -46,6 +47,12 @@ public class TestButton extends SequentialCommandGroup {
       //wait 2 seconds
       new WaitCommand(2),
       new InstantCommand(intake:: motorOff, intake),
+      new WaitCommand(2),
+      //tests the hopper agitator
+      new InstantCommand(hopper:: motorOn, hopper),
+      //wait 2 seconds
+      new WaitCommand(2),
+      new InstantCommand(hopper:: motorOff, hopper),
       new WaitCommand(2),
       //tests the elevator
       new InstantCommand(elevator:: startMotor, elevator),
@@ -64,7 +71,6 @@ public class TestButton extends SequentialCommandGroup {
       //wait 2 seconds
       new WaitCommand(2),
       new InstantCommand(climber::moveDown, climber)
-
     );
 
 
