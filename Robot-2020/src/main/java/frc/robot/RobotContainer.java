@@ -67,8 +67,6 @@ public class RobotContainer {
     private final VisionArduino vision = new VisionArduino();
     private final Intake intake = new Intake();
     private final Agitator agitator = new Agitator();
-    //TODO: figure out if the hopper even needs to be a subsystem now
-    // private final Hopper hopper = new Hopper();
     private final Climber climber = new Climber();
 
     private UsbCamera camera;
@@ -108,7 +106,7 @@ public class RobotContainer {
         /*GEAR SHIFTER*/
         this.jsButnShifter.whenPressed(new InstantCommand(drivetrain::highGear, drivetrain));
         this.jsButnShifter.whenReleased(new InstantCommand(drivetrain::lowGear, drivetrain));
-        this.jsButnReverse.whenPressed(new InstantCommand(drivetrain::resetEncoders, drivetrain));
+        // this.jsButnReverse.whenPressed(new InstantCommand(drivetrain::resetEncoders, drivetrain));
         // this.jsButnReverse.whenReleased(new InstantCommand(drivetrain::disableReverse, drivetrain));
         /*SHOOTER*/
         this.gpButnShoot.whileHeld(new InstantCommand(shooterwheel::shoot, shooterwheel)); //Manual
@@ -118,7 +116,6 @@ public class RobotContainer {
         /*ELEVATOR*/
         this.gpButnManualElevator.whileHeld(new InstantCommand(elevator::startMotor, elevator)); //Manual
         this.gpButnManualElevator.whenReleased(new InstantCommand(elevator::stopMotor, elevator));
-        // this.gpButnManualElevator.whileHeld(new BallElevator(elevator));
 
         /*CONTROL PANEL*/
         //TODO: test this
@@ -127,7 +124,6 @@ public class RobotContainer {
         // this.jsButnRaiseAndLowerControlPanel.whenPressed(new ControlPanelPiston(controlpanel));
         
         // jsButnRaiseAndLowerControlPanel.whenPressed(new DriveRotation(drivetrain, -90));
-
         /*CLIMBER*/
         this.jsButnRaiseClimb.whileHeld(new InstantCommand(climber::openLoopUp, climber));
         this.jsButnRaiseClimb.whenReleased(new InstantCommand(climber::stopMotor, climber));
@@ -136,10 +132,7 @@ public class RobotContainer {
         /*HOPPER*/
         this.jsButnAgitator.whileHeld(new InstantCommand(agitator:: motorOn, agitator));
         this.jsButnAgitator.whenReleased(new InstantCommand(agitator:: motorOff, agitator));
-        // this.gpButnHopperDisturber.whileHeld(new InstantCommand(hopper:: HopperDisturberExtend, hopper));
-        // this.gpButnHopperDisturber.whenReleased(new InstantCommand(hopper:: HopperDisturberIntake, hopper));
         /*INTAKE*/
-        // Removed this, this is a trigger now
         this.gpButnIntake.whileActiveOnce(new IntakeAndElevator(elevator, gamepad, intake));
         this.gpButnIntakeDownAndUp.whenPressed(new intakeArm(intake));
         /*PIXYCAM*/
