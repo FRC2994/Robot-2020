@@ -15,10 +15,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import com.analog.adis16448.frc.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.utils.Constants;
 
 public class Drivetrain extends SubsystemBase {
@@ -32,16 +34,16 @@ public class Drivetrain extends SubsystemBase {
 	private CANEncoder rightENC = FrontRight.getEncoder();
 	private CANEncoder leftENC = FrontLeft.getEncoder();
 
-	Solenoid gearShiftSolenoid = new Solenoid(0, 1);
+	Solenoid gearShiftSolenoid = new Solenoid(Constants.SOLENOID_PORT, Constants.PCM_GEAR);
 	public static enum GearShiftState { HI, LO };
 
-	public ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+	private final ADIS16448_IMU gyro = new ADIS16448_IMU();
 	public DifferentialDrive differentialDrive;
 
 	private int startPosition;
 	private int desiredPosition = 0; 
 	private boolean stopArcadeDrive;
-	private boolean reverse;
+	private boolean reverse = false;
 	
 	private static final double leftDistancePerPulse = (4.0 / 12.0 * Math.PI) / 360.0;
 	private static final double rightDistancePerPulse = (4.0 / 12.0 * Math.PI) / 360.0;
@@ -52,8 +54,6 @@ public class Drivetrain extends SubsystemBase {
 		FrontLeft.restoreFactoryDefaults();
 		RearLeft.restoreFactoryDefaults();
 		
-		// FrontRight.setInverted(false);
-		// FrontLeft.setInverted(true);
 		// Set the rear drives to follow the left and right front drives
 		RearLeft.follow(FrontLeft);
 		RearRight.follow(FrontRight);
@@ -80,6 +80,7 @@ public class Drivetrain extends SubsystemBase {
 		FrontRight.setOpenLoopRampRate(0.1);
 
 		reverse = false;
+		differentialDrive.setSafetyEnabled(false);
 	}
 	
 	public void setDesiredPosition(int position) {
@@ -131,7 +132,13 @@ public class Drivetrain extends SubsystemBase {
 	
 
 	public void arcadeDrive(double forward, double rotation) {
-		differentialDrive.arcadeDrive(-forward , rotation);
+		if(reverse == false){
+			differentialDrive.arcadeDrive(-forward, rotation);
+		}
+		else{
+			differentialDrive.arcadeDrive(forward , rotation);
+		}// differentialDrive.feed();
+		// differentialDrive.feedWatchdog();
 	}
 
 	public void getJoystickValues(Joystick joystick) {
@@ -209,6 +216,13 @@ public class Drivetrain extends SubsystemBase {
 		stopArcadeDrive = value;
 	}
 
+	public void enableReverse(){
+		reverse = true;
+	}
+	public void disableReverse(){
+		reverse= false;
+	}
+
     /**
      * This function is called periodically by Scheduler.run
      */
@@ -218,6 +232,12 @@ public class Drivetrain extends SubsystemBase {
 		// Logger.appendRecord(
 		//  		getFrontLeftMotor().getMotorOutputVoltage() + "\t" + getFrontRightMotor().getMotorOutputVoltage() + 
 		//  		"\t" + getLeftEncoderValue() + "\t" + getRightEncoderValue() + "\t" + getHeading() + "\t");
+		// System.out.println(getLeftEncoderValue());
+		// SmartDashboard.putNumber("RotationX", gyro.getGyroAngleX());
+		// SmartDashboard.putNumber("RotationY", gyro.getGyroAngleY());
+		// SmartDashboard.putNumber("RotationZ", gyro.getGyroAngleZ());
+		SmartDashboard.putNumber("Position", getLeftEncoderValue());
+		SmartDashboard.putNumber("Gyro", getHeading());
 	}
 
    /**
@@ -226,7 +246,7 @@ public class Drivetrain extends SubsystemBase {
     * @return The robots heading in degrees.
     */
     public double getHeading() {
-      return gyro.getAngle();
+      return gyro.getGyroAngleY();
     }
 
    /**

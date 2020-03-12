@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.RobotContainer;
+import frc.utils.AnalogSwitch;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,10 +29,12 @@ public class Robot extends TimedRobot {
 	private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
 	private RobotContainer m_robotContainer;	
+	private AnalogSwitch autoSwitch;
 	// private final DriveWithJoystick driveWithJoystickCommand; 
 
 	public Robot() {
 		m_robotContainer = new RobotContainer();
+		autoSwitch = new AnalogSwitch();
 	}
 
 
@@ -42,10 +45,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		System.out.println("[robot] running robotInit");
-
-		m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
-		m_chooser.addOption("My Auto", kCustomAuto);
-		SmartDashboard.putData("Auto choices", m_chooser);
 		
 		if(m_robotContainer == null) {
 			m_robotContainer = new RobotContainer();
@@ -63,6 +62,14 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotPeriodic() {
 		CommandScheduler.getInstance().run();
+		// SmartDashboard.putNumber("Analog Switch", autoSwitch.getCurrentMode());
+
+		boolean debugCurrent = false;
+		if (debugCurrent) {
+			SmartDashboard.putNumber("elevatorCurrent", m_robotContainer.getPDPCurrent(7));
+			SmartDashboard.putNumber("shooterCurrent", m_robotContainer.getPDPCurrent(1));
+			SmartDashboard.putNumber("Analog Switch getCurrentMode", autoSwitch.getCurrentMode());
+		}
 	}
 
 	/**
@@ -80,9 +87,9 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 		System.out.println("[robot] running autonomousInit");
 
-		m_autoSelected = m_chooser.getSelected();
-		// m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-		System.out.println("Auto selected: " + m_autoSelected);
+		// int selectedAuto = autoSwitch.getCurrentMode();
+		// System.out.println("AUTO MODE: " + selectedAuto);
+		m_robotContainer.getAutoCommand().schedule();
 	}
 
 	/**
@@ -90,22 +97,22 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		switch (m_autoSelected) {
-			case kCustomAuto:
-				// Put custom auto code here
-				break;
-			case kDefaultAuto:
-			default:
-				// Put default auto code here
-				break;
-		}
+		// switch (m_autoSelected) {
+		// 	case kCustomAuto:
+		// 		// Put custom auto code here
+		// 		break;
+		// 	case kDefaultAuto:
+		// 	default:
+		// 		// Put default auto code here
+		// 		break;
+		// }
 	}
 
 	@Override
 	public void teleopInit() {
 		System.out.println("[robot] running teleopInit");
 
-		// this.driveWithJoystickCommand.schedule(); 
+		m_robotContainer.enableDefaultCommands();
 	}
 
 	/**
@@ -113,7 +120,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-
 	}
 
 	/**

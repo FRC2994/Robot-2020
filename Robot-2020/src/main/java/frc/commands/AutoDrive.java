@@ -7,42 +7,35 @@
 
 // package frc.commands;
 
-// import frc.subsystems.ControlPanel;
-// import com.revrobotics.ColorSensorV3;
-
-// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-// import edu.wpi.first.wpilibj.util.Color;
 // import edu.wpi.first.wpilibj2.command.CommandBase;
+// import frc.subsystems.DriveAutonomous;
 
-// public class DetectColor extends CommandBase {
+// public class AutoDrive extends CommandBase {
+// 	private DriveAutonomous autoDrive;
 
-// 	private final ColorSensorV3 sensor;
 // 	/**
-// 	 * Creates a new DetectColor.
+// 	 * Creates a new AutoDrive.
 // 	 */
-// 	public DetectColor(ControlPanel controlPanel) {
-// 		this.addRequirements(controlPanel);
-// 		this.sensor = controlPanel.colorSensor();
+// 	public AutoDrive(DriveAutonomous autoDrive) {
+// 		this.autoDrive = autoDrive;
 // 	}
 
 // 	// Called when the command is initially scheduled.
 // 	@Override
 // 	public void initialize() {
-// 		System.out.println("[DetectColor] initialize");
+// 		System.out.println("[AutoDrive] initialize");
+// 		this.autoDrive.start();
 // 	}
 
 // 	// Called every time the scheduler runs while the command is scheduled.
 // 	@Override
 // 	public void execute() {
-// 		Color current = this.sensor.getColor();
-// 		SmartDashboard.putNumber("red", current.red);
-// 		SmartDashboard.putNumber("blue", current.blue);
-// 		SmartDashboard.putNumber("green", current.green);
 // 	}
 
 // 	// Called once the command ends or is interrupted.
 // 	@Override
 // 	public void end(boolean interrupted) {
+// 		this.autoDrive.stop();
 // 	}
 
 // 	// Returns true when the command should end.
