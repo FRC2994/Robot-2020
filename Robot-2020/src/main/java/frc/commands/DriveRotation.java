@@ -14,12 +14,14 @@ import frc.subsystems.Drivetrain;
 public class DriveRotation extends CommandBase {
   private Drivetrain drive;
   private double target,error, integral, derivative, timechange, currentTime, lastTime, lastError, currentPosition;
+  int timerTicks;
 
   //PID VALUES
-  private double kP = 0.0196;
-  private double kI = 0;      //TODO: find values for these
-  private double iLimit = 10;
+  private double kP = 0.0147;
+  private double kI = 0.08;      //TODO: find values for these
+  private double iLimit = 15;
   private double kD = 0;
+  // 0.00045;
 
   public DriveRotation(Drivetrain _drive, double _target) {
     drive = _drive;
@@ -37,6 +39,7 @@ public class DriveRotation extends CommandBase {
     derivative = 0;
     lastTime = 0;
     lastError = 0;
+    timerTicks =0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -60,6 +63,7 @@ public class DriveRotation extends CommandBase {
 
     //Outputs the output
     double output = (kP * error) + (kI * integral) + (kD * derivative);
+    System.out.println(output);
     drive.arcadeDrive(0, output);
 
     lastError = error;
@@ -75,6 +79,9 @@ public class DriveRotation extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return currentPosition == target;
+    if(currentPosition == target) {
+      timerTicks++;
+    }
+    return timerTicks == 10;
   }
 }

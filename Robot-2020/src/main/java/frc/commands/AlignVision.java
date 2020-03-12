@@ -21,9 +21,9 @@ public class AlignVision extends CommandBase {
 
   private double target = 144;
   private double pixel_offset = 4;
-  private double kP = 0;
-  private double kI = 0;
-  private double iLimit = 0;
+  private double kP = 0.0095;
+  private double kI = 0.01;
+  private double iLimit = 20;
   private double kD = 0;
 
   public AlignVision(Drivetrain _drive, VisionArduino _vision) {
@@ -43,43 +43,48 @@ public class AlignVision extends CommandBase {
     rotationSum = 0;
     dt = 0;
     vision.ledOn();
-    new WaitCommand(0.5); //Waits for led to turn on
+    new WaitCommand(1); //Waits for led to turn on
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     currentPosition = vision.getX();
-    currentTime = Timer.getFPGATimestamp();
-    dt = currentTime - lastTime;
+      if(currentPosition != -1){
+      currentTime = Timer.getFPGATimestamp();
+      dt = currentTime - lastTime;
 
-    //P Calculation
-    error = target - currentPosition;
+      //P Calculation
+      error = target - currentPosition;
 
-    //I Calculation
-    if(Math.abs(error)<iLimit){
-      rotationSum += error*dt;
+      //I Calculation
+      if(Math.abs(error)<iLimit){
+        rotationSum += error*dt;
+      }
+
+      //D Calculation
+      rotationRate = (error - lastError) / dt;
+
+      double output = kP*error + kI*rotationSum + kD*rotationRate;
+      System.out.println(currentPosition);
+      drive.arcadeDrive(0, -output);
+
+      lastError = error;
+      lastTime = currentTime;
     }
-
-    //D Calculation
-    rotationRate = (error - lastError) / dt;
-
-    double output = kP*error + kI*rotationSum + kD*rotationRate;
-    drive.arcadeDrive(0, output);
-
-    lastError = error;
-    lastTime = currentTime;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     drive.tankDrive(0, 0);
+    vision.ledOff();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ((currentPosition < (target + pixel_offset)) && (currentPosition > (target - pixel_offset))) || currentPosition == -1; // -1 means that is sees no target
+    // return currentPosition == -1; // -1 means that is sees no target
+    return false;
   }
 }

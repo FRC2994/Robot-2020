@@ -237,6 +237,7 @@ public class Drivetrain extends SubsystemBase {
 		// SmartDashboard.putNumber("RotationY", gyro.getGyroAngleY());
 		// SmartDashboard.putNumber("RotationZ", gyro.getGyroAngleZ());
 		SmartDashboard.putNumber("Position", getLeftEncoderValue());
+		SmartDashboard.putNumber("Gyro", getHeading());
 	}
 
    /**

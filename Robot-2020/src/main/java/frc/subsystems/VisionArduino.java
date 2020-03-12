@@ -31,6 +31,7 @@ public class VisionArduino extends SubsystemBase {
   
   public void splitter() {
     String info = read();
+    // System.out.println(info);
     //.split("\\|");
     // if(info.length == 3){//if there is an x, y, and area value the length equals 3
 		x = Double.parseDouble(info);//set x
@@ -40,6 +41,7 @@ public class VisionArduino extends SubsystemBase {
   }
 
   public double getX() {
+    splitter();
     return x;
   }
   

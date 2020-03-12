@@ -29,6 +29,7 @@ import frc.subsystems.Climber;
 
 //Commands Imports
 import frc.commands.DefaultDrive;
+import frc.commands.DriveRotation;
 import frc.commands.ShootSpeed;
 // import frc.commands.GoToColor;
 // import frc.commands.SpinControlPanel;
@@ -122,6 +123,9 @@ public class RobotContainer {
         // this.jsButnDetectColour.whileHeld(new GoToColor(controlpanel));
         // this.jsButnRotationControl.whileHeld(new SpinControlPanel(controlpanel));
         // this.jsButnRaiseAndLowerControlPanel.whenPressed(new ControlPanelPiston(controlpanel));
+        
+        jsButnRaiseAndLowerControlPanel.whenPressed(new DriveRotation(drivetrain, -90));
+
         jsButnRotationControl.whileHeld(new InstantCommand(controlpanel::moveMotor, controlpanel));
         jsButnRotationControl.whenReleased(new InstantCommand(controlpanel::stopMotor, controlpanel));
         /*CLIMBER*/
