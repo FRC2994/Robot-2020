@@ -26,6 +26,7 @@ import frc.subsystems.ShooterHood;
 import frc.subsystems.VisionArduino;
 import frc.subsystems.Intake;
 import frc.subsystems.Climber;
+import frc.subsystems.Agitator;
 
 //Commands Imports
 import frc.commands.DefaultDrive;
@@ -59,12 +60,13 @@ public class RobotContainer {
    
     //Subsystems
     private final Drivetrain drivetrain = new Drivetrain();
-    private final ControlPanel controlpanel = new ControlPanel(); 
+    // private final ControlPanel controlpanel = new ControlPanel(); 
     private final ShooterWheel shooterwheel = new ShooterWheel();
     private final Elevator elevator = new Elevator();
     private final ShooterHood shooterhood = new ShooterHood();
     private final VisionArduino vision = new VisionArduino();
     private final Intake intake = new Intake();
+    private final Agitator agitator = new Agitator();
     //TODO: figure out if the hopper even needs to be a subsystem now
     // private final Hopper hopper = new Hopper();
     private final Climber climber = new Climber();
@@ -77,7 +79,7 @@ public class RobotContainer {
     private final JoystickButton jsButnIntakePowerCell           = new JoystickButton(this.joystick, 1);
     private final JoystickButton gpButnRunPixyCam                = new JoystickButton(this.joystick, 2);
     private final JoystickButton jsButnRaiseAndLowerControlPanel = new JoystickButton(this.joystick, 3);
-    private final JoystickButton jsButnRotationControl           = new JoystickButton(this.joystick, 4);
+    private final JoystickButton jsButnAgitator                  = new JoystickButton(this.joystick, 4);
     private final JoystickButton jsButnReverse                   = new JoystickButton(this.joystick, 5);
     private final JoystickButton jsButnDetectColour              = new JoystickButton(this.joystick, 6);
     private final JoystickButton jsButnRaiseClimb                = new JoystickButton(this.joystick, 7);
@@ -124,16 +126,16 @@ public class RobotContainer {
         // this.jsButnRotationControl.whileHeld(new SpinControlPanel(controlpanel));
         // this.jsButnRaiseAndLowerControlPanel.whenPressed(new ControlPanelPiston(controlpanel));
         
-        jsButnRaiseAndLowerControlPanel.whenPressed(new DriveRotation(drivetrain, -90));
+        // jsButnRaiseAndLowerControlPanel.whenPressed(new DriveRotation(drivetrain, -90));
 
-        jsButnRotationControl.whileHeld(new InstantCommand(controlpanel::moveMotor, controlpanel));
-        jsButnRotationControl.whenReleased(new InstantCommand(controlpanel::stopMotor, controlpanel));
         /*CLIMBER*/
         this.jsButnRaiseClimb.whileHeld(new InstantCommand(climber::openLoopUp, climber));
         this.jsButnRaiseClimb.whenReleased(new InstantCommand(climber::stopMotor, climber));
         this.jsButnLowerClimb.whileHeld(new InstantCommand(climber::openLoopDown, climber));
         this.jsButnLowerClimb.whenReleased(new InstantCommand(climber::stopMotor, climber));
         /*HOPPER*/
+        this.jsButnAgitator.whileHeld(new InstantCommand(agitator:: motorOn, agitator));
+        this.jsButnAgitator.whenReleased(new InstantCommand(agitator:: motorOff, agitator));
         // this.gpButnHopperDisturber.whileHeld(new InstantCommand(hopper:: HopperDisturberExtend, hopper));
         // this.gpButnHopperDisturber.whenReleased(new InstantCommand(hopper:: HopperDisturberIntake, hopper));
         /*INTAKE*/

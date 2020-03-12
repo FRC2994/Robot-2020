@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.utils.Constants;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
@@ -20,11 +21,12 @@ private double agitatorMotorSpeed = 0;
 
   public Agitator() {
     agitatorMotor = new VictorSPX(Constants.CAN_CONTROL_PANEL); 
+    agitatorMotor.setNeutralMode(NeutralMode.Brake);
     //still have to update the constants and add a new CAN_ID for the agitator, right now the climber will be a placeholder
 }
 
 public void motorOn() {
-  agitatorMotorSpeed = 0.6;
+  agitatorMotorSpeed = -0.2;
   agitatorMotor.set(ControlMode.PercentOutput, agitatorMotorSpeed);
 }
 
