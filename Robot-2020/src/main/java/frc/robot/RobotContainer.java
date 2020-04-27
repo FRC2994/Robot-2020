@@ -65,8 +65,8 @@ public class RobotContainer {
     private final JoystickButton jsButnReverse                   = new JoystickButton(this.joystick, 5);
     private final JoystickButton jsButnDetectColour              = new JoystickButton(this.joystick, 6);
     private final JoystickButton jsButnRaiseClimb                = new JoystickButton(this.joystick, 7);
-    private final JoystickButton jsButnLowerClimb                = new JoystickButton(this.joystick, 8);
-    private final JoystickButton jsButnShifter                   = new JoystickButton(this.joystick, 12);
+    private final JoystickButton jsButnLowerClimb                = new JoystickButton(this.joystick, 12);
+    private final JoystickButton jsButnShifter                   = new JoystickButton(this.joystick, 8);
   
     //gamepad
     private final JoystickButton gpButnShoot                     = new JoystickButton(this.gamepad, 1);
