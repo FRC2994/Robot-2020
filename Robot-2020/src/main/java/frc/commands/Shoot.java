@@ -9,18 +9,18 @@ package frc.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.subsystems.Elevator;
+//import frc.subsystems.Elevator;
 import frc.subsystems.ShooterWheel;
 
 public class Shoot extends CommandBase {
-  private Elevator elevator;
+  //private Elevator elevator;
   private ShooterWheel shooter;
   int ticks = 0;
   int maxTicks = 100;
-  public Shoot(Elevator _elevator, ShooterWheel _shooter) {
-    elevator = _elevator;
+  public Shoot(ShooterWheel _shooter) {
+    //elevator = _elevator;
     shooter = _shooter;
-    addRequirements(elevator);
+    //addRequirements(elevator);
     addRequirements(shooter);
   }
 
@@ -51,20 +51,21 @@ public class Shoot extends CommandBase {
     //   System.out.println("Stopped");
     // }
     // Sytsem.out.println(ticks);
-    if(shooter.getRPM() > 5180){
+    /*if(shooter.getRPM() > 5180){
       elevator.startMotor();
       // System.out.println("SHOOT");
     }
     else{
       elevator.stopMotor();
     }
+    */
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     shooter.stopMotor();
-    elevator.stopMotor();
+    //elevator.stopMotor();
   }
 
   // Returns true when the command should end.

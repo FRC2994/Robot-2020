@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
 
 		// int selectedAuto = autoSwitch.getCurrentMode();
 		// System.out.println("AUTO MODE: " + selectedAuto);
-		m_robotContainer.getAutoCommand().schedule();
+		//m_robotContainer.getAutoCommand().schedule();
 	}
 
 	/**
